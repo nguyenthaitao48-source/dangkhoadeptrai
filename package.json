@@ -1,0 +1,13 @@
+{
+  "name": "khoasmm-portal",
+  "version": "1.0.0",
+  "description": "KHOASMM.COM - Hệ thống cung cấp dịch vụ Mạng Xã Hội uy tín chuyên nghiệp",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

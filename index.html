@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Primary Google SEO Meta Tags -->
+  <title>KHOA SMM - Hệ Thống Dịch Vụ Mạng Xã Hội Chuyên Nghiệp | khoasmm.com</title>
+  <meta name="title" content="KHOA SMM - Hệ Thống Dịch Vụ Mạng Xã Hội Chuyên Nghiệp | khoasmm.com">
+  <meta name="description" content="KHOASMM.COM - Nền tảng tăng tương tác TikTok, Facebook, Instagram, YouTube, Telegram uy tín số 1 Việt Nam. Máy chủ siêu tốc, bảo hành tụt sub, kết nối API tự động 24/7.">
+  <meta name="keywords" content="khoasmm, khoa smm, tăng follow tiktok, mua follow tiktok, tăng like facebook, buff view youtube, dịch vụ mxh, smm panel vietnam, khoasmm.com">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://khoasmm.com/">
+  <meta name="author" content="Lương Đặng Khoa">
+  <meta name="geo.region" content="VN">
+  <meta name="geo.placename" content="Vietnam">
+
+  <!-- Open Graph / Facebook Preview -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://khoasmm.com/">
+  <meta property="og:title" content="KHOA SMM - Hệ Thống Dịch Vụ Mạng Xã Hội Chuyên Nghiệp">
+  <meta property="og:description" content="Nền tảng tăng tương tác MXH hàng đầu: Follow TikTok, Like Facebook, Sub YouTube giá sỉ cực rẻ, bảo hành tự động.">
+  <meta property="og:site_name" content="KHOASMM.COM">
+  <meta property="og:locale" content="vi_VN">
+
+  <!-- Twitter Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://khoasmm.com/">
+  <meta name="twitter:title" content="KHOA SMM - Dịch Vụ Mạng Xã Hội Chuyên Nghiệp">
+  <meta name="twitter:description" content="Tăng Follow TikTok, Like Facebook, Sub YouTube giá sỉ số 1 Việt Nam.">
+
+  <!-- Schema.org JSON-LD Structured Data for Google -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "KHOA SMM",
+    "url": "https://khoasmm.com/",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://khoasmm.com/?s={search_term_string}",
+      "query-input": "required name=search_term_string"
+    },
+    "description": "Nền tảng cung cấp dịch vụ mạng xã hội TikTok, Facebook, Instagram, YouTube hàng đầu."
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "KHOA SMM",
+    "url": "https://khoasmm.com/",
+    "logo": "https://khoasmm.com/assets/logo.png",
+    "founder": {
+      "@type": "Person",
+      "name": "Lương Đặng Khoa"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer service",
+      "availableLanguage": "Vietnamese"
+    }
+  }
+  </script>
+  
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ==========================================================================
+       TOP HEADER BAR
+       ========================================================================== -->
+  <header class="top-header">
+    <div class="top-bar-inner">
+      <!-- Brand Logo -->
+      <div class="brand-logo" onclick="selectPlatform('tiktok')">
+        <div class="brand-badge-logo">
+          <i class="fas fa-rocket"></i>
+          <span>KHOA SMM</span>
+        </div>
+        <span class="brand-domain">khoasmm.com</span>
+      </div>
+
+      <!-- Quick Search Services -->
+      <div class="header-search">
+        <i class="fas fa-search"></i>
+        <input type="text" id="headerGlobalSearch" placeholder="Tìm kiếm dịch vụ (TikTok, FB, IG...)..." autocomplete="off">
+      </div>
+
+      <!-- Right Header Actions -->
+      <div class="header-actions">
+        <!-- Live BaoStar API Status Pill -->
+        <div class="header-balance-pill" id="baostarApiPill" style="background: rgba(16, 185, 129, 0.08); border-color: rgba(16, 185, 129, 0.3); font-size: 12px; cursor: pointer;" onclick="openModal('modalSettings')" title="Xem trạng thái kết nối BaoStar">
+          <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #10b981;"></span>
+          <span style="color: var(--text-muted);">API BaoStar:</span>
+          <strong style="color: #059669;" id="baostarBalanceLive">Đang kết nối...</strong>
+        </div>
+
+        <!-- Balance Pill with Quick Deposit -->
+        <div class="header-balance-pill">
+          <span>Ví:</span>
+          <span class="header-balance-amount" id="headerBalanceAmount">1,310 đ</span>
+          <button class="btn-deposit-quick" onclick="openDepositModal()">+ Nạp tiền</button>
+        </div>
+
+        <!-- Fullscreen toggle -->
+        <button class="action-icon-btn" onclick="toggleFullScreen()" title="Toàn màn hình">
+          <i class="fas fa-expand"></i>
+        </button>
+
+        <!-- Theme Toggle (Light / Dark) -->
+        <button class="action-icon-btn" onclick="toggleTheme()" title="Đổi giao diện Sáng / Tối">
+          <i class="fas fa-moon" id="themeToggleIcon"></i>
+        </button>
+
+        <!-- Notification Bell -->
+        <button class="action-icon-btn" onclick="openModal('modalNotifications')" title="Thông báo hệ thống">
+          <i class="far fa-bell"></i>
+          <span class="badge-dot">NEW</span>
+        </button>
+
+        <!-- User Profile Avatar Badge -->
+        <div class="header-user-badge" onclick="openModal('modalDomainGuide')">
+          <img src="https://api.dicebear.com/7.x/bottts/svg?seed=LuongDangKhoa&backgroundColor=fce7f3" alt="Avatar" class="user-avatar-mini">
+          <i class="fas fa-angle-down" style="font-size: 11px; color: var(--text-muted);"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Platform Categories Navigation Bar -->
+    <nav class="platform-navbar">
+      <div class="platform-navbar-inner" id="platformNavContainer">
+        <!-- Rendered dynamically via js/app.js -->
+      </div>
+    </nav>
+  </header>
+
+  <!-- ==========================================================================
+       MAIN CONTENT CONTAINER
+       ========================================================================== -->
+  <main class="main-layout">
+    
+    <!-- Title & Breadcrumb -->
+    <div class="page-title-section">
+      <h1 class="page-title" id="pageTitle">TĂNG FOLLOW TIKTOK</h1>
+      <div class="page-breadcrumb" id="breadcrumbText">
+        <span>TikTok</span> &gt; Tăng FOLLOW tiktok
+      </div>
+    </div>
+
+    <!-- Subservice Tabs (e.g., Follow, Like, View, Comment, Share...) -->
+    <div class="subservice-tabs" id="subserviceTabsContainer">
+      <!-- Rendered dynamically via js/app.js -->
+    </div>
+
+    <!-- App Grid: Workspace Left + Sidebar Right -->
+    <div class="app-grid">
+
+      <!-- LEFT COLUMN: Order Workspace & Service Management -->
+      <section class="order-workspace-card">
+        
+        <!-- Main Section Navigation Tabs -->
+        <div class="main-section-tabs">
+          <button class="section-tab-btn active" data-tab="order_create" onclick="switchMainTab('order_create')">
+            <i class="fas fa-shopping-cart"></i> Tạo tiến trình
+          </button>
+          <button class="section-tab-btn" data-tab="order_log" onclick="switchMainTab('order_log')">
+            <i class="fas fa-history"></i> Nhật ký đơn hàng
+          </button>
+          <button class="section-tab-btn" data-tab="api_docs" onclick="switchMainTab('api_docs')">
+            <i class="fas fa-code"></i> Kết nối API
+          </button>
+          <button class="section-tab-btn" data-tab="support" onclick="switchMainTab('support')">
+            <i class="fas fa-headset"></i> Hỗ trợ & Hướng dẫn
+          </button>
+        </div>
+
+        <!-- 1. ORDER CREATION VIEW -->
+        <div id="orderCreateContainer">
+          
+          <!-- Server List & Dynamic Specification Card Grid -->
+          <div class="server-section-grid">
+            
+            <!-- Left Sub-section: Server Choice -->
+            <div>
+              <div class="section-label">
+                <i class="fas fa-server" style="color: var(--primary);"></i>
+                <span>Chọn Gói :</span>
+              </div>
+              <div class="server-radio-list" id="serverRadioList">
+                <!-- Injected via js/app.js -->
+              </div>
+            </div>
+
+            <!-- Right Sub-section: Dynamic Specification Note Box -->
+            <div>
+              <div class="section-label">
+                <i class="fas fa-clipboard-list" style="color: #0d9488;"></i>
+                <span>Thông tin &amp; Lưu ý máy chủ:</span>
+              </div>
+              <div id="serverSpecCardContainer">
+                <!-- Dynamic Pastel Box Injected via js/app.js -->
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Order Form Inputs -->
+          <div class="order-form-grid">
+            
+            <!-- Target URL / Link Input -->
+            <div class="form-group full-width">
+              <div class="form-label-wrap">
+                <label for="targetLinkInput"><i class="fas fa-link"></i> Nhập Link hoặc Username:</label>
+                <span class="form-sub-link" onclick="toggleMultiLinkTip()">
+                  <i class="fas fa-question-circle"></i> Bạn muốn mua 1 lần nhiều ID?
+                </span>
+              </div>
+              <input type="text" id="targetLinkInput" class="form-control" placeholder="Nhập username / @username hoặc link profile" oninput="state.targetLink = this.value">
+              <span style="font-size: 11.5px; color: var(--danger); margin-top: 3px;" id="linkErrorTip"></span>
+            </div>
+
+            <!-- Reactions Selection (Visible for Facebook Like) -->
+            <div class="form-group full-width" id="reactionsPickerContainer" style="display: none;">
+              <label style="font-size: 13.5px; font-weight: 700;"><i class="fas fa-heart"></i> Chọn cảm xúc:</label>
+              <div class="reactions-picker">
+                <div class="reaction-btn selected" onclick="selectReaction('like', this)">👍 Thích</div>
+                <div class="reaction-btn" onclick="selectReaction('love', this)">❤️ Yêu thích</div>
+                <div class="reaction-btn" onclick="selectReaction('care', this)">🥰 Thương thương</div>
+                <div class="reaction-btn" onclick="selectReaction('haha', this)">😆 Haha</div>
+                <div class="reaction-btn" onclick="selectReaction('wow', this)">😮 Wow</div>
+                <div class="reaction-btn" onclick="selectReaction('sad', this)">😢 Buồn</div>
+                <div class="reaction-btn" onclick="selectReaction('angry', this)">😡 Phẫn nộ</div>
+              </div>
+            </div>
+
+            <!-- Quantity Input -->
+            <div class="form-group">
+              <div class="form-label-wrap">
+                <label for="orderQuantityInput"><i class="fas fa-calculator"></i> Số lượng:</label>
+                <span style="font-size: 12px; color: var(--text-muted);" id="qtyMinMaxLabel">Min: 100 - Max: 100,000</span>
+              </div>
+              <input type="number" id="orderQuantityInput" class="form-control" value="100" min="1" step="10" oninput="handleQuantityChange(this.value)">
+              
+              <!-- Quick Quantity Increment Badges -->
+              <div class="quantity-quick-badges">
+                <span class="qty-badge" onclick="setAbsoluteQuantity(100)">100</span>
+                <span class="qty-badge" onclick="setAbsoluteQuantity(500)">500</span>
+                <span class="qty-badge" onclick="setAbsoluteQuantity(1000)">1,000</span>
+                <span class="qty-badge" onclick="setAbsoluteQuantity(5000)">5,000</span>
+                <span class="qty-badge" onclick="setQuickQuantity(1000)">+1,000</span>
+              </div>
+            </div>
+
+            <!-- Order Notes Input -->
+            <div class="form-group">
+              <div class="form-label-wrap">
+                <label for="orderNotesInput"><i class="fas fa-sticky-note"></i> Ghi chú đơn hàng:</label>
+                <span style="font-size: 12px; color: var(--text-dim);">Không bắt buộc</span>
+              </div>
+              <input type="text" id="orderNotesInput" class="form-control" placeholder="Ghi chú nội bộ cho đơn hàng này...">
+            </div>
+
+          </div>
+
+          <!-- Total Calculation & Submit Box -->
+          <div class="order-summary-box">
+            <div class="summary-cost-breakdown">
+              <div class="summary-unit-rate" id="summaryUnitRate">Giá: 29.73 đ / 1 đơn vị | Số lượng: 100</div>
+              <div class="summary-total-price" id="summaryTotalPrice">2,825 đ</div>
+              <div class="summary-discount-tag" id="summaryDiscount">
+                <i class="fas fa-check-circle"></i> Giảm 5% (Cao cấp): -148 đ
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+              <button class="btn-submit-order" onclick="submitOrder()">
+                <i class="fas fa-paper-plane"></i> Mua dịch vụ ngay
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 2. ORDER LOG VIEW (Nhật ký đơn hàng) -->
+        <div id="orderLogContainer" class="order-log-container">
+          <div class="order-log-header">
+            <!-- Filter by Status -->
+            <div class="order-filter-group">
+              <button class="order-filter-btn active" data-status="all" onclick="filterOrders('all')">Tất cả</button>
+              <button class="order-filter-btn" data-status="running" onclick="filterOrders('running')">Đang chạy</button>
+              <button class="order-filter-btn" data-status="completed" onclick="filterOrders('completed')">Đã hoàn thành</button>
+              <button class="order-filter-btn" data-status="processing" onclick="filterOrders('processing')">Chờ xử lý</button>
+              <button class="order-filter-btn" data-status="cancelled" onclick="filterOrders('cancelled')">Đã hủy</button>
+            </div>
+
+            <!-- Search in orders -->
+            <div class="header-search" style="max-width: 260px;">
+              <i class="fas fa-search"></i>
+              <input type="text" placeholder="Tìm theo mã đơn / link..." oninput="handleOrderSearch(this.value)">
+            </div>
+          </div>
+
+          <!-- Order Log Table -->
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>MÃ ĐƠN</th>
+                  <th>DỊCH VỤ / MÁY CHỦ</th>
+                  <th>LINK ĐÍCH</th>
+                  <th>SỐ LƯỢNG</th>
+                  <th>TỔNG TIỀN</th>
+                  <th>TRẠNG THÁI</th>
+                  <th>THỜI GIAN</th>
+                  <th>THAO TÁC</th>
+                </tr>
+              </thead>
+              <tbody id="orderLogTableBody">
+                <!-- Rendered dynamically via js/app.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 3. API DOCUMENTATION VIEW -->
+        <div id="apiDocsContainer" style="display: none; padding-top: 10px;">
+          <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 12px; color: var(--text-main);">
+            <i class="fas fa-plug" style="color: var(--primary);"></i> Kết Nối API Dành Cho Website Đại Lý & Khách Hàng Sỉ
+          </h3>
+          <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 20px;">
+            Hệ thống <strong>khoasmm.com</strong> hỗ trợ chuẩn kết nối SMM API v2 chuẩn quốc tế (Tương thích hoàn toàn với tất cả mã nguồn website con, bot tự động, panel bán dịch vụ MXH).
+          </p>
+
+          <div style="background: var(--bg-card-subtle); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 16px; margin-bottom: 20px;">
+            <div style="font-size: 13px; font-weight: 700; color: var(--text-main); margin-bottom: 6px;">API Key của bạn:</div>
+            <div style="display: flex; gap: 8px;">
+              <input type="text" class="form-control" value="ksmm_live_8912401928371928371298401" readonly style="font-family: monospace; font-weight: 700; color: var(--primary);">
+              <button class="copy-btn" style="padding: 0 16px; font-size: 13px;" onclick="copyText('ksmm_live_8912401928371928371298401', 'API Key')">Sao chép</button>
+            </div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 6px;">API Endpoint URL: <code>https://khoasmm.com/api/v2</code></div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px;">
+              <div style="font-weight: 700; font-size: 13.5px; margin-bottom: 8px; color: var(--primary);">1. Lấy danh sách dịch vụ</div>
+              <pre style="background: #0f172a; color: #38bdf8; padding: 12px; border-radius: 6px; font-size: 12px; overflow-x: auto;"><code>POST /api/v2
+{
+  "key": "YOUR_API_KEY",
+  "action": "services"
+}</code></pre>
+            </div>
+
+            <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px;">
+              <div style="font-weight: 700; font-size: 13.5px; margin-bottom: 8px; color: var(--success);">2. Tạo đơn hàng mới</div>
+              <pre style="background: #0f172a; color: #34d399; padding: 12px; border-radius: 6px; font-size: 12px; overflow-x: auto;"><code>POST /api/v2
+{
+  "key": "YOUR_API_KEY",
+  "action": "add",
+  "service": 19,
+  "link": "https://tiktok.com/@user",
+  "quantity": 1000
+}</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. SUPPORT & GUIDANCE VIEW -->
+        <div id="supportContainer" style="display: none; padding-top: 10px;">
+          <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 12px; color: var(--text-main);">
+            <i class="fas fa-life-ring" style="color: #06b6d4;"></i> Trung Tâm Trợ Giúp &amp; Quy Định Hệ Thống
+          </h3>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px;">
+            <div style="background: var(--bg-card-subtle); border: 1px solid var(--border-color); padding: 16px; border-radius: var(--radius-md);">
+              <h4 style="font-size: 14px; font-weight: 700; color: #2563eb; margin-bottom: 8px;">Quy định chạy đơn hàng</h4>
+              <ul style="font-size: 13px; color: var(--text-muted); line-height: 1.6; padding-left: 18px;">
+                <li>Đảm bảo tài khoản / bài viết luôn ở chế độ <strong>CÔNG KHAI</strong> trước khi đặt đơn.</li>
+                <li>Không đổi username hoặc tắt bình luận trong khi đơn hàng đang xử lý.</li>
+                <li>Không order cùng một link trên nhiều server cùng lúc (chống đè đơn).</li>
+              </ul>
+            </div>
+
+            <div style="background: var(--bg-card-subtle); border: 1px solid var(--border-color); padding: 16px; border-radius: var(--radius-md);">
+              <h4 style="font-size: 14px; font-weight: 700; color: #10b981; margin-bottom: 8px;">Kênh hỗ trợ chính thức</h4>
+              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">
+                - Quản trị viên: <strong>Lương Đặng Khoa</strong><br>
+                - Telegram hỗ trợ: <a href="https://t.me/khoasmm" target="_blank" style="color: var(--primary); font-weight: 600;">@khoasmm</a><br>
+                - Zalo / Hotline: <strong>0987.654.321</strong><br>
+                - Giờ làm việc: <strong>08:00 - 24:00</strong> tất cả các ngày trong tuần.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- RIGHT COLUMN: Account Overview Card & System Notices -->
+      <aside class="sidebar-sticky">
+
+        <!-- User Profile Card (Exact replica from BaoStar screenshot) -->
+        <div class="account-info-card">
+          <div class="account-card-header">
+            <i class="fas fa-user-circle" style="color: var(--primary);"></i>
+            <span>Thông tin tài khoản</span>
+          </div>
+
+          <div class="account-profile-hero">
+            <div class="avatar-wrapper">
+              <img src="https://api.dicebear.com/7.x/bottts/svg?seed=LuongDangKhoa&backgroundColor=fce7f3" alt="User 3D Avatar" class="avatar-3d">
+              <span class="avatar-status-dot" title="Online"></span>
+            </div>
+            <div class="account-user-name" id="cardUserName">Luong Dang Khoa</div>
+            <div class="account-rank-pill" id="cardUserRank">Cao cấp</div>
+          </div>
+
+          <div class="account-details-list">
+            <div class="account-stat-row">
+              <span class="stat-label">Số tiền hiện tại :</span>
+              <span class="stat-value stat-balance-highlight" id="cardUserBalance">1,310 đ</span>
+            </div>
+
+            <div class="account-stat-row">
+              <span class="stat-label">Tổng nạp :</span>
+              <span class="stat-value" id="cardUserTotalDeposit">133,059,931 đ</span>
+            </div>
+
+            <div class="account-stat-row">
+              <span class="stat-label">E-mail :</span>
+              <span class="stat-value" id="cardUserEmail" style="font-family: monospace; font-size: 12px;">khoaprono1@gmail.com</span>
+            </div>
+
+            <div class="account-stat-row">
+              <span class="stat-label">Ngày tham gia :</span>
+              <span class="stat-value" id="cardUserJoinDate" style="font-size: 12px;">2021-04-01 19:27:50</span>
+            </div>
+
+            <div class="account-stat-row" style="border-bottom: none;">
+              <span class="stat-label">Cấp tiếp theo :</span>
+              <span class="stat-value" style="font-size: 11.5px; color: #059669;" id="cardUserNextTier">Cao cấp 133,059,931/99,999,999,999</span>
+            </div>
+          </div>
+
+          <!-- Progress Bar to Next Level -->
+          <div class="level-progress-wrap">
+            <div class="level-progress-labels">
+              <span>Tiến độ VIP</span>
+              <span style="color: var(--primary); font-weight: 700;">[100%]</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-bar-fill" style="width: 100%;"></div>
+            </div>
+          </div>
+
+          <!-- Quick Deposit Button in Card -->
+          <button class="btn-deposit-card" onclick="openDepositModal()">
+            <i class="fas fa-wallet"></i> Nạp tiền vào tài khoản
+          </button>
+        </div>
+
+        <!-- Domain Notice Box -->
+        <div class="notice-box-card">
+          <div class="notice-box-header">
+            <i class="fas fa-globe"></i>
+            <span>Tên miền: khoasmm.com</span>
+          </div>
+          <div class="notice-box-content">
+            Hệ thống SMM được kích hoạt đầy đủ cho tên miền <strong>khoasmm.com</strong>. Kết nối tự động API đa nền tảng, tích hợp ngân hàng quét mã QR VietQR 24/7.
+          </div>
+        </div>
+
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- ==========================================================================
+       RIGHT FLOATING ACTION BUTTONS (Exact match to screenshot)
+       ========================================================================== -->
+  <div class="floating-actions-bar">
+    <!-- Cài đặt giao diện (Vertical button) -->
+    <div class="floating-vertical-setting" onclick="openModal('modalSettings')">
+      <i class="fas fa-cog"></i> CÀI ĐẶT GIAO DIỆN
+    </div>
+
+    <!-- Gia hạn nhanh (from screenshot 1) -->
+    <div class="floating-renew-fast" onclick="openModal('modalDomainGuide')">
+      <i class="fas fa-sync-alt"></i> Gia hạn nhanh
+    </div>
+
+    <!-- Telegram Button -->
+    <a href="https://t.me/khoasmm" target="_blank" class="floating-btn floating-tele" title="Nhắn tin Telegram">
+      <i class="fab fa-telegram-plane"></i>
+    </a>
+
+    <!-- Zalo Button -->
+    <a href="https://zalo.me/0987654321" target="_blank" class="floating-btn floating-zalo" title="Chat Zalo">
+      <i class="fas fa-comment-dots"></i>
+    </a>
+
+    <!-- Facebook Button -->
+    <a href="https://facebook.com/khoasmm" target="_blank" class="floating-btn floating-fb" title="Fanpage Facebook">
+      <i class="fab fa-facebook-f"></i>
+    </a>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL: NẠP TIỀN TỰ ĐỘNG (VietQR, MoMo, Thẻ Cào, Crypto)
+       ========================================================================== -->
+  <div class="modal-overlay" id="modalDeposit">
+    <div class="modal-window">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i class="fas fa-qrcode" style="color: #10b981;"></i>
+          <span>Nạp Tiền Tự Động 24/7 (Cộng Tiền Tức Thì)</span>
+        </div>
+        <button class="btn-modal-close" onclick="closeModal('modalDeposit')">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Deposit Methods Tabs -->
+        <div class="deposit-tabs">
+          <button class="deposit-tab-btn active"><i class="fas fa-university"></i> Ngân hàng (VietQR)</button>
+          <button class="deposit-tab-btn" onclick="showToast('Ví Momo đang bảo trì bảo dưỡng, quý khách vui lòng quét VietQR miễn phí!', 'info')"><i class="fas fa-mobile-alt"></i> Ví MoMo</button>
+          <button class="deposit-tab-btn" onclick="showToast('Chức năng nạp thẻ cào tự động chiết khấu 15%', 'info')"><i class="fas fa-credit-card"></i> Thẻ cào</button>
+        </div>
+
+        <!-- Dynamic VietQR Generator Card -->
+        <div class="qr-box-wrap">
+          <img id="vietQrImage" src="" alt="Mã VietQR" class="qr-code-img">
+          <div style="font-size: 12px; color: var(--text-muted); margin-top: 6px;">
+            Mở App ngân hàng quét mã QR để chuyển khoản nhanh không cần nhập thông tin
+          </div>
+        </div>
+
+        <!-- Bank Details Table -->
+        <table class="bank-info-table">
+          <tr>
+            <td style="color: var(--text-muted); width: 140px;">Ngân hàng:</td>
+            <td style="font-weight: 700;" id="depositBankName">MBBank (Quân Đội)</td>
+          </tr>
+          <tr>
+            <td style="color: var(--text-muted);">Số tài khoản:</td>
+            <td>
+              <span style="font-family: monospace; font-weight: 800; font-size: 15px; color: var(--primary);" id="depositBankAcc">0987654321</span>
+              <button class="copy-btn" onclick="copyText('0987654321', 'Số tài khoản')">Sao chép</button>
+            </td>
+          </tr>
+          <tr>
+            <td style="color: var(--text-muted);">Chủ tài khoản:</td>
+            <td style="font-weight: 700; text-transform: uppercase;" id="depositBankOwner">LUONG DANG KHOA</td>
+          </tr>
+          <tr>
+            <td style="color: var(--text-muted);">Nội dung chuyển tiền:</td>
+            <td>
+              <span style="font-family: monospace; font-weight: 800; color: #ef4444; background: #fef2f2; padding: 2px 6px; border-radius: 4px;" id="depositMemo">KHOASMM khoaprono1</span>
+              <button class="copy-btn" onclick="copyText(document.getElementById('depositMemo').textContent, 'Nội dung nạp')">Sao chép</button>
+            </td>
+          </tr>
+        </table>
+
+        <!-- Amount selector -->
+        <div style="margin-bottom: 12px;">
+          <label style="font-size: 13px; font-weight: 700; display: block; margin-bottom: 4px;">Số tiền muốn nạp (VNĐ):</label>
+          <div style="display: flex; gap: 8px;">
+            <input type="number" id="depositAmountInput" class="form-control" value="50000" min="10000" step="10000" oninput="updateDepositModal()">
+            <button class="qty-badge" onclick="document.getElementById('depositAmountInput').value = 50000; updateDepositModal();">50k</button>
+            <button class="qty-badge" onclick="document.getElementById('depositAmountInput').value = 100000; updateDepositModal();">100k</button>
+            <button class="qty-badge" onclick="document.getElementById('depositAmountInput').value = 500000; updateDepositModal();">500k</button>
+          </div>
+        </div>
+
+        <!-- Testing Simulator Bar -->
+        <div class="test-deposit-bar">
+          <div>
+            <div style="font-size: 12.5px; font-weight: 700; color: #059669;">🧪 Thử nghiệm nạp tiền ngay:</div>
+            <div style="font-size: 11.5px; color: var(--text-muted);">Bấm để mô phỏng tiền vào tài khoản tức thì</div>
+          </div>
+          <button class="btn-deposit-quick" style="padding: 8px 14px; font-size: 12.5px;" onclick="simulateSuccessfulDeposit()">
+            Xác nhận nạp thử
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL: CÀI ĐẶT GIAO DIỆN & TÙY CHỌN
+       ========================================================================== -->
+  <div class="modal-overlay" id="modalSettings">
+    <div class="modal-window">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i class="fas fa-sliders-h" style="color: var(--primary);"></i>
+          <span>Cài Đặt Giao Diện Hệ Thống</span>
+        </div>
+        <button class="btn-modal-close" onclick="closeModal('modalSettings')">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          
+          <div>
+            <div style="font-size: 14px; font-weight: 700; margin-bottom: 8px;">Chế độ màu nền:</div>
+            <div style="display: flex; gap: 10px;">
+              <button class="section-tab-btn" onclick="applyTheme('light'); showToast('Đã chọn giao diện Vàng Kem (Chuẩn BaoStar)', 'info');">
+                <i class="fas fa-sun" style="color: #f59e0b;"></i> Sáng (Vàng kem)
+              </button>
+              <button class="section-tab-btn" onclick="applyTheme('dark'); showToast('Đã chọn giao diện Đêm (Cyber Slate)', 'info');">
+                <i class="fas fa-moon" style="color: #38bdf8;"></i> Tối (Dark mode)
+              </button>
+            </div>
+          </div>
+
+          <div style="border-top: 1px dashed var(--border-color); padding-top: 14px;">
+            <div style="font-size: 14px; font-weight: 700; margin-bottom: 6px;">Thông tin tên miền:</div>
+            <p style="font-size: 13px; color: var(--text-muted);">
+              Tên miền: <strong>khoasmm.com</strong><br>
+              Thời hạn: <strong>2026-07-17 đến 2027-07-17</strong><br>
+              Trạng thái: <span style="color: #10b981; font-weight: 700;">Đang hoạt động (Active)</span>
+            </p>
+          </div>
+
+          <div style="border-top: 1px dashed var(--border-color); padding-top: 14px;">
+            <button class="btn-submit-order" style="width: 100%; justify-content: center;" onclick="closeModal('modalSettings')">
+              Lưu thiết lập
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL: HƯỚNG DẪN TRỎ TÊN MIỀN KHOASMM.COM
+       ========================================================================== -->
+  <div class="modal-overlay" id="modalDomainGuide">
+    <div class="modal-window">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i class="fas fa-network-wired" style="color: #2563eb;"></i>
+          <span>Cấu Hình Tên Miền khoasmm.com</span>
+        </div>
+        <button class="btn-modal-close" onclick="closeModal('modalDomainGuide')">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 14px;">
+          Để website chạy trực tiếp trên tên miền <strong>khoasmm.com</strong> (như trong ảnh quản lý tên miền của bạn), bạn chỉ cần trỏ bản ghi DNS sau tại trang quản lý tên miền:
+        </p>
+
+        <table class="data-table" style="margin-bottom: 16px;">
+          <thead>
+            <tr>
+              <th>Loại (Type)</th>
+              <th>Tên (Host)</th>
+              <th>Giá trị (Points to)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>A Record</code></td>
+              <td><code>@</code></td>
+              <td><code>IP máy chủ VPS / Hosting</code></td>
+            </tr>
+            <tr>
+              <td><code>CNAME</code></td>
+              <td><code>www</code></td>
+              <td><code>khoasmm.com</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div style="background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 6px; padding: 12px; font-size: 12.5px; color: #065f46;">
+          <i class="fas fa-check-circle"></i> Mã nguồn website này hoàn toàn tĩnh hoặc chạy với Node.js, bạn có thể tải lên bất kỳ Hosting (cPanel, DirectAdmin) hoặc VPS (Nginx / Cloudflare) cực kỳ đơn giản!
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL: THÔNG BÁO HỆ THỐNG
+       ========================================================================== -->
+  <div class="modal-overlay" id="modalNotifications">
+    <div class="modal-window">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i class="fas fa-bell" style="color: #f59e0b;"></i>
+          <span>Thông Báo Mới Nhất</span>
+        </div>
+        <button class="btn-modal-close" onclick="closeModal('modalNotifications')">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="modal-body" style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="background: var(--bg-card-subtle); padding: 12px; border-radius: 8px; border-left: 3px solid #10b981;">
+          <div style="font-weight: 700; font-size: 13.5px; color: var(--text-main);">Cập nhật máy chủ TikTok &amp; Facebook</div>
+          <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Máy chủ Tiktok Follow Tây SV19 đã bổ sung thêm 500,000 tài nguyên tốc độ cao.</div>
+        </div>
+
+        <div style="background: var(--bg-card-subtle); padding: 12px; border-radius: 8px; border-left: 3px solid #3b82f6;">
+          <div style="font-weight: 700; font-size: 13.5px; color: var(--text-main);">Khuyến mãi nạp tiền tự động</div>
+          <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Tặng thêm 5% giá trị cho mọi đơn nạp tiền từ 500,000đ qua VietQR.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Custom Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    // Helper scripts
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    function toggleMultiLinkTip() {
+      showToast("Chức năng Mua 1 lần nhiều ID: Hãy nhập mỗi link/username trên 1 dòng riêng biệt!", "info");
+    }
+
+    function selectReaction(name, el) {
+      state.selectedReaction = name;
+      document.querySelectorAll('.reaction-btn').forEach(b => b.classList.remove('selected'));
+      el.classList.add('selected');
+    }
+  </script>
+</body>
+</html>
