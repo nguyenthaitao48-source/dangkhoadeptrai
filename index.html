@@ -1771,6 +1771,250 @@ button, input, select, textarea {
   border-bottom-color: var(--primary);
 }
 
+/* ADMIN PANEL STYLING */
+.btn-admin-header {
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 800;
+  border-radius: var(--radius-full);
+  border: none;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 8px rgba(217, 119, 6, 0.3);
+  transition: var(--transition);
+  animation: pulseGold 2s infinite;
+}
+
+@keyframes pulseGold {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
+  50% { box-shadow: 0 0 0 6px rgba(245, 158, 11, 0); }
+}
+
+.btn-admin-header:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+.admin-window {
+  max-width: 950px !important;
+  width: 95% !important;
+}
+
+.admin-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.admin-stat-card {
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.admin-stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.admin-stat-val {
+  font-family: 'Outfit', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.admin-stat-lbl {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.admin-action-btn {
+  padding: 4px 10px;
+  font-size: 11.5px;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.admin-action-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.btn-add-money {
+  background: #ecfdf5;
+  color: #059669;
+  border-color: #a7f3d0;
+}
+.btn-deduct-money {
+  background: #fef2f2;
+  color: #dc2626;
+  border-color: #fecaca;
+}
+
+/* ADMIN PANEL ADVANCED STYLES */
+.admin-nav-tabs {
+  display: flex;
+  gap: 8px;
+  border-bottom: 2px solid var(--border-color);
+  margin-bottom: 20px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.admin-nav-tab {
+  padding: 8px 16px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition);
+  margin-bottom: -6px;
+}
+
+.admin-nav-tab.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+  background: var(--bg-card-subtle);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+
+.admin-nav-tab:hover {
+  color: var(--primary);
+}
+
+.admin-card-section {
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  margin-bottom: 18px;
+}
+
+.admin-section-header {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.admin-table-container {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  max-height: 420px;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+  text-align: left;
+}
+
+.admin-table th {
+  background: var(--bg-card-subtle);
+  padding: 10px 14px;
+  font-weight: 700;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  white-space: nowrap;
+}
+
+.admin-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border-color);
+  vertical-align: middle;
+}
+
+.admin-table tr:hover td {
+  background: rgba(239, 68, 68, 0.02);
+}
+
+.admin-profit-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 800;
+  background: #ecfdf5;
+  color: #059669;
+  border: 1px solid #a7f3d0;
+}
+
+/* ANNOUNCEMENT BANNER */
+.announcement-banner-bar {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.06), rgba(249, 115, 22, 0.08));
+  border: 1px solid rgba(239, 68, 68, 0.15);
+  border-radius: var(--radius-md);
+  padding: 10px 16px;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.announcement-badge {
+  background: linear-gradient(135deg, #ef4444, #f97316);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+
+.announcement-ticker {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+
+
+
   </style>
 </head>
 <body>
@@ -1810,6 +2054,11 @@ button, input, select, textarea {
 
         <!-- 2. LOGGED-IN USER STATE: SHOW USER WALLET & PROFILE -->
         <div id="headerAuthUser" style="display: none; align-items: center; gap: 10px;">
+          <!-- Exclusive Admin Panel Button -->
+          <button class="btn-admin-header" id="headerAdminBtn" style="display: none;" onclick="openAdminPanel()" title="Mở Bảng Quản Trị Website">
+            <i class="fas fa-crown"></i> Quản Trị Website
+          </button>
+
           <!-- Live BaoStar API Status Pill -->
           <div class="header-balance-pill" id="baostarApiPill" style="background: rgba(16, 185, 129, 0.08); border-color: rgba(16, 185, 129, 0.3); font-size: 12px; cursor: pointer;" onclick="openModal('modalSettings')" title="Xem trạng thái kết nối BaoStar">
             <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #10b981;"></span>
@@ -1859,6 +2108,12 @@ button, input, select, textarea {
        MAIN CONTENT CONTAINER
        ========================================================================== -->
   <main class="main-layout">
+
+    <!-- Announcement Banner Bar -->
+    <div class="announcement-banner-bar" id="announcementBannerBar">
+      <div class="announcement-badge"><i class="fas fa-bullhorn"></i> THÔNG BÁO</div>
+      <div class="announcement-ticker" id="announcementTickerText">Chào mừng quý khách đến với KHOASMM.COM - Hệ thống tăng tương tác MXH uy tín tự động 24/7.</div>
+    </div>
     
     <!-- Title & Breadcrumb -->
     <div class="page-title-section">
@@ -1949,344 +2204,333 @@ button, input, select, textarea {
 
             <!-- Quantity Input -->
             <div class="form-group">
-              <div class="form-label-wrap">
-                <label for="orderQuantityInput"><i class="fas fa-calculator"></i> Số lượng:</label>
-                <span style="font-size: 12px; color: var(--text-muted);" id="qtyMinMaxLabel">Min: 50 - Max: 100,000</span>
-              </div>
-              <input type="number" id="orderQuantityInput" class="form-control" value="100" min="1" step="10" oninput="handleQuantityChange(this.value)">
-              
-              <!-- Quick Quantity Increment Badges -->
-              <div class="quantity-quick-badges">
-                <span class="qty-badge" onclick="setAbsoluteQuantity(100)">100</span>
-                <span class="qty-badge" onclick="setAbsoluteQuantity(500)">500</span>
-                <span class="qty-badge" onclick="setAbsoluteQuantity(1000)">1,000</span>
-                <span class="qty-badge" onclick="setAbsoluteQuantity(5000)">5,000</span>
-                <span class="qty-badge" onclick="setQuickQuantity(1000)">+1,000</span>
+              <label for="orderQuantityInput"><i class="fas fa-sort-numeric-up-alt"></i> Số lượng cần tăng:</label>
+              <input type="number" id="orderQuantityInput" class="form-control" value="100" min="50" step="10" oninput="handleQuantityChange(this.value)">
+              <div class="form-help-text" id="quantityRangeHint">Tối thiểu: 50 - Tối đa: 100,000</div>
+            </div>
+
+            <!-- Total Price Preview (Realtime Calculation) -->
+            <div class="form-group">
+              <label><i class="fas fa-calculator"></i> Tổng tiền thanh toán:</label>
+              <div class="price-calc-box">
+                <div>
+                  <span class="price-calc-val" id="totalPriceDisplay">0</span>
+                  <span class="price-calc-unit">VNĐ</span>
+                </div>
+                <div class="price-formula" id="priceFormulaHint">0 đ x 100</div>
               </div>
             </div>
 
-            <!-- Order Notes Input -->
-            <div class="form-group">
-              <div class="form-label-wrap">
-                <label for="orderNotesInput"><i class="fas fa-sticky-note"></i> Ghi chú đơn hàng:</label>
-                <span style="font-size: 12px; color: var(--text-dim);">Không bắt buộc</span>
-              </div>
-              <input type="text" id="orderNotesInput" class="form-control" placeholder="Ghi chú nội bộ cho đơn hàng này...">
+            <!-- Order Notes (Optional) -->
+            <div class="form-group full-width">
+              <label for="orderNotesInput"><i class="far fa-comment-dots"></i> Ghi chú đơn hàng (Không bắt buộc):</label>
+              <input type="text" id="orderNotesInput" class="form-control" placeholder="Ghi chú thêm nếu cần (vd: chạy nhanh giúp mình)..." oninput="state.orderNotes = this.value">
             </div>
 
           </div>
 
-          <!-- Total Calculation & Submit Box -->
-          <div class="order-summary-box">
-            <div class="summary-cost-breakdown">
-              <div class="summary-unit-rate" id="summaryUnitRate">Giá: 29.73 đ / 1 đơn vị | Số lượng: 100</div>
-              <div class="summary-total-price" id="summaryTotalPrice">2,825 đ</div>
-              <div class="summary-discount-tag" id="summaryDiscount" style="display: none;"></div>
-            </div>
-
-            <div style="display: flex; gap: 10px;">
-              <button class="btn-submit-order" onclick="submitOrder()">
-                <i class="fas fa-paper-plane"></i> Mua dịch vụ ngay
-              </button>
+          <!-- Checkout & Order Action Bar -->
+          <div class="order-action-bar">
+            <button class="btn-create-order" id="btnSubmitOrder" onclick="handleCreateOrder()">
+              <i class="fas fa-paper-plane"></i> Mua ngay dịch vụ
+            </button>
+            <div class="order-guarantee-note">
+              <i class="fas fa-shield-alt" style="color: #10b981;"></i>
+              <span>Hệ thống tự động trừ tiền trong ví. Hoàn tiền 100% nếu lỗi máy chủ.</span>
             </div>
           </div>
 
         </div>
 
-        <!-- 2. ORDER LOG VIEW -->
-        <div id="orderLogContainer" class="order-log-container">
+        <!-- 2. ORDER LOG VIEW (Data Table) -->
+        <div id="orderLogContainer" style="display: none;">
           <div class="order-log-header">
             <div class="order-filter-group">
-              <button class="order-filter-btn active" data-status="all" onclick="filterOrders('all')">Tất cả</button>
-              <button class="order-filter-btn" data-status="running" onclick="filterOrders('running')">Đang chạy</button>
-              <button class="order-filter-btn" data-status="completed" onclick="filterOrders('completed')">Đã hoàn thành</button>
-              <button class="order-filter-btn" data-status="processing" onclick="filterOrders('processing')">Chờ xử lý</button>
-              <button class="order-filter-btn" data-status="cancelled" onclick="filterOrders('cancelled')">Đã hủy</button>
+              <button class="order-filter-btn active" data-filter="all" onclick="filterOrderLog('all')">Tất cả</button>
+              <button class="order-filter-btn" data-filter="running" onclick="filterOrderLog('running')">Đang chạy</button>
+              <button class="order-filter-btn" data-filter="completed" onclick="filterOrderLog('completed')">Đã xong</button>
+              <button class="order-filter-btn" data-filter="processing" onclick="filterOrderLog('processing')">Chờ xử lý</button>
             </div>
-
-            <div class="header-search" style="max-width: 260px;">
-              <i class="fas fa-search"></i>
-              <input type="text" placeholder="Tìm theo mã đơn / link..." oninput="handleOrderSearch(this.value)">
-            </div>
+            <button class="copy-btn" onclick="loadUserOrders()" style="display: flex; align-items: center; gap: 6px;">
+              <i class="fas fa-sync-alt"></i> Tải lại đơn hàng
+            </button>
           </div>
 
-          <div class="table-responsive">
-            <table class="data-table">
+          <div class="order-table-container">
+            <table class="order-table">
               <thead>
                 <tr>
-                  <th>MÃ ĐƠN</th>
-                  <th>DỊCH VỤ / MÁY CHỦ</th>
-                  <th>LINK ĐÍCH</th>
-                  <th>SỐ LƯỢNG</th>
-                  <th>TỔNG TIỀN</th>
-                  <th>TRẠNG THÁI</th>
-                  <th>THỜI GIAN</th>
-                  <th>THAO TÁC</th>
+                  <th>Mã đơn</th>
+                  <th>Dịch vụ</th>
+                  <th>Máy chủ</th>
+                  <th>Target / Link</th>
+                  <th>Số lượng</th>
+                  <th>Giá tiền</th>
+                  <th>Trạng thái</th>
+                  <th>Thời gian</th>
                 </tr>
               </thead>
-              <tbody id="orderLogTableBody"></tbody>
+              <tbody id="orderTableBody"></tbody>
             </table>
           </div>
         </div>
 
         <!-- 3. API DOCUMENTATION VIEW -->
-        <div id="apiDocsContainer" style="display: none; padding-top: 10px;">
-          <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 12px; color: var(--text-main);">
-            <i class="fas fa-plug" style="color: var(--primary);"></i> Kết Nối API Dành Cho Website Đại Lý & Khách Hàng Sỉ
-          </h3>
-          <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 20px;">
-            Hệ thống <strong>khoasmm.com</strong> hỗ trợ chuẩn kết nối SMM API v2 chuẩn quốc tế.
-          </p>
-          <div style="background: var(--bg-card-subtle); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 16px; margin-bottom: 20px;">
-            <div style="font-size: 13px; font-weight: 700; color: var(--text-main); margin-bottom: 6px;">API Key của bạn:</div>
-            <div style="display: flex; gap: 8px;">
-              <input type="text" class="form-control" value="ksmm_live_8912401928371928371298401" readonly style="font-family: monospace; font-weight: 700; color: var(--primary);">
-              <button class="copy-btn" style="padding: 0 16px; font-size: 13px;" onclick="copyText('ksmm_live_8912401928371928371298401', 'API Key')">Sao chép</button>
+        <div id="apiDocsContainer" style="display: none;">
+          <div class="api-doc-wrap">
+            <h2 class="api-doc-title"><i class="fas fa-plug"></i> Tài liệu tích hợp API BaoStar v2</h2>
+            <p style="color: var(--text-muted); font-size: 13.5px; margin-bottom: 20px;">
+              KHOASMM.COM hỗ trợ chuẩn giao thức API SMM v2 chuẩn quốc tế. Bạn có thể kết nối trang web bán lẻ của mình trực tiếp với KHOASMM.
+            </p>
+
+            <div class="api-box">
+              <div class="api-box-title">1. Thông tin Endpoint API</div>
+              <div class="api-code-block">
+                <span>URL API:</span> <strong>https://khoasmm.com/api/v2</strong> (hoặc https://baostar.net/api/v2)<br>
+                <span>Phương thức:</span> <strong>POST</strong><br>
+                <span>Định dạng dữ liệu:</span> <strong>application/x-www-form-urlencoded</strong>
+              </div>
             </div>
-            <div style="font-size: 12px; color: var(--text-muted); margin-top: 6px;">API Endpoint URL: <code>https://khoasmm.com/api/v2</code></div>
+
+            <div class="api-box">
+              <div class="api-box-title">2. API Key của bạn</div>
+              <div class="api-code-block" style="display: flex; justify-content: space-between; align-items: center;">
+                <code style="color: var(--primary); font-weight: 700;">Mzk5NzVub3diZDg1MzBkODRlNzBjMjMyYTkzNmViMGZk</code>
+                <button class="copy-btn" onclick="copyText('Mzk5NzVub3diZDg1MzBkODRlNzBjMjMyYTkzNmViMGZk', 'API Key')">Sao chép</button>
+              </div>
+            </div>
+
+            <div class="api-box">
+              <div class="api-box-title">3. Ví dụ gửi đơn hàng (cURL)</div>
+              <pre class="api-code-block" style="white-space: pre-wrap; margin: 0; font-family: monospace; font-size: 12px; color: #0284c7;">curl -X POST https://khoasmm.com/api/v2 \
+  -d "key=Mzk5NzVub3diZDg1MzBkODRlNzBjMjMyYTkzNmViMGZk" \
+  -d "action=add" \
+  -d "service=16379" \
+  -d "link=https://www.tiktok.com/@khoasmm" \
+  -d "quantity=100"</pre>
+            </div>
           </div>
         </div>
 
-        <!-- 4. SUPPORT & GUIDANCE VIEW -->
-        <div id="supportContainer" style="display: none; padding-top: 10px;">
-          <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 12px; color: var(--text-main);">
-            <i class="fas fa-life-ring" style="color: #06b6d4;"></i> Trung Tâm Trợ Giúp &amp; Quy Định Hệ Thống
-          </h3>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px;">
-            <div style="background: var(--bg-card-subtle); border: 1px solid var(--border-color); padding: 16px; border-radius: var(--radius-md);">
-              <h4 style="font-size: 14px; font-weight: 700; color: #2563eb; margin-bottom: 8px;">Quy định chạy đơn hàng</h4>
-              <ul style="font-size: 13px; color: var(--text-muted); line-height: 1.6; padding-left: 18px;">
-                <li>Đảm bảo tài khoản / bài viết luôn ở chế độ <strong>CÔNG KHAI</strong> trước khi đặt đơn.</li>
-                <li>Không đổi username hoặc tắt bình luận trong khi đơn hàng đang xử lý.</li>
-                <li>Không order cùng một link trên nhiều server cùng lúc (chống đè đơn).</li>
-              </ul>
-            </div>
-            <div style="background: var(--bg-card-subtle); border: 1px solid var(--border-color); padding: 16px; border-radius: var(--radius-md);">
-              <h4 style="font-size: 14px; font-weight: 700; color: #10b981; margin-bottom: 8px;">Kênh hỗ trợ chính thức</h4>
-              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">
-                - Quản trị viên: <strong>Lương Đặng Khoa</strong><br>
-                - Telegram hỗ trợ: <a href="https://t.me/khoasmm" target="_blank" style="color: var(--primary); font-weight: 600;">@khoasmm</a><br>
-                - Zalo / Hotline: <strong>0987.654.321</strong><br>
-                - Giờ làm việc: <strong>08:00 - 24:00</strong> 24/7.
-              </p>
+        <!-- 4. SUPPORT VIEW -->
+        <div id="supportContainer" style="display: none;">
+          <div class="api-doc-wrap">
+            <h2 class="api-doc-title"><i class="fas fa-life-ring"></i> Trung tâm trợ giúp & CSKH</h2>
+            <p style="color: var(--text-muted); font-size: 13.5px; margin-bottom: 24px;">
+              Mọi thắc mắc về đơn hàng, bảo hành nạp tiền hoặc đăng ký làm đại lý phân phối, vui lòng liên hệ admin:
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+              <div style="background: var(--bg-card-subtle); padding: 20px; border-radius: var(--radius-md); border: 1px solid var(--border-color); text-align: center;">
+                <div style="width: 50px; height: 50px; margin: 0 auto 12px; border-radius: 50%; background: #0088cc; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px;">
+                  <i class="fab fa-telegram-plane"></i>
+                </div>
+                <div style="font-weight: 800; font-size: 16px;">Telegram Hỗ trợ</div>
+                <div style="font-size: 13px; color: var(--text-muted); margin: 6px 0 14px;">Trực tuyến phản hồi sau 1 phút</div>
+                <a href="https://t.me/khoasmm" target="_blank" class="copy-btn" style="text-decoration: none; display: inline-block;">Nhắn Telegram</a>
+              </div>
+
+              <div style="background: var(--bg-card-subtle); padding: 20px; border-radius: var(--radius-md); border: 1px solid var(--border-color); text-align: center;">
+                <div style="width: 50px; height: 50px; margin: 0 auto 12px; border-radius: 50%; background: #0068ff; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px;">
+                  <i class="fas fa-comment-alt"></i>
+                </div>
+                <div style="font-weight: 800; font-size: 16px;">Zalo Hotline</div>
+                <div style="font-size: 13px; color: var(--text-muted); margin: 6px 0 14px;">Hỗ trợ khiếu nại nạp tiền</div>
+                <a href="https://zalo.me/0987654321" target="_blank" class="copy-btn" style="text-decoration: none; display: inline-block;">Liên hệ Zalo</a>
+              </div>
             </div>
           </div>
         </div>
 
       </section>
 
-      <!-- RIGHT COLUMN: Account Overview Card & System Notices -->
-      <aside class="sidebar-sticky">
+      <!-- RIGHT COLUMN: User Profile / Guest State & Bank Transfer Guide -->
+      <aside class="sidebar-column">
 
-        <!-- 1. GUEST SIDEBAR CARD (When not logged in) -->
-        <div id="sidebarGuestCard" class="account-info-card">
-          <div class="guest-card-wrapper">
-            <div class="guest-card-icon">
-              <i class="fas fa-user-lock"></i>
-            </div>
-            <div class="guest-card-title">Chào Mừng Quý Khách!</div>
-            <div class="guest-card-desc">
-              Vui lòng Đăng nhập hoặc Tạo tài khoản để nạp tiền vào ví cá nhân và tự động mua dịch vụ.
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 8px;">
-              <button class="btn-submit-order" style="justify-content: center; width: 100%;" onclick="openAuthModal('login')">
-                <i class="fas fa-sign-in-alt"></i> Đăng nhập ngay
-              </button>
-              <button class="btn-auth-login" style="width: 100%; padding: 10px;" onclick="openAuthModal('register')">
-                <i class="fas fa-user-plus"></i> Tạo tài khoản mới (0đ)
-              </button>
-            </div>
+        <!-- 1. GUEST STATE CARD: VISIBLE WHEN VISITOR IS NOT LOGGED IN -->
+        <div class="user-profile-card guest-card" id="sidebarGuestCard">
+          <div class="guest-card-icon">
+            <i class="fas fa-user-lock"></i>
+          </div>
+          <div class="guest-card-title">Khách vãng lai</div>
+          <div class="guest-card-desc">
+            Vui lòng <strong>Đăng ký</strong> hoặc <strong>Đăng nhập</strong> tài khoản để bắt đầu nạp tiền và tạo đơn hàng tương tác MXH.
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <button class="btn-auth-register" style="padding: 10px; font-size: 13px;" onclick="openAuthModal('register')">
+              <i class="fas fa-user-plus"></i> Tạo tài khoản mới (Miễn phí)
+            </button>
+            <button class="btn-auth-login" style="padding: 10px; font-size: 13px; background: var(--bg-card-subtle); color: var(--text-main); border: 1px solid var(--border-color);" onclick="openAuthModal('login')">
+              <i class="fas fa-sign-in-alt"></i> Đã có tài khoản? Đăng nhập
+            </button>
           </div>
         </div>
 
-        <!-- 2. AUTHENTICATED USER CARD (When logged in) -->
-        <div id="sidebarUserCard" class="account-info-card" style="display: none;">
-          <div class="account-card-header">
-            <i class="fas fa-user-circle" style="color: var(--primary);"></i>
-            <span>Thông tin tài khoản</span>
+        <!-- 2. LOGGED IN USER PROFILE CARD -->
+        <div class="user-profile-card" id="sidebarUserCard" style="display: none;">
+          <div class="user-avatar-wrap">
+            <img src="https://api.dicebear.com/7.x/bottts/svg?seed=LuongDangKhoa&backgroundColor=fce7f3" alt="Avatar Lương Đặng Khoa" class="user-avatar-img">
+            <span class="user-status-online" title="Trạng thái trực tuyến"></span>
           </div>
 
-          <div class="account-profile-hero">
-            <div class="avatar-wrapper">
-              <img src="https://api.dicebear.com/7.x/bottts/svg?seed=User&backgroundColor=fce7f3" alt="User Avatar" class="avatar-3d">
-              <span class="avatar-status-dot" title="Online"></span>
-            </div>
-            <div class="account-user-name" id="cardUserName">Khách hàng</div>
-            <div class="account-rank-pill" id="cardUserRank">Thành viên</div>
+          <div class="user-info-text">
+            <div class="user-name" id="cardUserName">Khách hàng</div>
+            <div class="user-rank-badge" id="cardUserRank">Thành viên</div>
           </div>
 
-          <div class="account-details-list">
-            <div class="account-stat-row">
-              <span class="stat-label">Số tiền hiện tại :</span>
-              <span class="stat-value stat-balance-highlight" id="cardUserBalance">0 đ</span>
+          <div class="user-stats-grid">
+            <div class="user-stat-item">
+              <div class="user-stat-label">Số dư khả dụng:</div>
+              <div class="user-stat-value text-success" id="cardUserBalance">0 đ</div>
             </div>
-
-            <div class="account-stat-row">
-              <span class="stat-label">Tổng nạp :</span>
-              <span class="stat-value" id="cardUserTotalDeposit">0 đ</span>
-            </div>
-
-            <div class="account-stat-row">
-              <span class="stat-label">E-mail :</span>
-              <span class="stat-value" id="cardUserEmail" style="font-family: monospace; font-size: 12px;">user@gmail.com</span>
-            </div>
-
-            <div class="account-stat-row">
-              <span class="stat-label">Ngày tham gia :</span>
-              <span class="stat-value" id="cardUserJoinDate" style="font-size: 12px;">Hôm nay</span>
-            </div>
-
-            <div class="account-stat-row" style="border-bottom: none;">
-              <span class="stat-label">Cấp tiếp theo :</span>
-              <span class="stat-value" style="font-size: 11.5px; color: #059669;" id="cardUserNextTier">Thành viên 0/10,000,000 đ</span>
+            <div class="user-stat-item">
+              <div class="user-stat-label">Tổng nạp tích lũy:</div>
+              <div class="user-stat-value" id="cardUserTotalDeposit">0 đ</div>
             </div>
           </div>
 
-          <!-- Progress Bar to Next Level -->
-          <div class="level-progress-wrap">
-            <div class="level-progress-labels">
-              <span>Tiến độ VIP</span>
-              <span style="color: var(--primary); font-weight: 700;">[0%]</span>
-            </div>
-            <div class="progress-track">
-              <div class="progress-bar-fill" style="width: 5%;"></div>
-            </div>
-          </div>
-
-          <!-- Quick Deposit Button in Card -->
-          <button class="btn-deposit-card" onclick="openDepositModal()">
-            <i class="fas fa-wallet"></i> Nạp tiền vào tài khoản
+          <!-- Quick Deposit Button -->
+          <button class="btn-deposit-sidebar" onclick="openDepositModal()">
+            <i class="fas fa-qrcode"></i> Nạp tiền tự động (VietQR 24/7)
           </button>
 
-          <!-- Logout Button -->
-          <button class="copy-btn" style="width: 100%; margin: 10px 0 0; padding: 8px; text-align: center; background: rgba(239, 68, 68, 0.1); color: var(--danger); border-color: rgba(239, 68, 68, 0.3);" onclick="handleLogout()">
+          <!-- User Metadata -->
+          <div class="user-meta-list">
+            <div class="user-meta-row">
+              <span><i class="far fa-envelope"></i> Email:</span>
+              <span id="cardUserEmail" class="meta-val">...</span>
+            </div>
+            <div class="user-meta-row">
+              <span><i class="far fa-calendar-alt"></i> Ngày tham gia:</span>
+              <span id="cardUserJoinDate" class="meta-val">...</span>
+            </div>
+            <div class="user-meta-row">
+              <span><i class="fas fa-level-up-alt"></i> Cấp bậc tiếp theo:</span>
+              <span id="cardUserNextTier" class="meta-val" style="color: #f59e0b;">Đại lý (0/10tr đ)</span>
+            </div>
+          </div>
+
+          <button onclick="handleLogout()" style="width: 100%; margin-top: 14px; padding: 7px; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background: transparent; color: var(--danger); font-size: 12px; font-weight: 700; cursor: pointer;">
             <i class="fas fa-sign-out-alt"></i> Đăng xuất tài khoản
           </button>
         </div>
 
-        <!-- Domain Notice Box -->
-        <div class="notice-box-card">
-          <div class="notice-box-header">
-            <i class="fas fa-shield-alt"></i>
-            <span>Bảo mật hệ thống khoasmm.com</span>
+        <!-- BaoStar API Live Sync Widget -->
+        <div class="sidebar-widget">
+          <div class="sidebar-widget-header">
+            <i class="fas fa-bolt" style="color: #f59e0b;"></i>
+            <span>Kết nối BaoStar API Live</span>
           </div>
-          <div class="notice-box-content">
-            Khách hàng tự đăng ký tài khoản và quản lý số dư riêng biệt. Tiền nạp tự động qua VietQR theo cú pháp riêng của từng khách hàng.
+          <div style="font-size: 13px; line-height: 1.6; color: var(--text-muted);">
+            <div>Trạng thái máy chủ: <span style="color: #10b981; font-weight: 700;">Hoạt động 100%</span></div>
+            <div>Bảo hành tự động: <span style="font-weight: 600;">Hỗ trợ 24/7</span></div>
+            <div>Thời gian hoàn thành trung bình: <strong style="color: var(--text-main);">15 - 45 phút</strong></div>
           </div>
+        </div>
+
+        <!-- Free Services Notice Widget -->
+        <div class="sidebar-widget" style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.05), rgba(249, 115, 22, 0.05)); border-color: rgba(239, 68, 68, 0.2);">
+          <div class="sidebar-widget-header" style="color: var(--primary);">
+            <i class="fas fa-gift"></i>
+            <span>Dịch Vụ Miễn Phí Mỗi Ngày</span>
+          </div>
+          <div style="font-size: 12.5px; line-height: 1.5; color: var(--text-muted); margin-bottom: 10px;">
+            Nhận 100 tim TikTok hoặc 50 Like Facebook miễn phí mỗi ngày tại khung giờ vàng!
+          </div>
+          <button class="copy-btn" style="width: 100%;" onclick="showFreeServiceToast()">
+            <i class="fas fa-hand-holding-heart"></i> Nhận tương tác Free
+          </button>
         </div>
 
       </aside>
 
     </div>
+
   </main>
 
   <!-- ==========================================================================
-       RIGHT FLOATING ACTION BUTTONS
-       ========================================================================== -->
-  <div class="floating-actions-bar">
-    <div class="floating-vertical-setting" onclick="openModal('modalSettings')">
-      <i class="fas fa-cog"></i> CÀI ĐẶT GIAO DIỆN
-    </div>
-
-    <div class="floating-renew-fast" onclick="openModal('modalDomainGuide')">
-      <i class="fas fa-sync-alt"></i> Gia hạn nhanh
-    </div>
-
-    <a href="https://t.me/khoasmm" target="_blank" class="floating-btn floating-tele" title="Nhắn tin Telegram">
-      <i class="fab fa-telegram-plane"></i>
-    </a>
-
-    <a href="https://zalo.me/0987654321" target="_blank" class="floating-btn floating-zalo" title="Chat Zalo">
-      <i class="fas fa-comment-dots"></i>
-    </a>
-
-    <a href="https://facebook.com/khoasmm" target="_blank" class="floating-btn floating-fb" title="Fanpage Facebook">
-      <i class="fab fa-facebook-f"></i>
-    </a>
-  </div>
-
-  <!-- ==========================================================================
-       MODAL: ĐĂNG NHẬP / ĐĂNG KÝ (Authentication Modal)
+       MODAL: AUTHENTICATION (ĐĂNG NHẬP / ĐĂNG KÝ CHO KHÁCH HÀNG MỚI)
        ========================================================================== -->
   <div class="modal-overlay" id="modalAuth">
     <div class="modal-window" style="max-width: 440px;">
+      
       <div class="modal-header">
         <div class="modal-title">
           <i class="fas fa-user-circle" style="color: var(--primary);"></i>
-          <span>Tài Khoản Khách Hàng</span>
+          <span>Tài Khoản KHOA SMM</span>
         </div>
         <button class="btn-modal-close" onclick="closeModal('modalAuth')">
           <i class="fas fa-times"></i>
         </button>
       </div>
 
-      <div class="modal-body">
-        <!-- Tabs: Đăng nhập vs Đăng ký -->
-        <div class="auth-nav-tabs">
-          <div class="auth-nav-tab active" data-tab="login" onclick="switchAuthTab('login')">
-            <i class="fas fa-sign-in-alt"></i> Đăng nhập
-          </div>
-          <div class="auth-nav-tab" data-tab="register" onclick="switchAuthTab('register')">
-            <i class="fas fa-user-plus"></i> Đăng ký tài khoản
-          </div>
+      <!-- Auth Tabs: Login vs Register -->
+      <div class="auth-nav-tabs">
+        <div class="auth-nav-tab active" data-tab="login" onclick="switchAuthTab('login')">
+          <i class="fas fa-sign-in-alt"></i> Đăng nhập
         </div>
-
-        <!-- 1. LOGIN FORM -->
-        <form id="authLoginForm" onsubmit="handleLogin(event)">
-          <div class="form-group" style="margin-bottom: 12px;">
-            <label style="font-size: 13px; font-weight: 700; margin-bottom: 4px;">Tên đăng nhập:</label>
-            <input type="text" id="loginUsername" class="form-control" placeholder="Nhập tên đăng nhập của bạn..." required>
-          </div>
-          <div class="form-group" style="margin-bottom: 16px;">
-            <label style="font-size: 13px; font-weight: 700; margin-bottom: 4px;">Mật khẩu:</label>
-            <input type="password" id="loginPassword" class="form-control" placeholder="Nhập mật khẩu..." required>
-          </div>
-          <button type="submit" class="btn-submit-order" style="width: 100%; justify-content: center;">
-            <i class="fas fa-sign-in-alt"></i> Đăng nhập ngay
-          </button>
-          <div style="text-align: center; margin-top: 14px; font-size: 12.5px; color: var(--text-muted);">
-            Chưa có tài khoản? <a href="javascript:void(0)" onclick="switchAuthTab('register')" style="color: var(--primary); font-weight: 700;">Đăng ký miễn phí tại đây</a>
-          </div>
-        </form>
-
-        <!-- 2. REGISTER FORM -->
-        <form id="authRegisterForm" style="display: none;" onsubmit="handleRegister(event)">
-          <div class="form-group" style="margin-bottom: 10px;">
-            <label style="font-size: 13px; font-weight: 700; margin-bottom: 4px;">Họ và tên:</label>
-            <input type="text" id="regName" class="form-control" placeholder="Ví dụ: Nguyễn Văn A" required>
-          </div>
-          <div class="form-group" style="margin-bottom: 10px;">
-            <label style="font-size: 13px; font-weight: 700; margin-bottom: 4px;">Tên đăng nhập (viết liền không dấu):</label>
-            <input type="text" id="regUsername" class="form-control" placeholder="Ví dụ: nguyenvana123" required>
-          </div>
-          <div class="form-group" style="margin-bottom: 10px;">
-            <label style="font-size: 13px; font-weight: 700; margin-bottom: 4px;">Địa chỉ Email:</label>
-            <input type="email" id="regEmail" class="form-control" placeholder="nguyenvana@gmail.com" required>
-          </div>
-          <div class="form-group" style="margin-bottom: 16px;">
-            <label style="font-size: 13px; font-weight: 700; margin-bottom: 4px;">Mật khẩu:</label>
-            <input type="password" id="regPassword" class="form-control" placeholder="Tối thiểu 4 ký tự..." required>
-          </div>
-          <button type="submit" class="btn-auth-register" style="width: 100%; padding: 12px; font-size: 14px; justify-content: center; display: flex; align-items: center; gap: 6px;">
-            <i class="fas fa-user-plus"></i> Hoàn tất đăng ký (Số dư 0đ)
-          </button>
-          <div style="text-align: center; margin-top: 14px; font-size: 12.5px; color: var(--text-muted);">
-            Đã có tài khoản? <a href="javascript:void(0)" onclick="switchAuthTab('login')" style="color: var(--primary); font-weight: 700;">Đăng nhập tại đây</a>
-          </div>
-        </form>
+        <div class="auth-nav-tab" data-tab="register" onclick="switchAuthTab('register')">
+          <i class="fas fa-user-plus"></i> Đăng ký mới
+        </div>
       </div>
+
+      <!-- 1. LOGIN FORM -->
+      <form id="authLoginForm" onsubmit="handleLogin(event)" style="display: block;">
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label><i class="fas fa-user"></i> Tên đăng nhập:</label>
+          <input type="text" id="loginUsername" class="form-control" placeholder="Nhập tên đăng nhập..." required autocomplete="username">
+        </div>
+        <div class="form-group" style="margin-bottom: 18px;">
+          <label><i class="fas fa-lock"></i> Mật khẩu:</label>
+          <input type="password" id="loginPassword" class="form-control" placeholder="Nhập mật khẩu..." required autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn-create-order" style="width: 100%;">
+          <i class="fas fa-sign-in-alt"></i> Đăng Nhập Ngay
+        </button>
+        <div style="font-size: 12px; color: var(--text-muted); text-align: center; margin-top: 14px;">
+          Chưa có tài khoản? <a href="javascript:void(0)" onclick="switchAuthTab('register')" style="color: var(--primary); font-weight: 700;">Đăng ký miễn phí tại đây</a>
+        </div>
+      </form>
+
+      <!-- 2. REGISTER FORM -->
+      <form id="authRegisterForm" onsubmit="handleRegister(event)" style="display: none;">
+        <div class="form-group" style="margin-bottom: 12px;">
+          <label><i class="fas fa-id-card"></i> Họ và tên của bạn:</label>
+          <input type="text" id="regName" class="form-control" placeholder="Ví dụ: Nguyễn Văn A..." required>
+        </div>
+        <div class="form-group" style="margin-bottom: 12px;">
+          <label><i class="fas fa-user"></i> Tên đăng nhập (viết liền không dấu):</label>
+          <input type="text" id="regUsername" class="form-control" placeholder="Ví dụ: nguyenvana123..." required autocomplete="username">
+        </div>
+        <div class="form-group" style="margin-bottom: 12px;">
+          <label><i class="fas fa-envelope"></i> Địa chỉ Email:</label>
+          <input type="email" id="regEmail" class="form-control" placeholder="Email nhận thông báo..." required autocomplete="email">
+        </div>
+        <div class="form-group" style="margin-bottom: 18px;">
+          <label><i class="fas fa-lock"></i> Mật khẩu đăng nhập:</label>
+          <input type="password" id="regPassword" class="form-control" placeholder="Mật khẩu tối thiểu 4 ký tự..." required autocomplete="new-password">
+        </div>
+        <button type="submit" class="btn-create-order" style="width: 100%;">
+          <i class="fas fa-user-check"></i> Hoàn Tất Đăng Ký Tài Khoản
+        </button>
+        <div style="font-size: 12px; color: var(--text-muted); text-align: center; margin-top: 14px;">
+          Đã có tài khoản? <a href="javascript:void(0)" onclick="switchAuthTab('login')" style="color: var(--primary); font-weight: 700;">Đăng nhập tại đây</a>
+        </div>
+      </form>
+
     </div>
   </div>
 
   <!-- ==========================================================================
-       MODAL: NẠP TIỀN TỰ ĐỘNG (VietQR)
+       MODAL: NẠP TIỀN TỰ ĐỘNG (VIETQR VỚI CÚ PHÁP CÁ NHÂN HÓA)
        ========================================================================== -->
   <div class="modal-overlay" id="modalDeposit">
-    <div class="modal-window">
+    <div class="modal-window" style="max-width: 580px;">
+      
       <div class="modal-header">
         <div class="modal-title">
-          <i class="fas fa-qrcode" style="color: #10b981;"></i>
-          <span>Nạp Tiền Tự Động 24/7 (Cộng Tiền Tức Thì)</span>
+          <i class="fas fa-qrcode" style="color: #059669;"></i>
+          <span>Nạp Tiền Vào Ví Tự Động (VietQR)</span>
         </div>
         <button class="btn-modal-close" onclick="closeModal('modalDeposit')">
           <i class="fas fa-times"></i>
@@ -2294,88 +2538,367 @@ button, input, select, textarea {
       </div>
 
       <div class="modal-body">
-        <div class="qr-box-wrap">
-          <img id="vietQrImage" src="" alt="Mã VietQR" class="qr-code-img">
-          <div style="font-size: 12px; color: var(--text-muted); margin-top: 6px;">
-            Mở App ngân hàng quét mã QR để chuyển khoản nhanh không cần nhập thông tin
+        
+        <div class="deposit-grid">
+          
+          <!-- Left: VietQR Image -->
+          <div class="vietqr-box">
+            <div class="vietqr-frame">
+              <img id="vietQrImage" src="https://img.vietqr.io/image/MB-0987654321-compact2.png?amount=50000&addInfo=KHOASMM%20nap&accountName=LUONG%20DANG%20KHOA" alt="VietQR Nạp Tiền KHOASMM" class="vietqr-img">
+            </div>
+            <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 8px; text-align: center;">
+              Quét mã bằng app ngân hàng (MB, VCB, Techcombank, Momo...) để tự động điền STK &amp; Số tiền
+            </div>
           </div>
+
+          <!-- Right: Transfer Info & Copy Buttons -->
+          <div class="deposit-details">
+            
+            <div class="form-group" style="margin-bottom: 10px;">
+              <label for="depositAmountInput" style="font-size: 12px; font-weight: 700;">Số tiền muốn nạp (VNĐ):</label>
+              <input type="number" id="depositAmountInput" class="form-control" value="50000" min="10000" step="10000" oninput="updateDepositModal()">
+            </div>
+
+            <div class="deposit-info-card">
+              <div class="deposit-info-row">
+                <span class="info-label">Ngân hàng:</span>
+                <span class="info-val font-bold" id="depositBankName">MBBank</span>
+              </div>
+              <div class="deposit-info-row">
+                <span class="info-label">Số tài khoản:</span>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span class="info-val font-mono font-bold" id="depositBankAcc">0987654321</span>
+                  <button class="copy-mini-btn" onclick="copyText(state.bankConfig.accountNumber, 'Số tài khoản')">Chép</button>
+                </div>
+              </div>
+              <div class="deposit-info-row">
+                <span class="info-label">Chủ tài khoản:</span>
+                <span class="info-val font-bold" id="depositBankOwner">LUONG DANG KHOA</span>
+              </div>
+              <div class="deposit-info-row" style="background: rgba(239, 68, 68, 0.08); padding: 8px; border-radius: 6px; margin-top: 4px;">
+                <span class="info-label" style="color: var(--danger); font-weight: 800;">Nội dung chuyển khoản (bắt buộc):</span>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span class="info-val font-mono font-bold" id="depositMemo" style="color: var(--danger); font-size: 14px;">KHOASMM khach</span>
+                  <button class="copy-mini-btn" onclick="copyText(document.getElementById('depositMemo').textContent, 'Nội dung CK')">Chép</button>
+                </div>
+              </div>
+            </div>
+
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 10px; line-height: 1.5;">
+              <i class="fas fa-exclamation-triangle" style="color: #f59e0b;"></i>
+              <strong>Lưu ý:</strong> Vui lòng điền chính xác nội dung chuyển khoản để hệ thống cộng tiền tự động sau 1-3 phút.
+            </div>
+
+            <div style="margin-top: 12px;">
+              <button class="btn-deposit-sidebar" style="background: linear-gradient(135deg, #10b981, #059669); color: #fff;" onclick="simulateSuccessfulDeposit()">
+                <i class="fas fa-check-circle"></i> Tôi đã chuyển khoản thành công
+              </button>
+            </div>
+
+          </div>
+
         </div>
 
-        <table class="bank-info-table">
-          <tr>
-            <td style="color: var(--text-muted); width: 140px;">Ngân hàng:</td>
-            <td style="font-weight: 700;" id="depositBankName">MBBank (Quân Đội)</td>
-          </tr>
-          <tr>
-            <td style="color: var(--text-muted);">Số tài khoản:</td>
-            <td>
-              <span style="font-family: monospace; font-weight: 800; font-size: 15px; color: var(--primary);" id="depositBankAcc">0987654321</span>
-              <button class="copy-btn" onclick="copyText('0987654321', 'Số tài khoản')">Sao chép</button>
-            </td>
-          </tr>
-          <tr>
-            <td style="color: var(--text-muted);">Chủ tài khoản:</td>
-            <td style="font-weight: 700; text-transform: uppercase;" id="depositBankOwner">LUONG DANG KHOA</td>
-          </tr>
-          <tr>
-            <td style="color: var(--text-muted);">Nội dung chuyển tiền:</td>
-            <td>
-              <span style="font-family: monospace; font-weight: 800; color: #ef4444; background: #fef2f2; padding: 2px 6px; border-radius: 4px;" id="depositMemo">KHOASMM</span>
-              <button class="copy-btn" onclick="copyText(document.getElementById('depositMemo').textContent, 'Nội dung nạp')">Sao chép</button>
-            </td>
-          </tr>
-        </table>
-
-        <div style="margin-bottom: 12px;">
-          <label style="font-size: 13px; font-weight: 700; display: block; margin-bottom: 4px;">Số tiền muốn nạp (VNĐ):</label>
-          <div style="display: flex; gap: 8px;">
-            <input type="number" id="depositAmountInput" class="form-control" value="50000" min="10000" step="10000" oninput="updateDepositModal()">
-            <button class="qty-badge" onclick="document.getElementById('depositAmountInput').value = 50000; updateDepositModal();">50k</button>
-            <button class="qty-badge" onclick="document.getElementById('depositAmountInput').value = 100000; updateDepositModal();">100k</button>
-            <button class="qty-badge" onclick="document.getElementById('depositAmountInput').value = 500000; updateDepositModal();">500k</button>
-          </div>
-        </div>
-
-        <div class="test-deposit-bar">
-          <div>
-            <div style="font-size: 12.5px; font-weight: 700; color: #059669;">🧪 Thử nghiệm nạp tiền vào ví:</div>
-            <div style="font-size: 11.5px; color: var(--text-muted);">Bấm để mô phỏng tiền vào tài khoản của bạn tức thì</div>
-          </div>
-          <button class="btn-deposit-quick" style="padding: 8px 14px; font-size: 12.5px;" onclick="simulateSuccessfulDeposit()">
-            Xác nhận nạp thử
-          </button>
-        </div>
       </div>
+
     </div>
   </div>
 
   <!-- ==========================================================================
-       MODAL: CÀI ĐẶT GIAO DIỆN & TÙY CHỌN
+       MODAL: BẢNG ĐIỀU KHIỂN QUẢN TRỊ ADMIN (ADMIN CONTROL PANEL)
+       ========================================================================== -->
+  <div class="modal-overlay" id="modalAdminPanel">
+    <div class="modal-window admin-window">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <div class="modal-title" style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, #f59e0b, #d97706); display: flex; align-items: center; justify-content: center; color: white;">
+            <i class="fas fa-crown"></i>
+          </div>
+          <div>
+            <div style="font-weight: 800; font-size: 16px;">BẢNG QUẢN TRỊ WEBSITE (ADMIN PANEL)</div>
+            <div style="font-size: 11.5px; color: var(--text-muted); font-weight: 500;">Toàn quyền chỉnh sửa giá, thành viên, đơn hàng &amp; website</div>
+          </div>
+        </div>
+        <button class="btn-modal-close" onclick="closeModal('modalAdminPanel')">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div class="admin-nav-tabs">
+        <button class="admin-nav-tab active" data-tab="overview" onclick="switchAdminTab('overview')">
+          <i class="fas fa-chart-pie"></i> Tổng quan
+        </button>
+        <button class="admin-nav-tab" data-tab="pricing" onclick="switchAdminTab('pricing')">
+          <i class="fas fa-percentage"></i> Giá Bán &amp; Lãi 20%
+        </button>
+        <button class="admin-nav-tab" data-tab="users" onclick="switchAdminTab('users')">
+          <i class="fas fa-users-cog"></i> Quản lý Thành viên
+        </button>
+        <button class="admin-nav-tab" data-tab="orders" onclick="switchAdminTab('orders')">
+          <i class="fas fa-boxes"></i> Quản lý Đơn hàng
+        </button>
+        <button class="admin-nav-tab" data-tab="settings" onclick="switchAdminTab('settings')">
+          <i class="fas fa-sliders-h"></i> Cài đặt Website &amp; Bank
+        </button>
+      </div>
+
+      <!-- TAB 1: OVERVIEW -->
+      <div id="adminTab_overview" style="display: block;">
+        <div class="admin-stat-grid">
+          <div class="admin-stat-card">
+            <div class="admin-stat-icon" style="background: #e0f2fe; color: #0284c7;">
+              <i class="fas fa-users"></i>
+            </div>
+            <div>
+              <div class="admin-stat-val" id="adminStatUsers">0</div>
+              <div class="admin-stat-lbl">Tổng thành viên</div>
+            </div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="admin-stat-icon" style="background: #fef3c7; color: #d97706;">
+              <i class="fas fa-shopping-bag"></i>
+            </div>
+            <div>
+              <div class="admin-stat-val" id="adminStatOrders">0</div>
+              <div class="admin-stat-lbl">Tổng đơn hàng</div>
+            </div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="admin-stat-icon" style="background: #dcfce7; color: #16a34a;">
+              <i class="fas fa-coins"></i>
+            </div>
+            <div>
+              <div class="admin-stat-val" id="adminStatRevenue">0 đ</div>
+              <div class="admin-stat-lbl">Doanh thu bán lẻ</div>
+            </div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="admin-stat-icon" style="background: #f3e8ff; color: #9333ea;">
+              <i class="fas fa-bolt"></i>
+            </div>
+            <div>
+              <div class="admin-stat-val" id="adminBaoStarBalance" style="font-size: 16px;">Đang kiểm tra...</div>
+              <div class="admin-stat-lbl">Số dư gốc BaoStar</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="admin-card-section">
+          <div class="admin-section-header">
+            <i class="fas fa-shield-alt" style="color: #10b981;"></i>
+            <span>Thông tin Trạng thái Hệ thống</span>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; font-size: 13px;">
+            <div style="background: var(--bg-card); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color);">
+              <span style="color: var(--text-muted);">Tỷ lệ lãi mặc định:</span><br>
+              <strong style="color: #059669; font-size: 15px;">+20% Chênh lệch giá sỉ</strong>
+            </div>
+            <div style="background: var(--bg-card); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color);">
+              <span style="color: var(--text-muted);">Cổng nạp tự động:</span><br>
+              <strong style="color: #0284c7; font-size: 15px;">VietQR Pro 24/7</strong>
+            </div>
+            <div style="background: var(--bg-card); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color);">
+              <span style="color: var(--text-muted);">API Nhà cung cấp:</span><br>
+              <strong style="color: #8b5cf6; font-size: 15px;">BaoStar.net (v2 Live)</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: PRICING & 20% PROFIT MARGIN -->
+      <div id="adminTab_pricing" style="display: none;">
+        <div class="admin-card-section" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(217, 119, 6, 0.05)); border-color: rgba(245, 158, 11, 0.3);">
+          <div class="admin-section-header" style="color: #d97706;">
+            <i class="fas fa-percentage"></i>
+            <span>CẤU HÌNH TỶ LỆ ĂN CHÊNH LỆCH TOÀN BỘ WEBSITE (%)</span>
+          </div>
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">
+            Hệ thống tự động cộng tỷ lệ % này lên giá sỉ gốc của BaoStar. Khách hàng nạp tiền và mua, bạn tự động thu về đúng số tiền chênh lệch này vào tài khoản!
+          </p>
+          <div style="display: flex; gap: 10px; align-items: center; max-width: 450px;">
+            <div style="position: relative; flex: 1;">
+              <input type="number" id="adminProfitMarginInput" class="form-control" style="font-size: 16px; font-weight: 800; padding-right: 35px;" value="20" min="0" max="200" step="1">
+              <span style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-weight: 800; color: var(--text-muted);">%</span>
+            </div>
+            <button class="btn-deposit-quick" style="padding: 10px 18px; font-size: 13px; white-space: nowrap;" onclick="adminSaveGlobalMargin()">
+              <i class="fas fa-save"></i> Cập nhật % Lãi Toàn Web
+            </button>
+          </div>
+        </div>
+
+        <div class="admin-card-section">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
+            <div class="admin-section-header" style="margin-bottom: 0;">
+              <i class="fas fa-tags" style="color: var(--primary);"></i>
+              <span>Bảng Giá Chi Tiết Từng Dịch Vụ &amp; Tuỳ Chỉnh Giá Riêng</span>
+            </div>
+            <div style="position: relative; width: 260px;">
+              <i class="fas fa-search" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 12px;"></i>
+              <input type="text" id="adminPricingSearch" oninput="adminFilterPricingTable()" placeholder="Tìm dịch vụ / máy chủ..." style="width: 100%; padding: 6px 10px 6px 30px; font-size: 12.5px; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-card);">
+            </div>
+          </div>
+          
+          <div class="admin-table-container">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Dịch vụ</th>
+                  <th>Tên Máy chủ</th>
+                  <th>Giá gốc BaoStar</th>
+                  <th>Giá bán (+20%)</th>
+                  <th>Giá riêng (tùy chọn)</th>
+                  <th>Thao tác</th>
+                </tr>
+              </thead>
+              <tbody id="adminPricingTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: USERS & BALANCE -->
+      <div id="adminTab_users" style="display: none;">
+        <div class="admin-card-section">
+          <div class="admin-section-header">
+            <i class="fas fa-users-cog" style="color: var(--primary);"></i>
+            <span>Danh Sách Thành Viên &amp; Quản Lý Số Dư</span>
+          </div>
+          <div class="admin-table-container">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Tài khoản</th>
+                  <th>Họ tên</th>
+                  <th>Email</th>
+                  <th>Số dư ví</th>
+                  <th>Tổng nạp</th>
+                  <th>Cấp bậc</th>
+                  <th>Cộng / Trừ tiền</th>
+                </tr>
+              </thead>
+              <tbody id="adminUsersTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 4: ORDERS -->
+      <div id="adminTab_orders" style="display: none;">
+        <div class="admin-card-section">
+          <div class="admin-section-header">
+            <i class="fas fa-boxes" style="color: var(--primary);"></i>
+            <span>Tất Cả Đơn Hàng Trên Hệ Thống</span>
+          </div>
+          <div class="admin-table-container">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Mã đơn</th>
+                  <th>Khách hàng</th>
+                  <th>Dịch vụ</th>
+                  <th>Link / Target</th>
+                  <th>Số lượng</th>
+                  <th>Tổng tiền</th>
+                  <th>Trạng thái</th>
+                  <th>Thời gian</th>
+                  <th>Xử lý</th>
+                </tr>
+              </thead>
+              <tbody id="adminOrdersTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 5: WEBSITE SETTINGS & BANK -->
+      <div id="adminTab_settings" style="display: none;">
+        <div class="admin-card-section">
+          <div class="admin-section-header">
+            <i class="fas fa-university" style="color: #0284c7;"></i>
+            <span>Cấu Hình Thông Tin Ngân Hàng Nạp Tiền (VietQR)</span>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px;">
+            <div class="form-group">
+              <label>Tên Ngân hàng:</label>
+              <input type="text" id="adminBankName" class="form-control" placeholder="MBBank (Quân Đội)">
+            </div>
+            <div class="form-group">
+              <label>Mã Ngân hàng (VietQR code):</label>
+              <input type="text" id="adminBankCode" class="form-control" placeholder="MB">
+            </div>
+            <div class="form-group">
+              <label>Số Tài Khoản:</label>
+              <input type="text" id="adminBankAcc" class="form-control" placeholder="0987654321">
+            </div>
+            <div class="form-group">
+              <label>Tên Chủ Tài Khoản:</label>
+              <input type="text" id="adminBankOwner" class="form-control" placeholder="LUONG DANG KHOA">
+            </div>
+          </div>
+        </div>
+
+        <div class="admin-card-section">
+          <div class="admin-section-header">
+            <i class="fas fa-headset" style="color: #10b981;"></i>
+            <span>Thông Tin Liên Hệ &amp; Hỗ Trợ Admin</span>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px;">
+            <div class="form-group">
+              <label>Số điện thoại Zalo Admin:</label>
+              <input type="text" id="adminZalo" class="form-control" placeholder="0987654321">
+            </div>
+            <div class="form-group">
+              <label>Username Telegram:</label>
+              <input type="text" id="adminTelegram" class="form-control" placeholder="khoasmm">
+            </div>
+          </div>
+        </div>
+
+        <div class="admin-card-section">
+          <div class="admin-section-header">
+            <i class="fas fa-bullhorn" style="color: #f59e0b;"></i>
+            <span>Thông Báo Chạy Chữ Đầu Trang Web</span>
+          </div>
+          <div class="form-group">
+            <label>Nội dung chạy chữ thông báo:</label>
+            <input type="text" id="adminAnnouncement" class="form-control" placeholder="Chào mừng quý khách đến với KHOASMM.COM - Tăng tương tác MXH tự động 24/7.">
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 14px;">
+          <button class="btn-deposit-quick" style="padding: 12px 24px; font-size: 14px;" onclick="adminSaveGlobalSettings()">
+            <i class="fas fa-save"></i> Lưu Tất Cả Cài Đặt Website
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL: CÀI ĐẶT HỆ THỐNG & KẾT NỐI API
        ========================================================================== -->
   <div class="modal-overlay" id="modalSettings">
     <div class="modal-window">
       <div class="modal-header">
         <div class="modal-title">
-          <i class="fas fa-sliders-h" style="color: var(--primary);"></i>
-          <span>Cài Đặt Giao Diện Hệ Thống</span>
+          <i class="fas fa-cog" style="color: #64748b;"></i>
+          <span>Trạng Thái Hệ Thống &amp; Nhà Cung Cấp</span>
         </div>
         <button class="btn-modal-close" onclick="closeModal('modalSettings')">
           <i class="fas fa-times"></i>
         </button>
       </div>
-
       <div class="modal-body">
-        <div style="display: flex; flex-direction: column; gap: 16px;">
+        <div style="display: flex; flex-direction: column; gap: 14px;">
           <div>
-            <div style="font-size: 14px; font-weight: 700; margin-bottom: 8px;">Chế độ màu nền:</div>
-            <div style="display: flex; gap: 10px;">
-              <button class="section-tab-btn" onclick="applyTheme('light'); showToast('Đã chọn giao diện Vàng Kem (Chuẩn BaoStar)', 'info');">
-                <i class="fas fa-sun" style="color: #f59e0b;"></i> Sáng (Vàng kem)
-              </button>
-              <button class="section-tab-btn" onclick="applyTheme('dark'); showToast('Đã chọn giao diện Đêm (Cyber Slate)', 'info');">
-                <i class="fas fa-moon" style="color: #38bdf8;"></i> Tối (Dark mode)
-              </button>
-            </div>
+            <div style="font-size: 14px; font-weight: 700; margin-bottom: 6px;">Nhà cung cấp dịch vụ gốc:</div>
+            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+              Hệ thống kết nối trực tiếp với cổng <strong>BaoStar API v2</strong>.<br>
+              Khách đặt hàng sẽ được chuyển tự động tới BaoStar để xử lý tức thì.
+            </p>
           </div>
 
           <div style="border-top: 1px dashed var(--border-color); padding-top: 14px;">
@@ -3267,8 +3790,8 @@ const BANK_CONFIG = {
   </script>
   <script>
 /**
- * KHOASMM.COM - Core Application Logic with Multi-User Authentication
- * Integrated with backend database and BaoStar API
+ * KHOASMM.COM - Core Application Logic with Multi-User Authentication & Admin Panel
+ * Integrated with 20% Profit Margin Calculator, Database & BaoStar API
  */
 
 // Application State
@@ -3283,6 +3806,11 @@ let state = {
   activeMainTab: "order_create",
   orderFilter: "all",
   searchKeyword: "",
+  
+  // Profit Margin & Settings (Default 20% profit margin)
+  profitMargin: 20,
+  customPrices: {},
+  bankConfig: { ...BANK_CONFIG },
   
   // User Authentication State
   user: { ...GUEST_USER },
@@ -3299,19 +3827,73 @@ let state = {
 document.addEventListener("DOMContentLoaded", async () => {
   applyTheme(state.theme);
   initPlatformNavbar();
-  renderCurrentService();
   initEventListeners();
+  
+  // 1. Load System Settings & 20% Margin
+  await loadSystemSettings();
+
+  // 2. Render Services with 20% Margin applied
+  renderCurrentService();
   updateDepositModal();
   
-  // Check User Authentication first
+  // 3. Check User Authentication
   await initAuthState();
   
-  // Check BaoStar API connection status
+  // 4. Check BaoStar API connection status
   checkBaoStarApiStatus();
 });
 
 // ==========================================================================
-// AUTHENTICATION SYSTEM (Guest vs Logged-In User)
+// SYSTEM SETTINGS & PROFIT MARGIN (+20% MARKUP)
+// ==========================================================================
+async function loadSystemSettings() {
+  try {
+    const res = await fetch('/api/public/settings');
+    const data = await res.json();
+    if (data) {
+      state.profitMargin = parseFloat(data.profitMargin) || 20;
+      state.customPrices = data.customPrices || {};
+      if (data.bankName) state.bankConfig.bankName = data.bankName;
+      if (data.accountNumber) state.bankConfig.accountNumber = data.accountNumber;
+      if (data.bankCode) state.bankConfig.bankCode = data.bankCode;
+      if (data.zalo) state.bankConfig.zalo = data.zalo;
+      if (data.telegram) state.bankConfig.telegram = data.telegram;
+      if (data.announcement) {
+        state.announcement = data.announcement;
+        const ticker = document.getElementById("announcementTickerText");
+        if (ticker) ticker.textContent = data.announcement;
+      }
+    }
+  } catch (e) {
+    console.warn('Could not load server settings, using defaults (20% margin):', e);
+  }
+
+  // Recalculate all service prices with +20% margin
+  applyProfitMargin();
+}
+
+function applyProfitMargin() {
+  const margin = state.profitMargin || 20;
+  for (const pKey in SERVICES_DATA) {
+    SERVICES_DATA[pKey].categories.forEach(cat => {
+      cat.servers.forEach(srv => {
+        // Save base wholesale price
+        if (srv.basePrice === undefined) {
+          srv.basePrice = srv.price;
+        }
+        // If custom price set by Admin, use it; else apply +20% markup
+        if (state.customPrices && state.customPrices[srv.id]) {
+          srv.price = parseFloat(state.customPrices[srv.id]);
+        } else {
+          srv.price = Number((srv.basePrice * (1 + margin / 100)).toFixed(2));
+        }
+      });
+    });
+  }
+}
+
+// ==========================================================================
+// AUTHENTICATION SYSTEM (Guest vs Logged-In User vs Admin)
 // ==========================================================================
 async function initAuthState() {
   const token = localStorage.getItem("khoasmm_token");
@@ -3349,13 +3931,13 @@ function setGuestState() {
 }
 
 function renderGuestUI() {
-  // Header: Show Login / Register buttons
   const authGuest = document.getElementById("headerAuthGuest");
   const authUser = document.getElementById("headerAuthUser");
+  const adminBtn = document.getElementById("headerAdminBtn");
   if (authGuest) authGuest.style.display = "flex";
   if (authUser) authUser.style.display = "none";
+  if (adminBtn) adminBtn.style.display = "none";
 
-  // Sidebar: Show Guest Card, Hide User Card
   const sidebarGuest = document.getElementById("sidebarGuestCard");
   const sidebarUser = document.getElementById("sidebarUserCard");
   if (sidebarGuest) sidebarGuest.style.display = "block";
@@ -3366,24 +3948,28 @@ function renderGuestUI() {
 }
 
 function renderAuthenticatedUI() {
-  // Header: Hide Guest, Show User Balance & Info
   const authGuest = document.getElementById("headerAuthGuest");
   const authUser = document.getElementById("headerAuthUser");
+  const adminBtn = document.getElementById("headerAdminBtn");
+
   if (authGuest) authGuest.style.display = "none";
   if (authUser) authUser.style.display = "flex";
+
+  // If Admin, show Admin Control Panel button
+  if (adminBtn) {
+    adminBtn.style.display = (state.user.role === 'Admin') ? "flex" : "none";
+  }
 
   const balanceHeader = document.getElementById("headerBalanceAmount");
   if (balanceHeader) {
     balanceHeader.textContent = `${(state.user.balance || 0).toLocaleString('vi-VN')} đ`;
   }
 
-  // Sidebar: Show User Card, Hide Guest Card
   const sidebarGuest = document.getElementById("sidebarGuestCard");
   const sidebarUser = document.getElementById("sidebarUserCard");
   if (sidebarGuest) sidebarGuest.style.display = "none";
   if (sidebarUser) sidebarUser.style.display = "block";
 
-  // Fill in User Card Details
   document.getElementById("cardUserName").textContent = state.user.name || state.user.username;
   document.getElementById("cardUserRank").textContent = state.user.role || "Thành viên";
   document.getElementById("cardUserBalance").textContent = `${(state.user.balance || 0).toLocaleString('vi-VN')} đ`;
@@ -3396,7 +3982,6 @@ function renderAuthenticatedUI() {
     nextTier.textContent = `${state.user.role} ${(state.user.totalDeposit || 0).toLocaleString('vi-VN')}/10,000,000 đ`;
   }
 
-  // Dynamic VietQR Memo Syntax
   updateDepositModal();
   calculateTotalPrice();
 }
@@ -3510,7 +4095,6 @@ function handleLogout() {
   showToast("Đã đăng xuất khỏi tài khoản!", "info");
 }
 
-// Load Orders for Current User
 async function loadUserOrders() {
   if (!state.token) return;
   try {
@@ -3528,7 +4112,423 @@ async function loadUserOrders() {
 }
 
 // ==========================================================================
-// CHECK BAOSTAR API STATUS (For Admin Indicator)
+// ADMIN CONTROL PANEL LOGIC (Full Management)
+// ==========================================================================
+function openAdminPanel() {
+  if (!state.user || state.user.role !== 'Admin') {
+    showToast("Chỉ Admin mới có quyền truy cập bảng quản trị!", "error");
+    return;
+  }
+  loadAdminOverview();
+  openModal("modalAdminPanel");
+}
+
+function switchAdminTab(tab) {
+  document.querySelectorAll(".admin-nav-tab").forEach(t => {
+    t.classList.toggle("active", t.getAttribute("data-tab") === tab);
+  });
+
+  const tabs = ['overview', 'users', 'pricing', 'orders', 'settings'];
+  tabs.forEach(t => {
+    const el = document.getElementById(`adminTab_${t}`);
+    if (el) el.style.display = (t === tab) ? "block" : "none";
+  });
+
+  if (tab === 'pricing') renderAdminPricingTable();
+}
+
+async function loadAdminOverview() {
+  if (!state.token) return;
+
+  try {
+    const res = await fetch('/api/admin/overview', {
+      headers: { 'X-User-Token': state.token }
+    });
+    const data = await res.json();
+
+    if (data.status === 'success') {
+      // 1. Stats
+      const statUsers = document.getElementById("adminStatUsers");
+      const statOrders = document.getElementById("adminStatOrders");
+      const statRev = document.getElementById("adminStatRevenue");
+      if (statUsers) statUsers.textContent = data.totalUsers || 0;
+      if (statOrders) statOrders.textContent = data.totalOrders || 0;
+      if (statRev) statRev.textContent = `${(data.totalRevenue || 0).toLocaleString('vi-VN')} đ`;
+
+      // 2. Settings fields
+      const marginInput = document.getElementById("adminProfitMarginInput");
+      if (marginInput) marginInput.value = data.settings.profitMargin || 20;
+
+      const bankNameEl = document.getElementById("adminBankName");
+      const bankCodeEl = document.getElementById("adminBankCode");
+      const bankAccEl = document.getElementById("adminBankAcc");
+      const bankOwnerEl = document.getElementById("adminBankOwner");
+      const zaloEl = document.getElementById("adminZalo");
+      const teleEl = document.getElementById("adminTelegram");
+      const announceEl = document.getElementById("adminAnnouncement");
+
+      if (bankNameEl) bankNameEl.value = data.settings.bankName || "";
+      if (bankCodeEl) bankCodeEl.value = data.settings.bankCode || "MB";
+      if (bankAccEl) bankAccEl.value = data.settings.accountNumber || "";
+      if (bankOwnerEl) bankOwnerEl.value = data.settings.accountName || "";
+      if (zaloEl) zaloEl.value = data.settings.zalo || "";
+      if (teleEl) teleEl.value = data.settings.telegram || "";
+      if (announceEl) announceEl.value = data.settings.announcement || "";
+
+      // 3. Render Users Table
+      renderAdminUsersTable(data.users || []);
+
+      // 4. Render Orders Table
+      renderAdminOrdersTable(data.orders || []);
+    }
+  } catch (err) {
+    console.error('Error loading admin overview:', err);
+  }
+}
+
+function renderAdminUsersTable(users) {
+  const tbody = document.getElementById("adminUsersTableBody");
+  if (!tbody) return;
+
+  let html = "";
+  users.forEach(u => {
+    html += `
+      <tr>
+        <td style="font-weight: 700; font-family: monospace;">${u.username}</td>
+        <td>${u.name || u.username}</td>
+        <td style="font-size: 11px;">${u.email}</td>
+        <td style="font-family: 'Outfit'; font-weight: 700; color: #059669;">${(u.balance || 0).toLocaleString('vi-VN')} đ</td>
+        <td style="font-size: 12px;">${(u.totalDeposit || 0).toLocaleString('vi-VN')} đ</td>
+        <td>
+          <select class="admin-role-select" onchange="adminChangeRole('${u.username}', this.value)" style="padding: 3px 6px; font-size: 11.5px; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-card); font-weight: 700;">
+            <option value="Thành viên" ${u.role === 'Thành viên' ? 'selected' : ''}>Thành viên</option>
+            <option value="Đại lý" ${u.role === 'Đại lý' ? 'selected' : ''}>Đại lý</option>
+            <option value="Nhà phân phối" ${u.role === 'Nhà phân phối' ? 'selected' : ''}>Nhà phân phối</option>
+            <option value="Admin" ${u.role === 'Admin' ? 'selected' : ''}>Admin</option>
+          </select>
+        </td>
+        <td>
+          <div style="display: flex; gap: 4px;">
+            <button class="admin-action-btn btn-add-money" onclick="adminPromptBalance('${u.username}', 'add')"><i class="fas fa-plus"></i> Cộng tiền</button>
+            <button class="admin-action-btn btn-deduct-money" onclick="adminPromptBalance('${u.username}', 'deduct')"><i class="fas fa-minus"></i> Trừ</button>
+          </div>
+        </td>
+      </tr>
+    `;
+  });
+  tbody.innerHTML = html;
+}
+
+function renderAdminOrdersTable(orders) {
+  const tbody = document.getElementById("adminOrdersTableBody");
+  if (!tbody) return;
+
+  let html = "";
+  orders.forEach(o => {
+    const isCompleted = o.status === 'completed';
+    const isCancelled = o.status === 'cancelled';
+    const statusClass = isCompleted ? 'badge-hot' : (isCancelled ? 'badge-custom' : 'badge-primary');
+
+    html += `
+      <tr>
+        <td style="font-family: monospace; font-weight: 700;">${o.id}</td>
+        <td><strong>${o.username}</strong></td>
+        <td>${o.serviceName}</td>
+        <td style="max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><a href="${o.target}" target="_blank" style="color: var(--primary); font-size: 11px;">${o.target}</a></td>
+        <td style="font-weight: 700;">${(o.quantity || 0).toLocaleString('vi-VN')}</td>
+        <td style="font-family: 'Outfit'; font-weight: 700; color: #ef4444;">${(o.price || 0).toLocaleString('vi-VN')} đ</td>
+        <td><span class="server-badge ${statusClass}">${o.statusText}</span></td>
+        <td style="font-size: 11px;">${o.createdAt}</td>
+        <td>
+          <div style="display: flex; gap: 4px;">
+            ${!isCompleted ? `<button class="admin-action-btn btn-add-money" onclick="adminChangeOrderStatus('${o.id}', 'completed', false)" title="Đánh dấu hoàn thành"><i class="fas fa-check"></i> Xong</button>` : ''}
+            ${!isCancelled ? `<button class="admin-action-btn btn-deduct-money" onclick="adminChangeOrderStatus('${o.id}', 'cancelled', true)" title="Hủy & hoàn tiền cho khách"><i class="fas fa-undo"></i> Hủy & Hoàn</button>` : ''}
+          </div>
+        </td>
+      </tr>
+    `;
+  });
+  tbody.innerHTML = html || `<tr><td colspan="9" style="text-align: center; padding: 20px; color: var(--text-muted);">Chưa có đơn hàng nào</td></tr>`;
+}
+
+function renderAdminPricingTable(searchQuery = "") {
+  const tbody = document.getElementById("adminPricingTableBody");
+  if (!tbody) return;
+
+  const currentMargin = state.profitMargin || 20;
+  let html = "";
+  const q = (searchQuery || "").toLowerCase().trim();
+
+  for (const pKey in SERVICES_DATA) {
+    SERVICES_DATA[pKey].categories.forEach(cat => {
+      cat.servers.forEach(srv => {
+        if (q && !cat.name.toLowerCase().includes(q) && !srv.name.toLowerCase().includes(q)) {
+          return;
+        }
+
+        const base = srv.basePrice || srv.price;
+        const currentPrice = srv.price;
+        const isCustom = state.customPrices && state.customPrices[srv.id] !== undefined;
+
+        html += `
+          <tr>
+            <td><strong style="color: var(--text-main);">${cat.name}</strong></td>
+            <td>${srv.name}</td>
+            <td style="font-family: monospace; font-size: 11.5px; color: var(--text-muted);">${base.toLocaleString('vi-VN')} đ</td>
+            <td>
+              <span class="admin-profit-badge">+${currentMargin}% Lãi</span>
+              <span style="font-family: 'Outfit'; font-weight: 700; color: #ef4444; margin-left: 6px;">${currentPrice.toLocaleString('vi-VN')} đ</span>
+              ${isCustom ? '<span style="font-size: 10px; color: #f59e0b; margin-left: 4px;">(Giá riêng)</span>' : ''}
+            </td>
+            <td>
+              <input type="number" id="customPrice_${srv.id}" style="width: 100px; padding: 4px 8px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 12px;" placeholder="${currentPrice}" step="0.1">
+            </td>
+            <td>
+              <div style="display: flex; gap: 4px;">
+                <button class="admin-action-btn btn-add-money" onclick="adminSaveSinglePrice('${srv.id}')"><i class="fas fa-save"></i> Lưu</button>
+                ${isCustom ? `<button class="admin-action-btn btn-deduct-money" onclick="adminResetSinglePrice('${srv.id}')" title="Xóa giá riêng, quay về tỷ lệ +${currentMargin}%"><i class="fas fa-times"></i> Xóa</button>` : ''}
+              </div>
+            </td>
+          </tr>
+        `;
+      });
+    });
+  }
+
+  tbody.innerHTML = html || `<tr><td colspan="6" style="text-align: center; padding: 20px;">Không tìm thấy dịch vụ phù hợp</td></tr>`;
+}
+
+function adminFilterPricingTable() {
+  const input = document.getElementById("adminPricingSearch");
+  const val = input ? input.value : "";
+  renderAdminPricingTable(val);
+}
+
+async function adminSaveSinglePrice(serverId) {
+  const input = document.getElementById(`customPrice_${serverId}`);
+  const val = parseFloat(input ? input.value : 0);
+  if (!val || val <= 0) {
+    showToast("Vui lòng nhập giá bán hợp lệ!", "error");
+    return;
+  }
+
+  const customPrices = {};
+  customPrices[serverId] = val;
+
+  try {
+    const res = await fetch('/api/admin/settings', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-User-Token': state.token
+      },
+      body: JSON.stringify({ customPrices })
+    });
+    const data = await res.json();
+    if (data.status === 'success') {
+      state.customPrices[serverId] = val;
+      applyProfitMargin();
+      renderCurrentService();
+      renderAdminPricingTable();
+      showToast(`Đã lưu giá riêng cho máy chủ: ${val} đ`, "success");
+    }
+  } catch (err) {
+    showToast("Lỗi khi lưu giá!", "error");
+  }
+}
+
+async function adminResetSinglePrice(serverId) {
+  if (!confirm("Bạn có chắc muốn xóa giá riêng này để trở về tỷ lệ lãi chung (+20%)?")) return;
+
+  const customPrices = { ...state.customPrices };
+  delete customPrices[serverId];
+
+  try {
+    const res = await fetch('/api/admin/settings', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-User-Token': state.token
+      },
+      body: JSON.stringify({ customPrices })
+    });
+    const data = await res.json();
+    if (data.status === 'success') {
+      state.customPrices = customPrices;
+      applyProfitMargin();
+      renderCurrentService();
+      renderAdminPricingTable();
+      showToast(`Đã khôi phục về giá chênh lệch mặc định!`, "success");
+    }
+  } catch (err) {
+    showToast("Lỗi kết nối máy chủ!", "error");
+  }
+}
+
+async function adminSaveGlobalMargin() {
+  const marginInput = document.getElementById("adminProfitMarginInput");
+  const margin = parseFloat(marginInput ? marginInput.value : 20) || 20;
+
+  try {
+    const res = await fetch('/api/admin/settings', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-User-Token': state.token
+      },
+      body: JSON.stringify({ profitMargin: margin })
+    });
+    const data = await res.json();
+    if (data.status === 'success') {
+      state.profitMargin = margin;
+      applyProfitMargin();
+      renderCurrentService();
+      renderAdminPricingTable();
+      showToast(`Đã cập nhật tỷ lệ chênh lệch toàn hệ thống: +${margin}% thành công!`, "success");
+    }
+  } catch (err) {
+    showToast("Lỗi lưu tỷ lệ chênh lệch!", "error");
+  }
+}
+
+async function adminPromptBalance(username, action) {
+  const text = action === 'add' ? 'cộng thêm vào' : 'trừ bớt khỏi';
+  const amountStr = prompt(`Nhập số tiền muốn ${text} tài khoản [${username}] (VNĐ):`, "100000");
+  if (!amountStr) return;
+
+  const amount = parseInt(amountStr);
+  if (isNaN(amount) || amount <= 0) {
+    alert("Số tiền không hợp lệ!");
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/admin/user/balance', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-User-Token': state.token
+      },
+      body: JSON.stringify({ targetUsername: username, action, amount })
+    });
+    const data = await res.json();
+    if (data.status === 'success') {
+      showToast(data.message, "success");
+      loadAdminOverview();
+    } else {
+      showToast(data.error || "Không thể thực hiện!", "error");
+    }
+  } catch (err) {
+    showToast("Lỗi kết nối máy chủ!", "error");
+  }
+}
+
+async function adminChangeRole(username, newRole) {
+  try {
+    const res = await fetch('/api/admin/user/role', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-User-Token': state.token
+      },
+      body: JSON.stringify({ targetUsername: username, role: newRole })
+    });
+    const data = await res.json();
+    if (data.status === 'success') {
+      showToast(data.message, "success");
+      loadAdminOverview();
+    } else {
+      showToast(data.error || "Không thể đổi cấp bậc!", "error");
+    }
+  } catch (err) {
+    showToast("Lỗi kết nối máy chủ!", "error");
+  }
+}
+
+async function adminChangeOrderStatus(orderId, newStatus, refund) {
+  const confirmMsg = refund 
+    ? `Bạn có chắc muốn HỦY đơn ${orderId} và HOÀN TIỀN lại cho khách hàng?`
+    : `Xác nhận đánh dấu đơn hàng ${orderId} đã HOÀN THÀNH?`;
+  if (!confirm(confirmMsg)) return;
+
+  try {
+    const res = await fetch('/api/admin/order/status', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-User-Token': state.token
+      },
+      body: JSON.stringify({ orderId, newStatus, refund })
+    });
+    const data = await res.json();
+    if (data.status === 'success') {
+      showToast(data.message, "success");
+      loadAdminOverview();
+    } else {
+      showToast(data.error || "Không thể cập nhật đơn hàng!", "error");
+    }
+  } catch (err) {
+    showToast("Lỗi kết nối máy chủ!", "error");
+  }
+}
+
+async function adminSaveGlobalSettings() {
+  const marginInput = document.getElementById("adminProfitMarginInput");
+  const margin = parseFloat(marginInput ? marginInput.value : 20) || 20;
+
+  const bankName = (document.getElementById("adminBankName")?.value || "").trim();
+  const bankCode = (document.getElementById("adminBankCode")?.value || "MB").trim();
+  const accountNumber = (document.getElementById("adminBankAcc")?.value || "").trim();
+  const accountName = (document.getElementById("adminBankOwner")?.value || "").trim();
+  const zalo = (document.getElementById("adminZalo")?.value || "").trim();
+  const telegram = (document.getElementById("adminTelegram")?.value || "").trim();
+  const announcement = (document.getElementById("adminAnnouncement")?.value || "").trim();
+
+  try {
+    const res = await fetch('/api/admin/settings', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-User-Token': state.token
+      },
+      body: JSON.stringify({
+        profitMargin: margin,
+        bankName,
+        bankCode,
+        accountNumber,
+        accountName,
+        zalo,
+        telegram,
+        announcement
+      })
+    });
+    const data = await res.json();
+
+    if (data.status === 'success') {
+      state.profitMargin = margin;
+      state.bankConfig.bankName = bankName;
+      state.bankConfig.bankCode = bankCode;
+      state.bankConfig.accountNumber = accountNumber;
+      state.bankConfig.accountName = accountName;
+      state.bankConfig.zalo = zalo;
+      state.bankConfig.telegram = telegram;
+      state.announcement = announcement;
+
+      const ticker = document.getElementById("announcementTickerText");
+      if (ticker && announcement) ticker.textContent = announcement;
+
+      applyProfitMargin();
+      renderCurrentService();
+      updateDepositModal();
+      showToast(`Đã lưu toàn bộ thiết lập hệ thống & thông tin ngân hàng!`, "success");
+    }
+  } catch (err) {
+    showToast("Lỗi khi lưu cài đặt!", "error");
+  }
+}
+
+// ==========================================================================
+// CHECK BAOSTAR API STATUS
 // ==========================================================================
 async function checkBaoStarApiStatus() {
   const pill = document.getElementById("baostarBalanceLive");
@@ -3539,6 +4539,8 @@ async function checkBaoStarApiStatus() {
     const data = await res.json();
     if (data && data.balance !== undefined) {
       pill.textContent = `${data.balance} ${data.currency || 'USD'} (Sẵn sàng)`;
+      const adminBao = document.getElementById("adminBaoStarBalance");
+      if (adminBao) adminBao.textContent = `${data.balance} ${data.currency}`;
     } else {
       pill.textContent = "Offline";
     }
@@ -3548,7 +4550,7 @@ async function checkBaoStarApiStatus() {
 }
 
 // ==========================================================================
-// NAVIGATION & SERVICES RENDERING
+// SERVICES RENDERING & NAVIGATION
 // ==========================================================================
 function initPlatformNavbar() {
   const container = document.getElementById("platformNavContainer");
@@ -3763,7 +4765,7 @@ function renderServerSpecCard(srv) {
 }
 
 // ==========================================================================
-// PRICE CALCULATION & SUBMIT ORDER TO SERVER
+// PRICE CALCULATION & ORDER SUBMISSION
 // ==========================================================================
 function calculateTotalPrice() {
   if (!state.currentServer) return;
@@ -3826,9 +4828,7 @@ function setAbsoluteQuantity(qty) {
   calculateTotalPrice();
 }
 
-// SUBMIT ORDER (Requires Login)
 async function submitOrder() {
-  // If guest, require login
   if (!state.user || state.user.isGuest || !state.token) {
     showToast("Vui lòng đăng nhập hoặc đăng ký tài khoản để tạo đơn hàng!", "error");
     openAuthModal("login");
@@ -3862,7 +4862,6 @@ async function submitOrder() {
   const discountAmount = (rawTotal * (state.user.discountPercent || 0)) / 100;
   const finalTotal = Math.round(rawTotal - discountAmount);
 
-  // Check balance
   if ((state.user.balance || 0) < finalTotal) {
     const shortage = finalTotal - (state.user.balance || 0);
     showToast(`Số dư không đủ! Bạn cần nạp thêm ${shortage.toLocaleString('vi-VN')} đ. Đang mở nạp tiền...`, "error");
@@ -4011,9 +5010,6 @@ function copyOrderDetails(orderId) {
   });
 }
 
-// ==========================================================================
-// TABS SWITCHER
-// ==========================================================================
 function switchMainTab(tabId) {
   state.activeMainTab = tabId;
 
@@ -4055,25 +5051,24 @@ function updateDepositModal() {
   const amountInput = document.getElementById("depositAmountInput");
   const amount = parseInt(amountInput ? amountInput.value : 50000) || 50000;
   
-  // Syntax per user: KHOASMM <username>
   const username = (state.user && !state.user.isGuest) ? state.user.username : "khoa";
-  const memoCode = `${BANK_CONFIG.syntaxPrefix} ${username}`;
+  const memoCode = `${state.bankConfig.syntaxPrefix || 'KHOASMM'} ${username}`;
 
   const bankNameEl = document.getElementById("depositBankName");
   const bankAccEl = document.getElementById("depositBankAcc");
   const bankOwnerEl = document.getElementById("depositBankOwner");
   const memoEl = document.getElementById("depositMemo");
 
-  if (bankNameEl) bankNameEl.textContent = BANK_CONFIG.bankName;
-  if (bankAccEl) bankAccEl.textContent = BANK_CONFIG.accountNumber;
-  if (bankOwnerEl) bankOwnerEl.textContent = BANK_CONFIG.accountName;
+  if (bankNameEl) bankNameEl.textContent = state.bankConfig.bankName;
+  if (bankAccEl) bankAccEl.textContent = state.bankConfig.accountNumber;
+  if (bankOwnerEl) bankOwnerEl.textContent = state.bankConfig.accountName;
   if (memoEl) memoEl.textContent = memoCode;
 
   const qrImg = document.getElementById("vietQrImage");
   if (qrImg) {
     const encodedMemo = encodeURIComponent(memoCode);
-    const encodedOwner = encodeURIComponent(BANK_CONFIG.accountName);
-    qrImg.src = `https://img.vietqr.io/image/${BANK_CONFIG.bankCode}-${BANK_CONFIG.accountNumber}-compact2.png?amount=${amount}&addInfo=${encodedMemo}&accountName=${encodedOwner}`;
+    const encodedOwner = encodeURIComponent(state.bankConfig.accountName);
+    qrImg.src = `https://img.vietqr.io/image/${state.bankConfig.bankCode || 'MB'}-${state.bankConfig.accountNumber}-compact2.png?amount=${amount}&addInfo=${encodedMemo}&accountName=${encodedOwner}`;
   }
 }
 

@@ -1,6 +1,6 @@
 /**
  * KHOASMM.COM - Node.js Server & BaoStar API Gateway
- * Integrated Multi-User Authentication & Database System
+ * Multi-User System + Full Admin Control Panel + 20% Profit Margin System
  */
 
 const http = require('http');
@@ -21,7 +21,7 @@ const BAOSTAR_CONFIG = {
 };
 
 // =========================================================================
-// SIMPLE JSON DATABASE (Users & Orders)
+// SIMPLE JSON DATABASE (Users, Orders, System Settings)
 // =========================================================================
 function loadDb() {
   try {
@@ -40,16 +40,42 @@ function loadDb() {
           }
         },
         orders: [],
-        sessions: {}
+        sessions: {},
+        settings: {
+          profitMargin: 20, // 20% PROFIT MARGIN OVER BAOSTAR BASE PRICE
+          bankName: "MBBank (Quân Đội)",
+          bankCode: "MB",
+          accountNumber: "0987654321",
+          accountName: "LUONG DANG KHOA",
+          zalo: "0987654321",
+          telegram: "khoasmm",
+          announcement: "Chào mừng quý khách đến với KHOASMM.COM - Hệ thống tăng tương tác MXH uy tín tự động 24/7.",
+          customPrices: {} // serverId -> customPrice (vnd)
+        }
       };
       fs.writeFileSync(DB_FILE, JSON.stringify(initialDb, null, 2), 'utf8');
       return initialDb;
     }
     const data = fs.readFileSync(DB_FILE, 'utf8');
-    return JSON.parse(data);
+    const parsed = JSON.parse(data);
+    if (!parsed.settings) {
+      parsed.settings = {
+        profitMargin: 20,
+        bankName: "MBBank (Quân Đội)",
+        bankCode: "MB",
+        accountNumber: "0987654321",
+        accountName: "LUONG DANG KHOA",
+        zalo: "0987654321",
+        telegram: "khoasmm",
+        announcement: "Chào mừng quý khách đến với KHOASMM.COM",
+        customPrices: {}
+      };
+      saveDb(parsed);
+    }
+    return parsed;
   } catch (e) {
     console.error('Error loading DB:', e);
-    return { users: {}, orders: [], sessions: {} };
+    return { users: {}, orders: [], sessions: {}, settings: { profitMargin: 20, customPrices: {} } };
   }
 }
 
@@ -131,7 +157,6 @@ const server = http.createServer(async (req, res) => {
 
   const url = req.url.split('?')[0];
 
-  // Helper to read JSON body
   const readJsonBody = () => new Promise(resolve => {
     let body = '';
     req.on('data', chunk => body += chunk);
@@ -141,7 +166,6 @@ const server = http.createServer(async (req, res) => {
     });
   });
 
-  // Helper to get authenticated user
   const getAuthUser = () => {
     const token = req.headers['x-user-token'] || req.headers['authorization'];
     if (!token) return null;
@@ -155,10 +179,31 @@ const server = http.createServer(async (req, res) => {
   };
 
   // =========================================================================
+  // PUBLIC & SETTINGS APIS
+  // =========================================================================
+
+  // Public Settings & Margin Info
+  if (url === '/api/public/settings' && req.method === 'GET') {
+    const db = loadDb();
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({
+      profitMargin: db.settings.profitMargin || 20,
+      bankName: db.settings.bankName,
+      bankCode: db.settings.bankCode,
+      accountNumber: db.settings.accountNumber,
+      accountName: db.settings.accountName,
+      zalo: db.settings.zalo,
+      telegram: db.settings.telegram,
+      announcement: db.settings.announcement,
+      customPrices: db.settings.customPrices || {}
+    }));
+    return;
+  }
+
+  // =========================================================================
   // AUTHENTICATION APIS (Register, Login, Me, Logout)
   // =========================================================================
 
-  // 1. REGISTER: POST /api/auth/register
   if (url === '/api/auth/register' && req.method === 'POST') {
     const body = await readJsonBody();
     const { username, email, password, name } = body;
@@ -183,7 +228,7 @@ const server = http.createServer(async (req, res) => {
       name: name || cleanUsername,
       email: email || `${cleanUsername}@gmail.com`,
       passwordHash: hashPassword(password),
-      balance: 0, // NEW USERS START AT 0 VND!
+      balance: 0,
       totalDeposit: 0,
       role: 'Thành viên',
       createdAt: new Date().toISOString().replace('T', ' ').substring(0, 19)
@@ -202,7 +247,6 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // 2. LOGIN: POST /api/auth/login
   if (url === '/api/auth/login' && req.method === 'POST') {
     const body = await readJsonBody();
     const { username, password } = body;
@@ -235,7 +279,6 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // 3. GET CURRENT USER PROFILE: GET /api/auth/me
   if (url === '/api/auth/me' && req.method === 'GET') {
     const user = getAuthUser();
     if (!user) {
@@ -250,7 +293,6 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // 4. USER DEPOSIT (Simulator / Admin Add Money): POST /api/user/deposit
   if (url === '/api/user/deposit' && req.method === 'POST') {
     const user = getAuthUser();
     if (!user) {
@@ -277,10 +319,188 @@ const server = http.createServer(async (req, res) => {
   }
 
   // =========================================================================
+  // ADMIN CONTROL PANEL APIS (Protected: Admin Only)
+  // =========================================================================
+
+  // 1. ADMIN STATS & OVERVIEW: GET /api/admin/overview
+  if (url === '/api/admin/overview' && req.method === 'GET') {
+    const user = getAuthUser();
+    if (!user || user.role !== 'Admin') {
+      res.writeHead(403, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Quyền truy cập bị từ chối! Chỉ dành cho Admin.' }));
+      return;
+    }
+
+    const db = loadDb();
+    const usersList = Object.values(db.users).map(u => {
+      const safe = { ...u };
+      delete safe.passwordHash;
+      return safe;
+    });
+
+    let totalRevenue = 0;
+    db.orders.forEach(o => { totalRevenue += (o.price || 0); });
+
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({
+      status: 'success',
+      totalUsers: usersList.length,
+      totalOrders: db.orders.length,
+      totalRevenue: totalRevenue,
+      settings: db.settings,
+      users: usersList,
+      orders: db.orders.slice(0, 50)
+    }));
+    return;
+  }
+
+  // 2. ADMIN ADJUST USER BALANCE: POST /api/admin/user/balance
+  if (url === '/api/admin/user/balance' && req.method === 'POST') {
+    const user = getAuthUser();
+    if (!user || user.role !== 'Admin') {
+      res.writeHead(403, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Chỉ Admin mới có quyền thực hiện!' }));
+      return;
+    }
+
+    const body = await readJsonBody();
+    const { targetUsername, action, amount } = body;
+    const numAmount = parseInt(amount) || 0;
+
+    const db = loadDb();
+    if (!db.users[targetUsername]) {
+      res.writeHead(404, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Không tìm thấy người dùng này!' }));
+      return;
+    }
+
+    if (action === 'add') {
+      db.users[targetUsername].balance += numAmount;
+      db.users[targetUsername].totalDeposit += numAmount;
+    } else if (action === 'deduct') {
+      db.users[targetUsername].balance = Math.max(0, db.users[targetUsername].balance - numAmount);
+    }
+
+    saveDb(db);
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({
+      status: 'success',
+      message: `Đã ${action === 'add' ? 'cộng' : 'trừ'} ${numAmount.toLocaleString('vi-VN')} đ cho ${targetUsername}!`,
+      newBalance: db.users[targetUsername].balance
+    }));
+    return;
+  }
+
+  // 3. ADMIN UPDATE SETTINGS & PROFIT MARGIN: POST /api/admin/settings
+  if (url === '/api/admin/settings' && req.method === 'POST') {
+    const user = getAuthUser();
+    if (!user || user.role !== 'Admin') {
+      res.writeHead(403, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Chỉ Admin mới có quyền sửa cài đặt!' }));
+      return;
+    }
+
+    const body = await readJsonBody();
+    const db = loadDb();
+
+    if (body.profitMargin !== undefined) {
+      db.settings.profitMargin = parseFloat(body.profitMargin) || 20;
+    }
+    if (body.bankName) db.settings.bankName = body.bankName;
+    if (body.accountNumber) db.settings.accountNumber = body.accountNumber;
+    if (body.accountName) db.settings.accountName = body.accountName;
+    if (body.zalo) db.settings.zalo = body.zalo;
+    if (body.telegram) db.settings.telegram = body.telegram;
+    if (body.announcement) db.settings.announcement = body.announcement;
+
+    if (body.customPrices) {
+      db.settings.customPrices = { ...db.settings.customPrices, ...body.customPrices };
+    }
+
+    saveDb(db);
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({
+      status: 'success',
+      message: 'Cập nhật thiết lập & giá chênh lệch thành công!',
+      settings: db.settings
+    }));
+    return;
+  }
+
+  // 4. ADMIN UPDATE USER ROLE: POST /api/admin/user/role
+  if (url === '/api/admin/user/role' && req.method === 'POST') {
+    const user = getAuthUser();
+    if (!user || user.role !== 'Admin') {
+      res.writeHead(403, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Chỉ Admin mới có quyền thực hiện!' }));
+      return;
+    }
+
+    const body = await readJsonBody();
+    const { targetUsername, role } = body;
+    const db = loadDb();
+
+    if (!db.users[targetUsername]) {
+      res.writeHead(404, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Không tìm thấy người dùng này!' }));
+      return;
+    }
+
+    db.users[targetUsername].role = role || 'Thành viên';
+    saveDb(db);
+
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({
+      status: 'success',
+      message: `Đã cập nhật cấp bậc của ${targetUsername} thành ${role}!`,
+      newRole: role
+    }));
+    return;
+  }
+
+  // 5. ADMIN UPDATE ORDER STATUS & REFUND: POST /api/admin/order/status
+  if (url === '/api/admin/order/status' && req.method === 'POST') {
+    const user = getAuthUser();
+    if (!user || user.role !== 'Admin') {
+      res.writeHead(403, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Chỉ Admin mới có quyền thực hiện!' }));
+      return;
+    }
+
+    const body = await readJsonBody();
+    const { orderId, newStatus, newStatusText, refund } = body;
+    const db = loadDb();
+
+    const order = db.orders.find(o => o.id === orderId);
+    if (!order) {
+      res.writeHead(404, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Không tìm thấy đơn hàng này!' }));
+      return;
+    }
+
+    order.status = newStatus || order.status;
+    order.statusText = newStatusText || (newStatus === 'completed' ? 'Đã hoàn thành' : (newStatus === 'cancelled' ? 'Đã huỷ & Hoàn tiền' : 'Đang chạy'));
+
+    let refundMsg = '';
+    if (refund && order.price > 0 && db.users[order.username]) {
+      db.users[order.username].balance += order.price;
+      refundMsg = ` & Đã hoàn trả lại ${order.price.toLocaleString('vi-VN')} đ cho ${order.username}`;
+    }
+
+    saveDb(db);
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({
+      status: 'success',
+      message: `Đơn hàng ${orderId} chuyển sang "${order.statusText}"${refundMsg}!`,
+      order
+    }));
+    return;
+  }
+
+  // =========================================================================
   // ORDERS API
   // =========================================================================
 
-  // 5. USER ORDERS LIST: GET /api/orders/my-orders
   if (url === '/api/orders/my-orders' && req.method === 'GET') {
     const user = getAuthUser();
     if (!user) {
@@ -291,7 +511,7 @@ const server = http.createServer(async (req, res) => {
     const db = loadDb();
     let userOrders = [];
     if (user.role === 'Admin') {
-      userOrders = db.orders; // Admin sees all orders
+      userOrders = db.orders;
     } else {
       userOrders = db.orders.filter(o => o.username === user.username);
     }
@@ -300,7 +520,6 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // 6. CREATE ORDER: POST /api/orders/create
   if (url === '/api/orders/create' && req.method === 'POST') {
     const user = getAuthUser();
     if (!user) {
@@ -310,7 +529,7 @@ const server = http.createServer(async (req, res) => {
     }
 
     const body = await readJsonBody();
-    const { serviceId, baostarServiceId, serviceName, serverName, link, quantity, price, notes } = body;
+    const { baostarServiceId, serviceName, serverName, link, quantity, price, notes } = body;
 
     const qty = parseInt(quantity) || 0;
     const finalPrice = parseInt(price) || 0;
@@ -318,17 +537,14 @@ const server = http.createServer(async (req, res) => {
     const db = loadDb();
     const currentUser = db.users[user.username];
 
-    // Check balance
     if (currentUser.balance < finalPrice) {
       res.writeHead(400, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ error: `Số dư không đủ! Bạn cần nạp thêm ${(finalPrice - currentUser.balance).toLocaleString('vi-VN')} đ.` }));
       return;
     }
 
-    // Deduct user balance
     currentUser.balance -= finalPrice;
 
-    // Create Order Record
     const orderId = `KHOA-${Math.floor(100000 + Math.random() * 900000)}`;
     const now = new Date();
     const dateStr = now.toISOString().replace('T', ' ').substring(0, 19);
@@ -348,7 +564,6 @@ const server = http.createServer(async (req, res) => {
       baostarOrderId: null
     };
 
-    // Forward to BaoStar if service ID is present
     if (baostarServiceId) {
       try {
         const baostarRes = await callBaoStar({
@@ -384,7 +599,6 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // 7. Check live balance from BaoStar
   if (url === '/api/baostar/balance' && req.method === 'GET') {
     try {
       const result = await callBaoStar({ action: 'balance' });
@@ -438,10 +652,12 @@ const server = http.createServer(async (req, res) => {
 });
 
 server.listen(PORT, () => {
-  loadDb(); // Ensure db is initialized
+  loadDb();
   console.log(`=======================================================`);
-  console.log(`🚀 KHOASMM.COM Server with Multi-User Auth is running!`);
+  console.log(`🚀 KHOASMM.COM Server with Admin Control Panel is running!`);
   console.log(`🌐 Local URL:        http://localhost:${PORT}`);
   console.log(`⚡ Connected API:    BaoStar.net (Live v2)`);
+  console.log(`💰 Profit Margin:    20% Markup Active`);
+  console.log(`👑 Admin Account:    Username: admin | Pass: khoasmm123`);
   console.log(`=======================================================`);
 });
