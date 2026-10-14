@@ -1,16 +1,17 @@
 /**
  * KHOASMM.COM - Node.js Server & BaoStar API Gateway
- * Integrated with BaoStar API (https://baostar.net/api/v2)
- * API Key: Mzk5NzVub3diZDg1MzBkODRlNzBjMjMyYTkzNmViMGZk
+ * Integrated Multi-User Authentication & Database System
  */
 
 const http = require('http');
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 
 const PORT = process.env.PORT || 3000;
 const BASE_DIR = __dirname;
+const DB_FILE = path.join(BASE_DIR, 'data_store.json');
 
 // BAOSTAR PROVIDER CONFIGURATION
 const BAOSTAR_CONFIG = {
@@ -19,7 +20,52 @@ const BAOSTAR_CONFIG = {
   name: 'BaoStar API'
 };
 
-// Helper function to call BaoStar SMM API v2
+// =========================================================================
+// SIMPLE JSON DATABASE (Users & Orders)
+// =========================================================================
+function loadDb() {
+  try {
+    if (!fs.existsSync(DB_FILE)) {
+      const initialDb = {
+        users: {
+          "admin": {
+            username: "admin",
+            name: "Lương Đặng Khoa (Admin)",
+            email: "khoaprono1@gmail.com",
+            passwordHash: hashPassword("khoasmm123"),
+            balance: 1000000,
+            totalDeposit: 133059931,
+            role: "Admin",
+            createdAt: "2021-04-01 19:27:50"
+          }
+        },
+        orders: [],
+        sessions: {}
+      };
+      fs.writeFileSync(DB_FILE, JSON.stringify(initialDb, null, 2), 'utf8');
+      return initialDb;
+    }
+    const data = fs.readFileSync(DB_FILE, 'utf8');
+    return JSON.parse(data);
+  } catch (e) {
+    console.error('Error loading DB:', e);
+    return { users: {}, orders: [], sessions: {} };
+  }
+}
+
+function saveDb(db) {
+  try {
+    fs.writeFileSync(DB_FILE, JSON.stringify(db, null, 2), 'utf8');
+  } catch (e) {
+    console.error('Error saving DB:', e);
+  }
+}
+
+function hashPassword(pass) {
+  return crypto.createHash('sha256').update(pass + 'khoasmm_salt_2026').digest('hex');
+}
+
+// Call BaoStar SMM API v2
 function callBaoStar(payload) {
   return new Promise((resolve, reject) => {
     const postData = new URLSearchParams({
@@ -48,15 +94,8 @@ function callBaoStar(payload) {
       });
     });
 
-    req.on('error', (err) => {
-      reject(err);
-    });
-
-    req.on('timeout', () => {
-      req.destroy();
-      reject(new Error('BaoStar API Timeout'));
-    });
-
+    req.on('error', (err) => reject(err));
+    req.on('timeout', () => { req.destroy(); reject(new Error('BaoStar API Timeout')); });
     req.write(postData);
     req.end();
   });
@@ -82,7 +121,7 @@ const server = http.createServer(async (req, res) => {
   // CORS Headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-User-Token');
 
   if (req.method === 'OPTIONS') {
     res.writeHead(204);
@@ -90,12 +129,263 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  const url = req.url.split('?')[0];
+
+  // Helper to read JSON body
+  const readJsonBody = () => new Promise(resolve => {
+    let body = '';
+    req.on('data', chunk => body += chunk);
+    req.on('end', () => {
+      try { resolve(JSON.parse(body || '{}')); }
+      catch (e) { resolve({}); }
+    });
+  });
+
+  // Helper to get authenticated user
+  const getAuthUser = () => {
+    const token = req.headers['x-user-token'] || req.headers['authorization'];
+    if (!token) return null;
+    const cleanToken = token.replace('Bearer ', '').trim();
+    const db = loadDb();
+    const username = db.sessions[cleanToken];
+    if (username && db.users[username]) {
+      return db.users[username];
+    }
+    return null;
+  };
+
   // =========================================================================
-  // BAOSTAR PROXY API ENDPOINTS FOR KHOASMM
+  // AUTHENTICATION APIS (Register, Login, Me, Logout)
   // =========================================================================
 
-  // 1. Check live balance from BaoStar
-  if (req.url === '/api/baostar/balance' && req.method === 'GET') {
+  // 1. REGISTER: POST /api/auth/register
+  if (url === '/api/auth/register' && req.method === 'POST') {
+    const body = await readJsonBody();
+    const { username, email, password, name } = body;
+
+    if (!username || !password || username.length < 3) {
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Tên đăng nhập phải có ít nhất 3 ký tự!' }));
+      return;
+    }
+
+    const cleanUsername = username.toLowerCase().trim().replace(/[^a-z0-9_]/g, '');
+    const db = loadDb();
+
+    if (db.users[cleanUsername]) {
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Tên đăng nhập này đã có người sử dụng!' }));
+      return;
+    }
+
+    const newUser = {
+      username: cleanUsername,
+      name: name || cleanUsername,
+      email: email || `${cleanUsername}@gmail.com`,
+      passwordHash: hashPassword(password),
+      balance: 0, // NEW USERS START AT 0 VND!
+      totalDeposit: 0,
+      role: 'Thành viên',
+      createdAt: new Date().toISOString().replace('T', ' ').substring(0, 19)
+    };
+
+    const token = 'token_' + crypto.randomBytes(16).toString('hex');
+    db.users[cleanUsername] = newUser;
+    db.sessions[token] = cleanUsername;
+    saveDb(db);
+
+    const safeUser = { ...newUser };
+    delete safeUser.passwordHash;
+
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ status: 'success', user: safeUser, token: token }));
+    return;
+  }
+
+  // 2. LOGIN: POST /api/auth/login
+  if (url === '/api/auth/login' && req.method === 'POST') {
+    const body = await readJsonBody();
+    const { username, password } = body;
+
+    if (!username || !password) {
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Vui lòng nhập tên đăng nhập và mật khẩu!' }));
+      return;
+    }
+
+    const cleanUsername = username.toLowerCase().trim();
+    const db = loadDb();
+    const user = db.users[cleanUsername];
+
+    if (!user || user.passwordHash !== hashPassword(password)) {
+      res.writeHead(401, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Sai tên đăng nhập hoặc mật khẩu!' }));
+      return;
+    }
+
+    const token = 'token_' + crypto.randomBytes(16).toString('hex');
+    db.sessions[token] = cleanUsername;
+    saveDb(db);
+
+    const safeUser = { ...user };
+    delete safeUser.passwordHash;
+
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ status: 'success', user: safeUser, token: token }));
+    return;
+  }
+
+  // 3. GET CURRENT USER PROFILE: GET /api/auth/me
+  if (url === '/api/auth/me' && req.method === 'GET') {
+    const user = getAuthUser();
+    if (!user) {
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ authenticated: false, user: null }));
+      return;
+    }
+    const safeUser = { ...user };
+    delete safeUser.passwordHash;
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ authenticated: true, user: safeUser }));
+    return;
+  }
+
+  // 4. USER DEPOSIT (Simulator / Admin Add Money): POST /api/user/deposit
+  if (url === '/api/user/deposit' && req.method === 'POST') {
+    const user = getAuthUser();
+    if (!user) {
+      res.writeHead(401, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Vui lòng đăng nhập trước khi nạp tiền!' }));
+      return;
+    }
+
+    const body = await readJsonBody();
+    const amount = parseInt(body.amount) || 50000;
+
+    const db = loadDb();
+    db.users[user.username].balance += amount;
+    db.users[user.username].totalDeposit += amount;
+    saveDb(db);
+
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({
+      status: 'success',
+      newBalance: db.users[user.username].balance,
+      totalDeposit: db.users[user.username].totalDeposit
+    }));
+    return;
+  }
+
+  // =========================================================================
+  // ORDERS API
+  // =========================================================================
+
+  // 5. USER ORDERS LIST: GET /api/orders/my-orders
+  if (url === '/api/orders/my-orders' && req.method === 'GET') {
+    const user = getAuthUser();
+    if (!user) {
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ orders: [] }));
+      return;
+    }
+    const db = loadDb();
+    let userOrders = [];
+    if (user.role === 'Admin') {
+      userOrders = db.orders; // Admin sees all orders
+    } else {
+      userOrders = db.orders.filter(o => o.username === user.username);
+    }
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ orders: userOrders }));
+    return;
+  }
+
+  // 6. CREATE ORDER: POST /api/orders/create
+  if (url === '/api/orders/create' && req.method === 'POST') {
+    const user = getAuthUser();
+    if (!user) {
+      res.writeHead(401, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Vui lòng đăng nhập để tạo đơn hàng!' }));
+      return;
+    }
+
+    const body = await readJsonBody();
+    const { serviceId, baostarServiceId, serviceName, serverName, link, quantity, price, notes } = body;
+
+    const qty = parseInt(quantity) || 0;
+    const finalPrice = parseInt(price) || 0;
+
+    const db = loadDb();
+    const currentUser = db.users[user.username];
+
+    // Check balance
+    if (currentUser.balance < finalPrice) {
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: `Số dư không đủ! Bạn cần nạp thêm ${(finalPrice - currentUser.balance).toLocaleString('vi-VN')} đ.` }));
+      return;
+    }
+
+    // Deduct user balance
+    currentUser.balance -= finalPrice;
+
+    // Create Order Record
+    const orderId = `KHOA-${Math.floor(100000 + Math.random() * 900000)}`;
+    const now = new Date();
+    const dateStr = now.toISOString().replace('T', ' ').substring(0, 19);
+
+    const newOrder = {
+      id: orderId,
+      username: currentUser.username,
+      serviceName: serviceName || 'Dịch vụ MXH',
+      serverName: serverName || 'Máy chủ',
+      target: link,
+      quantity: qty,
+      price: finalPrice,
+      status: 'running',
+      statusText: 'Đang chạy',
+      createdAt: dateStr,
+      notes: notes || '',
+      baostarOrderId: null
+    };
+
+    // Forward to BaoStar if service ID is present
+    if (baostarServiceId) {
+      try {
+        const baostarRes = await callBaoStar({
+          action: 'add',
+          service: baostarServiceId,
+          link: link,
+          quantity: qty
+        });
+
+        if (baostarRes.data && baostarRes.data.order) {
+          newOrder.baostarOrderId = baostarRes.data.order;
+          newOrder.notes += ` (BaoStar #${baostarRes.data.order})`;
+          newOrder.statusText = 'Đang chạy (BaoStar)';
+        } else if (baostarRes.data && baostarRes.data.error) {
+          newOrder.status = 'processing';
+          newOrder.statusText = 'Chờ xử lý';
+          newOrder.notes += ` [BaoStar: ${baostarRes.data.error}]`;
+        }
+      } catch (err) {
+        console.error('BaoStar Forward error:', err);
+      }
+    }
+
+    db.orders.unshift(newOrder);
+    saveDb(db);
+
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({
+      status: 'success',
+      order: newOrder,
+      newBalance: currentUser.balance
+    }));
+    return;
+  }
+
+  // 7. Check live balance from BaoStar
+  if (url === '/api/baostar/balance' && req.method === 'GET') {
     try {
       const result = await callBaoStar({ action: 'balance' });
       res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -104,115 +394,6 @@ const server = http.createServer(async (req, res) => {
       res.writeHead(500, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ error: err.message }));
     }
-    return;
-  }
-
-  // 2. Fetch live services from BaoStar
-  if (req.url === '/api/baostar/services' && req.method === 'GET') {
-    try {
-      const result = await callBaoStar({ action: 'services' });
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify(result.data));
-    } catch (err) {
-      res.writeHead(500, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ error: err.message }));
-    }
-    return;
-  }
-
-  // 3. Place order directly to BaoStar
-  if (req.url === '/api/baostar/order' && req.method === 'POST') {
-    let body = '';
-    req.on('data', chunk => body += chunk);
-    req.on('end', async () => {
-      try {
-        const payload = JSON.parse(body || '{}');
-        const { service, link, quantity, comments } = payload;
-
-        if (!service || !link || !quantity) {
-          res.writeHead(400, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ error: 'Missing service, link or quantity' }));
-          return;
-        }
-
-        const baostarParams = {
-          action: 'add',
-          service: service,
-          link: link,
-          quantity: quantity
-        };
-
-        if (comments) baostarParams.comments = comments;
-
-        console.log(`[BaoStar Order] Sending to BaoStar: service=${service}, qty=${quantity}, link=${link}`);
-        const result = await callBaoStar(baostarParams);
-
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({
-          provider: 'BaoStar',
-          response: result.data,
-          raw: result.raw
-        }));
-      } catch (err) {
-        res.writeHead(500, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ error: err.message }));
-      }
-    });
-    return;
-  }
-
-  // 4. Check order status on BaoStar
-  if (req.url === '/api/baostar/status' && req.method === 'POST') {
-    let body = '';
-    req.on('data', chunk => body += chunk);
-    req.on('end', async () => {
-      try {
-        const payload = JSON.parse(body || '{}');
-        const { order } = payload;
-        const result = await callBaoStar({ action: 'status', order: order });
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(result.data));
-      } catch (err) {
-        res.writeHead(500, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ error: err.message }));
-      }
-    });
-    return;
-  }
-
-  // 5. Standard SMM v2 endpoint for KhoaSMM external clients
-  if (req.url.startsWith('/api/v2') && req.method === 'POST') {
-    let body = '';
-    req.on('data', chunk => body += chunk);
-    req.on('end', () => {
-      try {
-        const payload = JSON.parse(body || '{}');
-        const action = payload.action;
-
-        if (action === 'balance') {
-          res.writeHead(200, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ balance: "1310", currency: "VND" }));
-          return;
-        }
-
-        if (action === 'services') {
-          res.writeHead(200, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify([
-            { service: 16379, name: "Tiktok FollowTây", type: "Default", category: "TikTok", rate: "138.33", min: 100, max: 50000 },
-            { service: 16369, name: "S4 Follow TikTok Việt", type: "Default", category: "TikTok", rate: "30.00", min: 100, max: 30000 },
-            { service: 16344, name: "Tiktok Follow Tây | KHÔNG BẢO HÀNH", type: "Default", category: "TikTok", rate: "29.73", min: 100, max: 200000 }
-          ]));
-          return;
-        }
-
-        const fakeOrderId = Math.floor(100000 + Math.random() * 900000);
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ order: fakeOrderId }));
-      } catch (err) {
-        res.writeHead(400, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ error: "Invalid JSON format" }));
-      }
-    });
     return;
   }
 
@@ -257,10 +438,10 @@ const server = http.createServer(async (req, res) => {
 });
 
 server.listen(PORT, () => {
+  loadDb(); // Ensure db is initialized
   console.log(`=======================================================`);
-  console.log(`🚀 KHOASMM.COM Server is running!`);
+  console.log(`🚀 KHOASMM.COM Server with Multi-User Auth is running!`);
   console.log(`🌐 Local URL:        http://localhost:${PORT}`);
   console.log(`⚡ Connected API:    BaoStar.net (Live v2)`);
-  console.log(`🔑 Key:              ${BAOSTAR_CONFIG.apiKey.slice(0, 8)}...${BAOSTAR_CONFIG.apiKey.slice(-4)}`);
   console.log(`=======================================================`);
 });

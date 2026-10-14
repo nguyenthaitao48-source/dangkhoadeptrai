@@ -45,29 +45,9 @@
   }
   </script>
   
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "KHOA SMM",
-    "url": "https://khoasmm.com/",
-    "logo": "https://khoasmm.com/assets/logo.png",
-    "founder": {
-      "@type": "Person",
-      "name": "Lương Đặng Khoa"
-    },
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "contactType": "customer service",
-      "availableLanguage": "Vietnamese"
-    }
-  }
-  </script>
-  
   <!-- Font Awesome 6 Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
-  <!-- Custom Stylesheet -->
   <style>
 /* ==========================================================================
    KHOASMM.COM - STYLESHEET (Design System inspired by BaoStar & modern SMMs)
@@ -1685,7 +1665,113 @@ button, input, select, textarea {
 .toast-error i { color: var(--danger); }
 .toast-info i { color: var(--primary); }
 
-</style>
+/* AUTH BUTTONS IN HEADER */
+.header-auth-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-auth-login {
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--primary);
+  background: transparent;
+  color: var(--primary);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-auth-login:hover {
+  background: var(--primary-light);
+}
+
+.btn-auth-register {
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  border: none;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #fff;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+}
+
+.btn-auth-register:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+/* GUEST SIDEBAR CARD */
+.guest-card-wrapper {
+  text-align: center;
+  padding: 10px 0;
+}
+
+.guest-card-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 12px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  color: #64748b;
+  border: 2px dashed #cbd5e1;
+}
+
+[data-theme="dark"] .guest-card-icon {
+  background: #1e293b;
+  border-color: #475569;
+  color: #94a3b8;
+}
+
+.guest-card-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+
+.guest-card-desc {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+/* AUTH MODAL TABS */
+.auth-nav-tabs {
+  display: flex;
+  border-bottom: 2px solid var(--border-color);
+  margin-bottom: 20px;
+}
+
+.auth-nav-tab {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: var(--transition);
+}
+
+.auth-nav-tab.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+  </style>
 </head>
 <body>
 
@@ -1711,18 +1797,38 @@ button, input, select, textarea {
 
       <!-- Right Header Actions -->
       <div class="header-actions">
-        <!-- Live BaoStar API Status Pill -->
-        <div class="header-balance-pill" id="baostarApiPill" style="background: rgba(16, 185, 129, 0.08); border-color: rgba(16, 185, 129, 0.3); font-size: 12px; cursor: pointer;" onclick="openModal('modalSettings')" title="Xem trạng thái kết nối BaoStar">
-          <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #10b981;"></span>
-          <span style="color: var(--text-muted);">API BaoStar:</span>
-          <strong style="color: #059669;" id="baostarBalanceLive">Đang kết nối...</strong>
+        
+        <!-- 1. GUEST STATE: SHOW LOGIN & REGISTER BUTTONS -->
+        <div id="headerAuthGuest" class="header-auth-group">
+          <button class="btn-auth-login" onclick="openAuthModal('login')">
+            <i class="fas fa-sign-in-alt"></i> Đăng nhập
+          </button>
+          <button class="btn-auth-register" onclick="openAuthModal('register')">
+            <i class="fas fa-user-plus"></i> Đăng ký
+          </button>
         </div>
 
-        <!-- Balance Pill with Quick Deposit -->
-        <div class="header-balance-pill">
-          <span>Ví:</span>
-          <span class="header-balance-amount" id="headerBalanceAmount">1,310 đ</span>
-          <button class="btn-deposit-quick" onclick="openDepositModal()">+ Nạp tiền</button>
+        <!-- 2. LOGGED-IN USER STATE: SHOW USER WALLET & PROFILE -->
+        <div id="headerAuthUser" style="display: none; align-items: center; gap: 10px;">
+          <!-- Live BaoStar API Status Pill -->
+          <div class="header-balance-pill" id="baostarApiPill" style="background: rgba(16, 185, 129, 0.08); border-color: rgba(16, 185, 129, 0.3); font-size: 12px; cursor: pointer;" onclick="openModal('modalSettings')" title="Xem trạng thái kết nối BaoStar">
+            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #10b981;"></span>
+            <span style="color: var(--text-muted);">API BaoStar:</span>
+            <strong style="color: #059669;" id="baostarBalanceLive">Đang kết nối...</strong>
+          </div>
+
+          <!-- User Balance Pill with Quick Deposit -->
+          <div class="header-balance-pill">
+            <span>Số dư:</span>
+            <span class="header-balance-amount" id="headerBalanceAmount">0 đ</span>
+            <button class="btn-deposit-quick" onclick="openDepositModal()">+ Nạp tiền</button>
+          </div>
+
+          <!-- User Profile Avatar Badge & Logout -->
+          <div class="header-user-badge" onclick="handleLogout()" title="Bấm để Đăng xuất">
+            <img src="https://api.dicebear.com/7.x/bottts/svg?seed=User&backgroundColor=fce7f3" alt="Avatar" class="user-avatar-mini">
+            <span style="font-size: 12px; font-weight: 700; color: var(--danger); margin-left: 2px;"><i class="fas fa-sign-out-alt"></i></span>
+          </div>
         </div>
 
         <!-- Fullscreen toggle -->
@@ -1740,20 +1846,12 @@ button, input, select, textarea {
           <i class="far fa-bell"></i>
           <span class="badge-dot">NEW</span>
         </button>
-
-        <!-- User Profile Avatar Badge -->
-        <div class="header-user-badge" onclick="openModal('modalDomainGuide')">
-          <img src="https://api.dicebear.com/7.x/bottts/svg?seed=LuongDangKhoa&backgroundColor=fce7f3" alt="Avatar" class="user-avatar-mini">
-          <i class="fas fa-angle-down" style="font-size: 11px; color: var(--text-muted);"></i>
-        </div>
       </div>
     </div>
 
     <!-- Platform Categories Navigation Bar -->
     <nav class="platform-navbar">
-      <div class="platform-navbar-inner" id="platformNavContainer">
-        <!-- Rendered dynamically via js/app.js -->
-      </div>
+      <div class="platform-navbar-inner" id="platformNavContainer"></div>
     </nav>
   </header>
 
@@ -1770,10 +1868,8 @@ button, input, select, textarea {
       </div>
     </div>
 
-    <!-- Subservice Tabs (e.g., Follow, Like, View, Comment, Share...) -->
-    <div class="subservice-tabs" id="subserviceTabsContainer">
-      <!-- Rendered dynamically via js/app.js -->
-    </div>
+    <!-- Subservice Tabs -->
+    <div class="subservice-tabs" id="subserviceTabsContainer"></div>
 
     <!-- App Grid: Workspace Left + Sidebar Right -->
     <div class="app-grid">
@@ -1809,9 +1905,7 @@ button, input, select, textarea {
                 <i class="fas fa-server" style="color: var(--primary);"></i>
                 <span>Chọn Gói :</span>
               </div>
-              <div class="server-radio-list" id="serverRadioList">
-                <!-- Injected via js/app.js -->
-              </div>
+              <div class="server-radio-list" id="serverRadioList"></div>
             </div>
 
             <!-- Right Sub-section: Dynamic Specification Note Box -->
@@ -1820,9 +1914,7 @@ button, input, select, textarea {
                 <i class="fas fa-clipboard-list" style="color: #0d9488;"></i>
                 <span>Thông tin &amp; Lưu ý máy chủ:</span>
               </div>
-              <div id="serverSpecCardContainer">
-                <!-- Dynamic Pastel Box Injected via js/app.js -->
-              </div>
+              <div id="serverSpecCardContainer"></div>
             </div>
 
           </div>
@@ -1839,7 +1931,6 @@ button, input, select, textarea {
                 </span>
               </div>
               <input type="text" id="targetLinkInput" class="form-control" placeholder="Nhập username / @username hoặc link profile" oninput="state.targetLink = this.value">
-              <span style="font-size: 11.5px; color: var(--danger); margin-top: 3px;" id="linkErrorTip"></span>
             </div>
 
             <!-- Reactions Selection (Visible for Facebook Like) -->
@@ -1860,7 +1951,7 @@ button, input, select, textarea {
             <div class="form-group">
               <div class="form-label-wrap">
                 <label for="orderQuantityInput"><i class="fas fa-calculator"></i> Số lượng:</label>
-                <span style="font-size: 12px; color: var(--text-muted);" id="qtyMinMaxLabel">Min: 100 - Max: 100,000</span>
+                <span style="font-size: 12px; color: var(--text-muted);" id="qtyMinMaxLabel">Min: 50 - Max: 100,000</span>
               </div>
               <input type="number" id="orderQuantityInput" class="form-control" value="100" min="1" step="10" oninput="handleQuantityChange(this.value)">
               
@@ -1890,9 +1981,7 @@ button, input, select, textarea {
             <div class="summary-cost-breakdown">
               <div class="summary-unit-rate" id="summaryUnitRate">Giá: 29.73 đ / 1 đơn vị | Số lượng: 100</div>
               <div class="summary-total-price" id="summaryTotalPrice">2,825 đ</div>
-              <div class="summary-discount-tag" id="summaryDiscount">
-                <i class="fas fa-check-circle"></i> Giảm 5% (Cao cấp): -148 đ
-              </div>
+              <div class="summary-discount-tag" id="summaryDiscount" style="display: none;"></div>
             </div>
 
             <div style="display: flex; gap: 10px;">
@@ -1904,10 +1993,9 @@ button, input, select, textarea {
 
         </div>
 
-        <!-- 2. ORDER LOG VIEW (Nhật ký đơn hàng) -->
+        <!-- 2. ORDER LOG VIEW -->
         <div id="orderLogContainer" class="order-log-container">
           <div class="order-log-header">
-            <!-- Filter by Status -->
             <div class="order-filter-group">
               <button class="order-filter-btn active" data-status="all" onclick="filterOrders('all')">Tất cả</button>
               <button class="order-filter-btn" data-status="running" onclick="filterOrders('running')">Đang chạy</button>
@@ -1916,14 +2004,12 @@ button, input, select, textarea {
               <button class="order-filter-btn" data-status="cancelled" onclick="filterOrders('cancelled')">Đã hủy</button>
             </div>
 
-            <!-- Search in orders -->
             <div class="header-search" style="max-width: 260px;">
               <i class="fas fa-search"></i>
               <input type="text" placeholder="Tìm theo mã đơn / link..." oninput="handleOrderSearch(this.value)">
             </div>
           </div>
 
-          <!-- Order Log Table -->
           <div class="table-responsive">
             <table class="data-table">
               <thead>
@@ -1938,9 +2024,7 @@ button, input, select, textarea {
                   <th>THAO TÁC</th>
                 </tr>
               </thead>
-              <tbody id="orderLogTableBody">
-                <!-- Rendered dynamically via js/app.js -->
-              </tbody>
+              <tbody id="orderLogTableBody"></tbody>
             </table>
           </div>
         </div>
@@ -1951,9 +2035,8 @@ button, input, select, textarea {
             <i class="fas fa-plug" style="color: var(--primary);"></i> Kết Nối API Dành Cho Website Đại Lý & Khách Hàng Sỉ
           </h3>
           <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 20px;">
-            Hệ thống <strong>khoasmm.com</strong> hỗ trợ chuẩn kết nối SMM API v2 chuẩn quốc tế (Tương thích hoàn toàn với tất cả mã nguồn website con, bot tự động, panel bán dịch vụ MXH).
+            Hệ thống <strong>khoasmm.com</strong> hỗ trợ chuẩn kết nối SMM API v2 chuẩn quốc tế.
           </p>
-
           <div style="background: var(--bg-card-subtle); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 16px; margin-bottom: 20px;">
             <div style="font-size: 13px; font-weight: 700; color: var(--text-main); margin-bottom: 6px;">API Key của bạn:</div>
             <div style="display: flex; gap: 8px;">
@@ -1961,29 +2044,6 @@ button, input, select, textarea {
               <button class="copy-btn" style="padding: 0 16px; font-size: 13px;" onclick="copyText('ksmm_live_8912401928371928371298401', 'API Key')">Sao chép</button>
             </div>
             <div style="font-size: 12px; color: var(--text-muted); margin-top: 6px;">API Endpoint URL: <code>https://khoasmm.com/api/v2</code></div>
-          </div>
-
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-            <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px;">
-              <div style="font-weight: 700; font-size: 13.5px; margin-bottom: 8px; color: var(--primary);">1. Lấy danh sách dịch vụ</div>
-              <pre style="background: #0f172a; color: #38bdf8; padding: 12px; border-radius: 6px; font-size: 12px; overflow-x: auto;"><code>POST /api/v2
-{
-  "key": "YOUR_API_KEY",
-  "action": "services"
-}</code></pre>
-            </div>
-
-            <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px;">
-              <div style="font-weight: 700; font-size: 13.5px; margin-bottom: 8px; color: var(--success);">2. Tạo đơn hàng mới</div>
-              <pre style="background: #0f172a; color: #34d399; padding: 12px; border-radius: 6px; font-size: 12px; overflow-x: auto;"><code>POST /api/v2
-{
-  "key": "YOUR_API_KEY",
-  "action": "add",
-  "service": 19,
-  "link": "https://tiktok.com/@user",
-  "quantity": 1000
-}</code></pre>
-            </div>
           </div>
         </div>
 
@@ -2001,14 +2061,13 @@ button, input, select, textarea {
                 <li>Không order cùng một link trên nhiều server cùng lúc (chống đè đơn).</li>
               </ul>
             </div>
-
             <div style="background: var(--bg-card-subtle); border: 1px solid var(--border-color); padding: 16px; border-radius: var(--radius-md);">
               <h4 style="font-size: 14px; font-weight: 700; color: #10b981; margin-bottom: 8px;">Kênh hỗ trợ chính thức</h4>
               <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">
                 - Quản trị viên: <strong>Lương Đặng Khoa</strong><br>
                 - Telegram hỗ trợ: <a href="https://t.me/khoasmm" target="_blank" style="color: var(--primary); font-weight: 600;">@khoasmm</a><br>
                 - Zalo / Hotline: <strong>0987.654.321</strong><br>
-                - Giờ làm việc: <strong>08:00 - 24:00</strong> tất cả các ngày trong tuần.
+                - Giờ làm việc: <strong>08:00 - 24:00</strong> 24/7.
               </p>
             </div>
           </div>
@@ -2019,8 +2078,29 @@ button, input, select, textarea {
       <!-- RIGHT COLUMN: Account Overview Card & System Notices -->
       <aside class="sidebar-sticky">
 
-        <!-- User Profile Card (Exact replica from BaoStar screenshot) -->
-        <div class="account-info-card">
+        <!-- 1. GUEST SIDEBAR CARD (When not logged in) -->
+        <div id="sidebarGuestCard" class="account-info-card">
+          <div class="guest-card-wrapper">
+            <div class="guest-card-icon">
+              <i class="fas fa-user-lock"></i>
+            </div>
+            <div class="guest-card-title">Chào Mừng Quý Khách!</div>
+            <div class="guest-card-desc">
+              Vui lòng Đăng nhập hoặc Tạo tài khoản để nạp tiền vào ví cá nhân và tự động mua dịch vụ.
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <button class="btn-submit-order" style="justify-content: center; width: 100%;" onclick="openAuthModal('login')">
+                <i class="fas fa-sign-in-alt"></i> Đăng nhập ngay
+              </button>
+              <button class="btn-auth-login" style="width: 100%; padding: 10px;" onclick="openAuthModal('register')">
+                <i class="fas fa-user-plus"></i> Tạo tài khoản mới (0đ)
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. AUTHENTICATED USER CARD (When logged in) -->
+        <div id="sidebarUserCard" class="account-info-card" style="display: none;">
           <div class="account-card-header">
             <i class="fas fa-user-circle" style="color: var(--primary);"></i>
             <span>Thông tin tài khoản</span>
@@ -2028,37 +2108,37 @@ button, input, select, textarea {
 
           <div class="account-profile-hero">
             <div class="avatar-wrapper">
-              <img src="https://api.dicebear.com/7.x/bottts/svg?seed=LuongDangKhoa&backgroundColor=fce7f3" alt="User 3D Avatar" class="avatar-3d">
+              <img src="https://api.dicebear.com/7.x/bottts/svg?seed=User&backgroundColor=fce7f3" alt="User Avatar" class="avatar-3d">
               <span class="avatar-status-dot" title="Online"></span>
             </div>
-            <div class="account-user-name" id="cardUserName">Luong Dang Khoa</div>
-            <div class="account-rank-pill" id="cardUserRank">Cao cấp</div>
+            <div class="account-user-name" id="cardUserName">Khách hàng</div>
+            <div class="account-rank-pill" id="cardUserRank">Thành viên</div>
           </div>
 
           <div class="account-details-list">
             <div class="account-stat-row">
               <span class="stat-label">Số tiền hiện tại :</span>
-              <span class="stat-value stat-balance-highlight" id="cardUserBalance">1,310 đ</span>
+              <span class="stat-value stat-balance-highlight" id="cardUserBalance">0 đ</span>
             </div>
 
             <div class="account-stat-row">
               <span class="stat-label">Tổng nạp :</span>
-              <span class="stat-value" id="cardUserTotalDeposit">133,059,931 đ</span>
+              <span class="stat-value" id="cardUserTotalDeposit">0 đ</span>
             </div>
 
             <div class="account-stat-row">
               <span class="stat-label">E-mail :</span>
-              <span class="stat-value" id="cardUserEmail" style="font-family: monospace; font-size: 12px;">khoaprono1@gmail.com</span>
+              <span class="stat-value" id="cardUserEmail" style="font-family: monospace; font-size: 12px;">user@gmail.com</span>
             </div>
 
             <div class="account-stat-row">
               <span class="stat-label">Ngày tham gia :</span>
-              <span class="stat-value" id="cardUserJoinDate" style="font-size: 12px;">2021-04-01 19:27:50</span>
+              <span class="stat-value" id="cardUserJoinDate" style="font-size: 12px;">Hôm nay</span>
             </div>
 
             <div class="account-stat-row" style="border-bottom: none;">
               <span class="stat-label">Cấp tiếp theo :</span>
-              <span class="stat-value" style="font-size: 11.5px; color: #059669;" id="cardUserNextTier">Cao cấp 133,059,931/99,999,999,999</span>
+              <span class="stat-value" style="font-size: 11.5px; color: #059669;" id="cardUserNextTier">Thành viên 0/10,000,000 đ</span>
             </div>
           </div>
 
@@ -2066,10 +2146,10 @@ button, input, select, textarea {
           <div class="level-progress-wrap">
             <div class="level-progress-labels">
               <span>Tiến độ VIP</span>
-              <span style="color: var(--primary); font-weight: 700;">[100%]</span>
+              <span style="color: var(--primary); font-weight: 700;">[0%]</span>
             </div>
             <div class="progress-track">
-              <div class="progress-bar-fill" style="width: 100%;"></div>
+              <div class="progress-bar-fill" style="width: 5%;"></div>
             </div>
           </div>
 
@@ -2077,16 +2157,21 @@ button, input, select, textarea {
           <button class="btn-deposit-card" onclick="openDepositModal()">
             <i class="fas fa-wallet"></i> Nạp tiền vào tài khoản
           </button>
+
+          <!-- Logout Button -->
+          <button class="copy-btn" style="width: 100%; margin: 10px 0 0; padding: 8px; text-align: center; background: rgba(239, 68, 68, 0.1); color: var(--danger); border-color: rgba(239, 68, 68, 0.3);" onclick="handleLogout()">
+            <i class="fas fa-sign-out-alt"></i> Đăng xuất tài khoản
+          </button>
         </div>
 
         <!-- Domain Notice Box -->
         <div class="notice-box-card">
           <div class="notice-box-header">
-            <i class="fas fa-globe"></i>
-            <span>Tên miền: khoasmm.com</span>
+            <i class="fas fa-shield-alt"></i>
+            <span>Bảo mật hệ thống khoasmm.com</span>
           </div>
           <div class="notice-box-content">
-            Hệ thống SMM được kích hoạt đầy đủ cho tên miền <strong>khoasmm.com</strong>. Kết nối tự động API đa nền tảng, tích hợp ngân hàng quét mã QR VietQR 24/7.
+            Khách hàng tự đăng ký tài khoản và quản lý số dư riêng biệt. Tiền nạp tự động qua VietQR theo cú pháp riêng của từng khách hàng.
           </div>
         </div>
 
@@ -2096,37 +2181,105 @@ button, input, select, textarea {
   </main>
 
   <!-- ==========================================================================
-       RIGHT FLOATING ACTION BUTTONS (Exact match to screenshot)
+       RIGHT FLOATING ACTION BUTTONS
        ========================================================================== -->
   <div class="floating-actions-bar">
-    <!-- Cài đặt giao diện (Vertical button) -->
     <div class="floating-vertical-setting" onclick="openModal('modalSettings')">
       <i class="fas fa-cog"></i> CÀI ĐẶT GIAO DIỆN
     </div>
 
-    <!-- Gia hạn nhanh (from screenshot 1) -->
     <div class="floating-renew-fast" onclick="openModal('modalDomainGuide')">
       <i class="fas fa-sync-alt"></i> Gia hạn nhanh
     </div>
 
-    <!-- Telegram Button -->
     <a href="https://t.me/khoasmm" target="_blank" class="floating-btn floating-tele" title="Nhắn tin Telegram">
       <i class="fab fa-telegram-plane"></i>
     </a>
 
-    <!-- Zalo Button -->
     <a href="https://zalo.me/0987654321" target="_blank" class="floating-btn floating-zalo" title="Chat Zalo">
       <i class="fas fa-comment-dots"></i>
     </a>
 
-    <!-- Facebook Button -->
     <a href="https://facebook.com/khoasmm" target="_blank" class="floating-btn floating-fb" title="Fanpage Facebook">
       <i class="fab fa-facebook-f"></i>
     </a>
   </div>
 
   <!-- ==========================================================================
-       MODAL: NẠP TIỀN TỰ ĐỘNG (VietQR, MoMo, Thẻ Cào, Crypto)
+       MODAL: ĐĂNG NHẬP / ĐĂNG KÝ (Authentication Modal)
+       ========================================================================== -->
+  <div class="modal-overlay" id="modalAuth">
+    <div class="modal-window" style="max-width: 440px;">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i class="fas fa-user-circle" style="color: var(--primary);"></i>
+          <span>Tài Khoản Khách Hàng</span>
+        </div>
+        <button class="btn-modal-close" onclick="closeModal('modalAuth')">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Tabs: Đăng nhập vs Đăng ký -->
+        <div class="auth-nav-tabs">
+          <div class="auth-nav-tab active" data-tab="login" onclick="switchAuthTab('login')">
+            <i class="fas fa-sign-in-alt"></i> Đăng nhập
+          </div>
+          <div class="auth-nav-tab" data-tab="register" onclick="switchAuthTab('register')">
+            <i class="fas fa-user-plus"></i> Đăng ký tài khoản
+          </div>
+        </div>
+
+        <!-- 1. LOGIN FORM -->
+        <form id="authLoginForm" onsubmit="handleLogin(event)">
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label style="font-size: 13px; font-weight: 700; margin-bottom: 4px;">Tên đăng nhập:</label>
+            <input type="text" id="loginUsername" class="form-control" placeholder="Nhập tên đăng nhập của bạn..." required>
+          </div>
+          <div class="form-group" style="margin-bottom: 16px;">
+            <label style="font-size: 13px; font-weight: 700; margin-bottom: 4px;">Mật khẩu:</label>
+            <input type="password" id="loginPassword" class="form-control" placeholder="Nhập mật khẩu..." required>
+          </div>
+          <button type="submit" class="btn-submit-order" style="width: 100%; justify-content: center;">
+            <i class="fas fa-sign-in-alt"></i> Đăng nhập ngay
+          </button>
+          <div style="text-align: center; margin-top: 14px; font-size: 12.5px; color: var(--text-muted);">
+            Chưa có tài khoản? <a href="javascript:void(0)" onclick="switchAuthTab('register')" style="color: var(--primary); font-weight: 700;">Đăng ký miễn phí tại đây</a>
+          </div>
+        </form>
+
+        <!-- 2. REGISTER FORM -->
+        <form id="authRegisterForm" style="display: none;" onsubmit="handleRegister(event)">
+          <div class="form-group" style="margin-bottom: 10px;">
+            <label style="font-size: 13px; font-weight: 700; margin-bottom: 4px;">Họ và tên:</label>
+            <input type="text" id="regName" class="form-control" placeholder="Ví dụ: Nguyễn Văn A" required>
+          </div>
+          <div class="form-group" style="margin-bottom: 10px;">
+            <label style="font-size: 13px; font-weight: 700; margin-bottom: 4px;">Tên đăng nhập (viết liền không dấu):</label>
+            <input type="text" id="regUsername" class="form-control" placeholder="Ví dụ: nguyenvana123" required>
+          </div>
+          <div class="form-group" style="margin-bottom: 10px;">
+            <label style="font-size: 13px; font-weight: 700; margin-bottom: 4px;">Địa chỉ Email:</label>
+            <input type="email" id="regEmail" class="form-control" placeholder="nguyenvana@gmail.com" required>
+          </div>
+          <div class="form-group" style="margin-bottom: 16px;">
+            <label style="font-size: 13px; font-weight: 700; margin-bottom: 4px;">Mật khẩu:</label>
+            <input type="password" id="regPassword" class="form-control" placeholder="Tối thiểu 4 ký tự..." required>
+          </div>
+          <button type="submit" class="btn-auth-register" style="width: 100%; padding: 12px; font-size: 14px; justify-content: center; display: flex; align-items: center; gap: 6px;">
+            <i class="fas fa-user-plus"></i> Hoàn tất đăng ký (Số dư 0đ)
+          </button>
+          <div style="text-align: center; margin-top: 14px; font-size: 12.5px; color: var(--text-muted);">
+            Đã có tài khoản? <a href="javascript:void(0)" onclick="switchAuthTab('login')" style="color: var(--primary); font-weight: 700;">Đăng nhập tại đây</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL: NẠP TIỀN TỰ ĐỘNG (VietQR)
        ========================================================================== -->
   <div class="modal-overlay" id="modalDeposit">
     <div class="modal-window">
@@ -2141,14 +2294,6 @@ button, input, select, textarea {
       </div>
 
       <div class="modal-body">
-        <!-- Deposit Methods Tabs -->
-        <div class="deposit-tabs">
-          <button class="deposit-tab-btn active"><i class="fas fa-university"></i> Ngân hàng (VietQR)</button>
-          <button class="deposit-tab-btn" onclick="showToast('Ví Momo đang bảo trì bảo dưỡng, quý khách vui lòng quét VietQR miễn phí!', 'info')"><i class="fas fa-mobile-alt"></i> Ví MoMo</button>
-          <button class="deposit-tab-btn" onclick="showToast('Chức năng nạp thẻ cào tự động chiết khấu 15%', 'info')"><i class="fas fa-credit-card"></i> Thẻ cào</button>
-        </div>
-
-        <!-- Dynamic VietQR Generator Card -->
         <div class="qr-box-wrap">
           <img id="vietQrImage" src="" alt="Mã VietQR" class="qr-code-img">
           <div style="font-size: 12px; color: var(--text-muted); margin-top: 6px;">
@@ -2156,7 +2301,6 @@ button, input, select, textarea {
           </div>
         </div>
 
-        <!-- Bank Details Table -->
         <table class="bank-info-table">
           <tr>
             <td style="color: var(--text-muted); width: 140px;">Ngân hàng:</td>
@@ -2176,13 +2320,12 @@ button, input, select, textarea {
           <tr>
             <td style="color: var(--text-muted);">Nội dung chuyển tiền:</td>
             <td>
-              <span style="font-family: monospace; font-weight: 800; color: #ef4444; background: #fef2f2; padding: 2px 6px; border-radius: 4px;" id="depositMemo">KHOASMM khoaprono1</span>
+              <span style="font-family: monospace; font-weight: 800; color: #ef4444; background: #fef2f2; padding: 2px 6px; border-radius: 4px;" id="depositMemo">KHOASMM</span>
               <button class="copy-btn" onclick="copyText(document.getElementById('depositMemo').textContent, 'Nội dung nạp')">Sao chép</button>
             </td>
           </tr>
         </table>
 
-        <!-- Amount selector -->
         <div style="margin-bottom: 12px;">
           <label style="font-size: 13px; font-weight: 700; display: block; margin-bottom: 4px;">Số tiền muốn nạp (VNĐ):</label>
           <div style="display: flex; gap: 8px;">
@@ -2193,17 +2336,15 @@ button, input, select, textarea {
           </div>
         </div>
 
-        <!-- Testing Simulator Bar -->
         <div class="test-deposit-bar">
           <div>
-            <div style="font-size: 12.5px; font-weight: 700; color: #059669;">🧪 Thử nghiệm nạp tiền ngay:</div>
-            <div style="font-size: 11.5px; color: var(--text-muted);">Bấm để mô phỏng tiền vào tài khoản tức thì</div>
+            <div style="font-size: 12.5px; font-weight: 700; color: #059669;">🧪 Thử nghiệm nạp tiền vào ví:</div>
+            <div style="font-size: 11.5px; color: var(--text-muted);">Bấm để mô phỏng tiền vào tài khoản của bạn tức thì</div>
           </div>
           <button class="btn-deposit-quick" style="padding: 8px 14px; font-size: 12.5px;" onclick="simulateSuccessfulDeposit()">
             Xác nhận nạp thử
           </button>
         </div>
-
       </div>
     </div>
   </div>
@@ -2225,7 +2366,6 @@ button, input, select, textarea {
 
       <div class="modal-body">
         <div style="display: flex; flex-direction: column; gap: 16px;">
-          
           <div>
             <div style="font-size: 14px; font-weight: 700; margin-bottom: 8px;">Chế độ màu nền:</div>
             <div style="display: flex; gap: 10px;">
@@ -2241,67 +2381,10 @@ button, input, select, textarea {
           <div style="border-top: 1px dashed var(--border-color); padding-top: 14px;">
             <div style="font-size: 14px; font-weight: 700; margin-bottom: 6px;">Thông tin tên miền:</div>
             <p style="font-size: 13px; color: var(--text-muted);">
-              Tên miền: <strong>khoasmm.com</strong><br>
-              Thời hạn: <strong>2026-07-17 đến 2027-07-17</strong><br>
+              Tên miền chính thức: <strong>khoasmm.com</strong><br>
               Trạng thái: <span style="color: #10b981; font-weight: 700;">Đang hoạt động (Active)</span>
             </p>
           </div>
-
-          <div style="border-top: 1px dashed var(--border-color); padding-top: 14px;">
-            <button class="btn-submit-order" style="width: 100%; justify-content: center;" onclick="closeModal('modalSettings')">
-              Lưu thiết lập
-            </button>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ==========================================================================
-       MODAL: HƯỚNG DẪN TRỎ TÊN MIỀN KHOASMM.COM
-       ========================================================================== -->
-  <div class="modal-overlay" id="modalDomainGuide">
-    <div class="modal-window">
-      <div class="modal-header">
-        <div class="modal-title">
-          <i class="fas fa-network-wired" style="color: #2563eb;"></i>
-          <span>Cấu Hình Tên Miền khoasmm.com</span>
-        </div>
-        <button class="btn-modal-close" onclick="closeModal('modalDomainGuide')">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-
-      <div class="modal-body">
-        <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 14px;">
-          Để website chạy trực tiếp trên tên miền <strong>khoasmm.com</strong> (như trong ảnh quản lý tên miền của bạn), bạn chỉ cần trỏ bản ghi DNS sau tại trang quản lý tên miền:
-        </p>
-
-        <table class="data-table" style="margin-bottom: 16px;">
-          <thead>
-            <tr>
-              <th>Loại (Type)</th>
-              <th>Tên (Host)</th>
-              <th>Giá trị (Points to)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><code>A Record</code></td>
-              <td><code>@</code></td>
-              <td><code>IP máy chủ VPS / Hosting</code></td>
-            </tr>
-            <tr>
-              <td><code>CNAME</code></td>
-              <td><code>www</code></td>
-              <td><code>khoasmm.com</code></td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div style="background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 6px; padding: 12px; font-size: 12.5px; color: #065f46;">
-          <i class="fas fa-check-circle"></i> Mã nguồn website này hoàn toàn tĩnh hoặc chạy với Node.js, bạn có thể tải lên bất kỳ Hosting (cPanel, DirectAdmin) hoặc VPS (Nginx / Cloudflare) cực kỳ đơn giản!
         </div>
       </div>
     </div>
@@ -2321,25 +2404,17 @@ button, input, select, textarea {
           <i class="fas fa-times"></i>
         </button>
       </div>
-
       <div class="modal-body" style="display: flex; flex-direction: column; gap: 12px;">
         <div style="background: var(--bg-card-subtle); padding: 12px; border-radius: 8px; border-left: 3px solid #10b981;">
-          <div style="font-weight: 700; font-size: 13.5px; color: var(--text-main);">Cập nhật máy chủ TikTok &amp; Facebook</div>
-          <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Máy chủ Tiktok Follow Tây SV19 đã bổ sung thêm 500,000 tài nguyên tốc độ cao.</div>
-        </div>
-
-        <div style="background: var(--bg-card-subtle); padding: 12px; border-radius: 8px; border-left: 3px solid #3b82f6;">
-          <div style="font-weight: 700; font-size: 13.5px; color: var(--text-main);">Khuyến mãi nạp tiền tự động</div>
-          <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Tặng thêm 5% giá trị cho mọi đơn nạp tiền từ 500,000đ qua VietQR.</div>
+          <div style="font-weight: 700; font-size: 13.5px; color: var(--text-main);">Chào mừng quý khách đến với KHOASMM.COM</div>
+          <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Hệ thống cung cấp dịch vụ MXH tự động 24/7. Tự tạo tài khoản và nạp tiền VietQR tức thì.</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Toast Notification Container -->
   <div class="toast-container" id="toastContainer"></div>
 
-  <!-- Custom Scripts -->
   <script>
 /**
  * KHOASMM.COM - Dữ liệu danh mục dịch vụ Mạng Xã Hội
@@ -3160,17 +3235,20 @@ const INITIAL_ORDERS = [
   }
 ];
 
-// User Info Default State
-const DEFAULT_USER = {
-  name: "Luong Dang Khoa",
-  email: "khoaprono1@gmail.com",
-  role: "Cao cấp",
-  balance: 1310, // matching screenshot 1,310
-  totalDeposit: 133059931, // matching screenshot 133,059,931 d
-  joinDate: "2021-04-01 19:27:50",
-  targetDeposit: 99999999999,
-  discountPercent: 5 // 5% discount for "Cao cấp" tier
+// Default User State (Guest / New Visitor)
+const GUEST_USER = {
+  isGuest: true,
+  username: "khach",
+  name: "Khách vãng lai",
+  email: "Chưa đăng nhập",
+  role: "Chưa đăng nhập",
+  balance: 0,
+  totalDeposit: 0,
+  joinDate: "Hôm nay",
+  discountPercent: 0
 };
+
+const DEFAULT_USER = { ...GUEST_USER };
 
 // Bank Details for Auto Deposit System (VietQR)
 const BANK_CONFIG = {
@@ -3186,11 +3264,11 @@ const BANK_CONFIG = {
   exchangeRateUsdt: 25450
 };
 
-</script>
+  </script>
   <script>
 /**
- * KHOASMM.COM - Core Application Logic
- * Pair programming with user for SMM platform
+ * KHOASMM.COM - Core Application Logic with Multi-User Authentication
+ * Integrated with backend database and BaoStar API
  */
 
 // Application State
@@ -3202,34 +3280,256 @@ let state = {
   targetLink: "",
   selectedReaction: "like",
   orderNotes: "",
-  activeMainTab: "order_create", // "order_create", "order_log", "api_docs", "support"
+  activeMainTab: "order_create",
   orderFilter: "all",
   searchKeyword: "",
   
-  // User Profile
-  user: { ...DEFAULT_USER },
+  // User Authentication State
+  user: { ...GUEST_USER },
+  token: localStorage.getItem("khoasmm_token") || null,
   
   // Orders
-  orders: [...INITIAL_ORDERS],
+  orders: [],
   
   // Theme
   theme: localStorage.getItem("khoasmm_theme") || "light"
 };
 
 // Initialize App on DOMContentLoaded
-document.addEventListener("DOMContentLoaded", () => {
-  loadStoredData();
+document.addEventListener("DOMContentLoaded", async () => {
   applyTheme(state.theme);
-  initUserStats();
   initPlatformNavbar();
   renderCurrentService();
-  renderOrderLog();
   initEventListeners();
   updateDepositModal();
+  
+  // Check User Authentication first
+  await initAuthState();
+  
+  // Check BaoStar API connection status
   checkBaoStarApiStatus();
 });
 
-// Check Live Connection to BaoStar API
+// ==========================================================================
+// AUTHENTICATION SYSTEM (Guest vs Logged-In User)
+// ==========================================================================
+async function initAuthState() {
+  const token = localStorage.getItem("khoasmm_token");
+  if (!token) {
+    setGuestState();
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/auth/me', {
+      headers: { 'X-User-Token': token }
+    });
+    const data = await res.json();
+
+    if (data.authenticated && data.user) {
+      state.user = data.user;
+      state.user.isGuest = false;
+      renderAuthenticatedUI();
+      loadUserOrders();
+    } else {
+      localStorage.removeItem("khoasmm_token");
+      setGuestState();
+    }
+  } catch (e) {
+    console.error('Auth error:', e);
+    setGuestState();
+  }
+}
+
+function setGuestState() {
+  state.user = { ...GUEST_USER };
+  state.token = null;
+  state.orders = [];
+  renderGuestUI();
+}
+
+function renderGuestUI() {
+  // Header: Show Login / Register buttons
+  const authGuest = document.getElementById("headerAuthGuest");
+  const authUser = document.getElementById("headerAuthUser");
+  if (authGuest) authGuest.style.display = "flex";
+  if (authUser) authUser.style.display = "none";
+
+  // Sidebar: Show Guest Card, Hide User Card
+  const sidebarGuest = document.getElementById("sidebarGuestCard");
+  const sidebarUser = document.getElementById("sidebarUserCard");
+  if (sidebarGuest) sidebarGuest.style.display = "block";
+  if (sidebarUser) sidebarUser.style.display = "none";
+
+  renderOrderLog();
+  calculateTotalPrice();
+}
+
+function renderAuthenticatedUI() {
+  // Header: Hide Guest, Show User Balance & Info
+  const authGuest = document.getElementById("headerAuthGuest");
+  const authUser = document.getElementById("headerAuthUser");
+  if (authGuest) authGuest.style.display = "none";
+  if (authUser) authUser.style.display = "flex";
+
+  const balanceHeader = document.getElementById("headerBalanceAmount");
+  if (balanceHeader) {
+    balanceHeader.textContent = `${(state.user.balance || 0).toLocaleString('vi-VN')} đ`;
+  }
+
+  // Sidebar: Show User Card, Hide Guest Card
+  const sidebarGuest = document.getElementById("sidebarGuestCard");
+  const sidebarUser = document.getElementById("sidebarUserCard");
+  if (sidebarGuest) sidebarGuest.style.display = "none";
+  if (sidebarUser) sidebarUser.style.display = "block";
+
+  // Fill in User Card Details
+  document.getElementById("cardUserName").textContent = state.user.name || state.user.username;
+  document.getElementById("cardUserRank").textContent = state.user.role || "Thành viên";
+  document.getElementById("cardUserBalance").textContent = `${(state.user.balance || 0).toLocaleString('vi-VN')} đ`;
+  document.getElementById("cardUserTotalDeposit").textContent = `${(state.user.totalDeposit || 0).toLocaleString('vi-VN')} đ`;
+  document.getElementById("cardUserEmail").textContent = state.user.email || "";
+  document.getElementById("cardUserJoinDate").textContent = state.user.createdAt || "Hôm nay";
+
+  const nextTier = document.getElementById("cardUserNextTier");
+  if (nextTier) {
+    nextTier.textContent = `${state.user.role} ${(state.user.totalDeposit || 0).toLocaleString('vi-VN')}/10,000,000 đ`;
+  }
+
+  // Dynamic VietQR Memo Syntax
+  updateDepositModal();
+  calculateTotalPrice();
+}
+
+function openAuthModal(tab = "login") {
+  switchAuthTab(tab);
+  openModal("modalAuth");
+}
+
+function switchAuthTab(tab) {
+  document.querySelectorAll(".auth-nav-tab").forEach(t => {
+    t.classList.toggle("active", t.getAttribute("data-tab") === tab);
+  });
+
+  const loginForm = document.getElementById("authLoginForm");
+  const registerForm = document.getElementById("authRegisterForm");
+
+  if (loginForm) loginForm.style.display = tab === "login" ? "block" : "none";
+  if (registerForm) registerForm.style.display = tab === "register" ? "block" : "none";
+}
+
+async function handleLogin(e) {
+  if (e) e.preventDefault();
+  const usernameInput = document.getElementById("loginUsername");
+  const passwordInput = document.getElementById("loginPassword");
+
+  const username = usernameInput ? usernameInput.value.trim() : "";
+  const password = passwordInput ? passwordInput.value : "";
+
+  if (!username || !password) {
+    showToast("Vui lòng nhập tên đăng nhập và mật khẩu!", "error");
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+    const data = await res.json();
+
+    if (data.status === 'success' && data.user) {
+      localStorage.setItem("khoasmm_token", data.token);
+      state.token = data.token;
+      state.user = data.user;
+      state.user.isGuest = false;
+
+      closeModal("modalAuth");
+      renderAuthenticatedUI();
+      loadUserOrders();
+      showToast(`Đăng nhập thành công! Xin chào ${state.user.name || state.user.username}`, "success");
+    } else {
+      showToast(data.error || "Sai tên đăng nhập hoặc mật khẩu!", "error");
+    }
+  } catch (err) {
+    showToast("Không thể kết nối đến máy chủ!", "error");
+  }
+}
+
+async function handleRegister(e) {
+  if (e) e.preventDefault();
+  const nameInput = document.getElementById("regName");
+  const usernameInput = document.getElementById("regUsername");
+  const emailInput = document.getElementById("regEmail");
+  const passwordInput = document.getElementById("regPassword");
+
+  const name = nameInput ? nameInput.value.trim() : "";
+  const username = usernameInput ? usernameInput.value.trim().toLowerCase() : "";
+  const email = emailInput ? emailInput.value.trim() : "";
+  const password = passwordInput ? passwordInput.value : "";
+
+  if (!username || username.length < 3) {
+    showToast("Tên đăng nhập phải có ít nhất 3 ký tự!", "error");
+    return;
+  }
+  if (!password || password.length < 4) {
+    showToast("Mật khẩu phải có ít nhất 4 ký tự!", "error");
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/auth/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, username, email, password })
+    });
+    const data = await res.json();
+
+    if (data.status === 'success' && data.user) {
+      localStorage.setItem("khoasmm_token", data.token);
+      state.token = data.token;
+      state.user = data.user;
+      state.user.isGuest = false;
+
+      closeModal("modalAuth");
+      renderAuthenticatedUI();
+      loadUserOrders();
+      showToast(`Đăng ký tài khoản mới thành công! Số dư khởi tạo: 0 đ`, "success");
+    } else {
+      showToast(data.error || "Đăng ký không thành công!", "error");
+    }
+  } catch (err) {
+    showToast("Lỗi kết nối máy chủ!", "error");
+  }
+}
+
+function handleLogout() {
+  localStorage.removeItem("khoasmm_token");
+  setGuestState();
+  showToast("Đã đăng xuất khỏi tài khoản!", "info");
+}
+
+// Load Orders for Current User
+async function loadUserOrders() {
+  if (!state.token) return;
+  try {
+    const res = await fetch('/api/orders/my-orders', {
+      headers: { 'X-User-Token': state.token }
+    });
+    const data = await res.json();
+    if (data && data.orders) {
+      state.orders = data.orders;
+      renderOrderLog();
+    }
+  } catch (err) {
+    console.error('Error loading orders:', err);
+  }
+}
+
+// ==========================================================================
+// CHECK BAOSTAR API STATUS (For Admin Indicator)
+// ==========================================================================
 async function checkBaoStarApiStatus() {
   const pill = document.getElementById("baostarBalanceLive");
   if (!pill) return;
@@ -3239,48 +3539,16 @@ async function checkBaoStarApiStatus() {
     const data = await res.json();
     if (data && data.balance !== undefined) {
       pill.textContent = `${data.balance} ${data.currency || 'USD'} (Sẵn sàng)`;
-      pill.title = `Tài khoản BaoStar trực tuyến. Số dư: ${data.balance} ${data.currency}`;
-    } else if (data && data.error) {
-      pill.textContent = "Lỗi kết nối";
-      pill.style.color = "var(--danger)";
+    } else {
+      pill.textContent = "Offline";
     }
   } catch (err) {
-    pill.textContent = "Offline (Local)";
-    pill.style.color = "var(--text-muted)";
+    pill.textContent = "Offline";
   }
-}
-
-// Load state from localStorage if available
-function loadStoredData() {
-  const savedUser = localStorage.getItem("khoasmm_user");
-  if (savedUser) {
-    try {
-      state.user = { ...state.user, ...JSON.parse(savedUser) };
-    } catch (e) {
-      console.error("Error loading user:", e);
-    }
-  }
-
-  const savedOrders = localStorage.getItem("khoasmm_orders");
-  if (savedOrders) {
-    try {
-      state.orders = JSON.parse(savedOrders);
-    } catch (e) {
-      console.error("Error loading orders:", e);
-    }
-  }
-}
-
-function saveUserData() {
-  localStorage.setItem("khoasmm_user", JSON.stringify(state.user));
-}
-
-function saveOrdersData() {
-  localStorage.setItem("khoasmm_orders", JSON.stringify(state.orders));
 }
 
 // ==========================================================================
-// NAVIGATION & PLATFORM SELECTION
+// NAVIGATION & SERVICES RENDERING
 // ==========================================================================
 function initPlatformNavbar() {
   const container = document.getElementById("platformNavContainer");
@@ -3322,12 +3590,10 @@ function selectPlatform(platformKey) {
   state.currentCategory = null;
   state.currentServer = null;
 
-  // Update active state in navbar
   document.querySelectorAll(".platform-navbar .nav-item").forEach(el => {
     el.classList.toggle("active", el.getAttribute("data-platform") === platformKey);
   });
 
-  // Switch to order tab
   switchMainTab("order_create");
   renderCurrentService();
 }
@@ -3336,35 +3602,27 @@ function renderCurrentService() {
   const platform = SERVICES_DATA[state.currentPlatform];
   if (!platform) return;
 
-  // Set default category if none selected
   if (!state.currentCategory) {
     state.currentCategory = platform.categories[0];
   }
 
-  // Update Breadcrumb & Title
   document.getElementById("pageTitle").textContent = state.currentCategory.title || state.currentCategory.name.toUpperCase();
   document.getElementById("breadcrumbText").innerHTML = `<span>${platform.name}</span> &gt; ${state.currentCategory.name}`;
 
-  // Render Sub-service Tabs
   renderSubserviceTabs(platform);
-
-  // Render Server List
   renderServerList(state.currentCategory);
 
-  // Update Input placeholders
   const linkInput = document.getElementById("targetLinkInput");
   if (linkInput) {
     linkInput.placeholder = state.currentCategory.linkPlaceholder || "Nhập link cần chạy";
     linkInput.value = state.targetLink;
   }
 
-  // Reaction picker visibility for Facebook
   const reactionContainer = document.getElementById("reactionsPickerContainer");
   if (reactionContainer) {
     reactionContainer.style.display = state.currentCategory.hasReactions ? "block" : "none";
   }
 
-  // Recalculate
   calculateTotalPrice();
 }
 
@@ -3395,15 +3653,11 @@ function selectCategory(categoryId) {
   renderCurrentService();
 }
 
-// ==========================================================================
-// SERVER LIST & DETAILED SPECIFICATION CARD
-// ==========================================================================
 function renderServerList(category) {
   const container = document.getElementById("serverRadioList");
   if (!container) return;
 
   if (!state.currentServer && category.servers.length > 0) {
-    // Pick the recommended server or the first one
     const recommended = category.servers.find(s => s.recommended) || category.servers[0];
     state.currentServer = recommended;
   }
@@ -3417,7 +3671,7 @@ function renderServerList(category) {
         <div class="server-info-content">
           <div class="server-title-wrap">
             <span class="server-name">${srv.name}</span>
-            <span class="server-price">${srv.price.toLocaleString('vi-VN', { minimumFractionDigits: 0, maximumFractionDigits: 2 })} vnd</span>
+            <span class="server-price">${srv.price.toLocaleString('vi-VN')} vnd</span>
             ${srv.badge ? `<span class="server-badge ${srv.badgeClass || 'badge-primary'}">${srv.badge}</span>` : ''}
           </div>
         </div>
@@ -3435,14 +3689,12 @@ function selectServer(serverId) {
 
   state.currentServer = srv;
   
-  // Re-render selection highlight
   document.querySelectorAll(".server-radio-item").forEach(item => {
     item.classList.remove("selected");
     const radio = item.querySelector("input");
     if (radio) radio.checked = false;
   });
 
-  // Re-highlight the chosen item
   const allItems = document.querySelectorAll(".server-radio-item");
   state.currentCategory.servers.forEach((s, idx) => {
     if (s.id === serverId && allItems[idx]) {
@@ -3456,7 +3708,6 @@ function selectServer(serverId) {
   calculateTotalPrice();
 }
 
-// Render dynamic server specification note card (Replica of BaoStar's colorful pastel notes)
 function renderServerSpecCard(srv) {
   const container = document.getElementById("serverSpecCardContainer");
   if (!container) return;
@@ -3505,14 +3756,14 @@ function renderServerSpecCard(srv) {
 
       <div class="spec-row spec-row-drop">
         <i class="fas fa-chart-line"></i>
-        <div><span class="spec-label-title">Tỉ lệ tụt:</span> ${srv.dropRate || "Không xác định (phụ thuộc vào thuật toán)"}</div>
+        <div><span class="spec-label-title">Tỉ lệ tụt:</span> ${srv.dropRate || "Không xác định"}</div>
       </div>
     </div>
   `;
 }
 
 // ==========================================================================
-// PRICE CALCULATION & ORDER SUBMISSION
+// PRICE CALCULATION & SUBMIT ORDER TO SERVER
 // ==========================================================================
 function calculateTotalPrice() {
   if (!state.currentServer) return;
@@ -3524,12 +3775,10 @@ function calculateTotalPrice() {
   const rawUnitRate = state.currentServer.price;
   const rawTotal = qty * rawUnitRate;
 
-  // Apply User Tier Discount
-  const discountRate = state.user.discountPercent || 0;
+  const discountRate = (state.user && !state.user.isGuest) ? (state.user.discountPercent || 0) : 0;
   const discountAmount = (rawTotal * discountRate) / 100;
   const finalTotal = Math.max(0, Math.round(rawTotal - discountAmount));
 
-  // Update Summary Box
   const rateDisplay = document.getElementById("summaryUnitRate");
   const totalDisplay = document.getElementById("summaryTotalPrice");
   const discountDisplay = document.getElementById("summaryDiscount");
@@ -3555,7 +3804,6 @@ function calculateTotalPrice() {
 function handleQuantityChange(value) {
   const qtyInput = document.getElementById("orderQuantityInput");
   if (!qtyInput) return;
-
   let qty = parseInt(value);
   if (isNaN(qty) || qty < 1) qty = 1;
   qtyInput.value = qty;
@@ -3566,7 +3814,6 @@ function handleQuantityChange(value) {
 function setQuickQuantity(delta) {
   const qtyInput = document.getElementById("orderQuantityInput");
   if (!qtyInput) return;
-
   let current = parseInt(qtyInput.value) || 0;
   qtyInput.value = current + delta;
   calculateTotalPrice();
@@ -3575,12 +3822,19 @@ function setQuickQuantity(delta) {
 function setAbsoluteQuantity(qty) {
   const qtyInput = document.getElementById("orderQuantityInput");
   if (!qtyInput) return;
-
   qtyInput.value = qty;
   calculateTotalPrice();
 }
 
-function submitOrder() {
+// SUBMIT ORDER (Requires Login)
+async function submitOrder() {
+  // If guest, require login
+  if (!state.user || state.user.isGuest || !state.token) {
+    showToast("Vui lòng đăng nhập hoặc đăng ký tài khoản để tạo đơn hàng!", "error");
+    openAuthModal("login");
+    return;
+  }
+
   const linkInput = document.getElementById("targetLinkInput");
   const targetLink = linkInput ? linkInput.value.trim() : "";
   const notesInput = document.getElementById("orderNotesInput");
@@ -3609,90 +3863,51 @@ function submitOrder() {
   const finalTotal = Math.round(rawTotal - discountAmount);
 
   // Check balance
-  if (state.user.balance < finalTotal) {
-    const shortage = finalTotal - state.user.balance;
-    showToast(`Số dư không đủ! Bạn cần thêm ${shortage.toLocaleString('vi-VN')} đ. Đang mở nạp tiền...`, "error");
-    setTimeout(() => {
-      openDepositModal(shortage);
-    }, 1200);
+  if ((state.user.balance || 0) < finalTotal) {
+    const shortage = finalTotal - (state.user.balance || 0);
+    showToast(`Số dư không đủ! Bạn cần nạp thêm ${shortage.toLocaleString('vi-VN')} đ. Đang mở nạp tiền...`, "error");
+    setTimeout(() => { openDepositModal(shortage); }, 1200);
     return;
   }
 
-  // Deduct balance
-  state.user.balance -= finalTotal;
-  saveUserData();
-  initUserStats();
+  showToast("Đang tạo đơn và đẩy sang hệ thống xử lý...", "info");
 
-  // Create new order entry
-  const newOrderId = `KHOA-${Math.floor(100000 + Math.random() * 900000)}`;
-  const now = new Date();
-  const dateStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
-
-  const orderItem = {
-    id: newOrderId,
-    serviceName: state.currentCategory.name,
-    serverName: state.currentServer.name,
-    target: targetLink,
-    quantity: qty,
-    startCount: 0,
-    remains: qty,
-    price: finalTotal,
-    status: "running",
-    statusText: "Đang chạy",
-    createdAt: dateStr,
-    notes: notes,
-    baostarServiceId: state.currentServer.baostarServiceId || null
-  };
-
-  state.orders.unshift(orderItem);
-  saveOrdersData();
-  renderOrderLog();
-
-  // Reset link input
-  if (linkInput) linkInput.value = "";
-  if (notesInput) notesInput.value = "";
-  state.targetLink = "";
-
-  // REAL API DISPATCH TO BAOSTAR
-  if (state.currentServer.baostarServiceId) {
-    showToast(`Đang đẩy đơn #${newOrderId} sang hệ thống BaoStar...`, "info");
-    
-    fetch('/api/baostar/order', {
+  try {
+    const res = await fetch('/api/orders/create', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'X-User-Token': state.token
+      },
       body: JSON.stringify({
-        service: state.currentServer.baostarServiceId,
+        serviceId: state.currentServer.id,
+        baostarServiceId: state.currentServer.baostarServiceId || null,
+        serviceName: state.currentCategory.name,
+        serverName: state.currentServer.name,
         link: targetLink,
-        quantity: qty
+        quantity: qty,
+        price: finalTotal,
+        notes: notes
       })
-    })
-    .then(res => res.json())
-    .then(resData => {
-      console.log('BaoStar Order Response:', resData);
-      if (resData.response && resData.response.order) {
-        orderItem.id = `BAO-${resData.response.order}`;
-        orderItem.statusText = "Đang chạy (BaoStar)";
-        orderItem.notes = `BaoStar Order ID: ${resData.response.order}`;
-        saveOrdersData();
-        renderOrderLog();
-        showToast(`BaoStar đã nhận đơn #${resData.response.order} thành công!`, "success");
-      } else if (resData.response && resData.response.error) {
-        orderItem.status = "processing";
-        orderItem.statusText = "Chờ xử lý (Nguồn)";
-        orderItem.notes = `BaoStar: ${resData.response.error}`;
-        saveOrdersData();
-        renderOrderLog();
-        showToast(`Đã lưu đơn vào khoasmm.com. Phản hồi BaoStar: ${resData.response.error}`, "info");
-      } else {
-        showToast(`Tạo đơn #${newOrderId} thành công!`, "success");
-      }
-    })
-    .catch(err => {
-      console.error('Error dispatching to BaoStar:', err);
-      showToast(`Đã lưu đơn #${newOrderId} trên khoasmm.com!`, "success");
     });
-  } else {
-    showToast(`Tạo đơn hàng #${newOrderId} thành công! Hệ thống đang xử lý.`, "success");
+
+    const data = await res.json();
+
+    if (data.status === 'success' && data.order) {
+      state.user.balance = data.newBalance;
+      renderAuthenticatedUI();
+      loadUserOrders();
+
+      if (linkInput) linkInput.value = "";
+      if (notesInput) notesInput.value = "";
+      state.targetLink = "";
+
+      showToast(`Tạo đơn hàng #${data.order.id} thành công!`, "success");
+    } else {
+      showToast(data.error || "Không thể tạo đơn hàng!", "error");
+    }
+  } catch (err) {
+    showToast("Lỗi kết nối khi gửi đơn!", "error");
   }
 }
 
@@ -3703,20 +3918,30 @@ function renderOrderLog() {
   const tbody = document.getElementById("orderLogTableBody");
   if (!tbody) return;
 
+  if (state.user.isGuest) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="8" style="text-align: center; padding: 40px; color: var(--text-muted);">
+          <i class="fas fa-lock" style="font-size: 32px; margin-bottom: 10px; display: block; opacity: 0.5;"></i>
+          Vui lòng <a href="javascript:void(0)" onclick="openAuthModal('login')" style="color: var(--primary); font-weight: 700;">Đăng nhập</a> để xem nhật ký đơn hàng của bạn
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
   let filtered = state.orders;
 
-  // Filter by status
   if (state.orderFilter !== "all") {
     filtered = filtered.filter(o => o.status === state.orderFilter);
   }
 
-  // Search filter
   if (state.searchKeyword) {
     const kw = state.searchKeyword.toLowerCase();
     filtered = filtered.filter(o => 
       o.id.toLowerCase().includes(kw) || 
-      o.target.toLowerCase().includes(kw) || 
-      o.serviceName.toLowerCase().includes(kw)
+      (o.target && o.target.toLowerCase().includes(kw)) || 
+      (o.serviceName && o.serviceName.toLowerCase().includes(kw))
     );
   }
 
@@ -3725,7 +3950,7 @@ function renderOrderLog() {
       <tr>
         <td colspan="8" style="text-align: center; padding: 40px; color: var(--text-muted);">
           <i class="fas fa-inbox" style="font-size: 32px; margin-bottom: 10px; display: block; opacity: 0.5;"></i>
-          Không tìm thấy đơn hàng nào phù hợp
+          Bạn chưa có đơn hàng nào
         </td>
       </tr>
     `;
@@ -3787,12 +4012,11 @@ function copyOrderDetails(orderId) {
 }
 
 // ==========================================================================
-// TABS SWITCHER (Tạo đơn hàng vs Nhật ký đơn hàng vs Bảng giá vs Hỗ trợ)
+// TABS SWITCHER
 // ==========================================================================
 function switchMainTab(tabId) {
   state.activeMainTab = tabId;
 
-  // Toggle buttons
   document.querySelectorAll(".section-tab-btn").forEach(btn => {
     btn.classList.toggle("active", btn.getAttribute("data-tab") === tabId);
   });
@@ -3808,42 +4032,19 @@ function switchMainTab(tabId) {
   if (supportContainer) supportContainer.style.display = tabId === "support" ? "block" : "none";
 
   if (tabId === "order_log") {
-    renderOrderLog();
+    loadUserOrders();
   }
 }
 
 // ==========================================================================
-// USER STATS & WALLET (Sidebar & Header)
-// ==========================================================================
-function initUserStats() {
-  // Balance Header
-  const headerBalance = document.getElementById("headerBalanceAmount");
-  if (headerBalance) {
-    headerBalance.textContent = `${state.user.balance.toLocaleString('vi-VN')} đ`;
-  }
-
-  // Sidebar Card
-  const userNameEl = document.getElementById("cardUserName");
-  const userRankEl = document.getElementById("cardUserRank");
-  const userBalanceEl = document.getElementById("cardUserBalance");
-  const userTotalDepositEl = document.getElementById("cardUserTotalDeposit");
-  const userEmailEl = document.getElementById("cardUserEmail");
-  const userJoinDateEl = document.getElementById("cardUserJoinDate");
-  const userNextTierEl = document.getElementById("cardUserNextTier");
-
-  if (userNameEl) userNameEl.textContent = state.user.name;
-  if (userRankEl) userRankEl.textContent = state.user.role;
-  if (userBalanceEl) userBalanceEl.textContent = `${state.user.balance.toLocaleString('vi-VN')} đ`;
-  if (userTotalDepositEl) userTotalDepositEl.textContent = `${state.user.totalDeposit.toLocaleString('vi-VN')} đ`;
-  if (userEmailEl) userEmailEl.textContent = state.user.email;
-  if (userJoinDateEl) userJoinDateEl.textContent = state.user.joinDate;
-  if (userNextTierEl) userNextTierEl.textContent = `${state.user.role} ${state.user.totalDeposit.toLocaleString('vi-VN')}/99,999,999,999`;
-}
-
-// ==========================================================================
-// AUTOMATED DEPOSIT SYSTEM (VietQR & Simulator)
+// AUTOMATED DEPOSIT SYSTEM (VietQR)
 // ==========================================================================
 function openDepositModal(defaultAmount = 50000) {
+  if (state.user.isGuest) {
+    showToast("Vui lòng đăng nhập hoặc đăng ký tài khoản trước khi nạp tiền!", "error");
+    openAuthModal("login");
+    return;
+  }
   const amountInput = document.getElementById("depositAmountInput");
   if (amountInput) amountInput.value = Math.max(10000, defaultAmount);
   updateDepositModal();
@@ -3853,9 +4054,11 @@ function openDepositModal(defaultAmount = 50000) {
 function updateDepositModal() {
   const amountInput = document.getElementById("depositAmountInput");
   const amount = parseInt(amountInput ? amountInput.value : 50000) || 50000;
-  const memoCode = `${BANK_CONFIG.syntaxPrefix} ${state.user.email.split('@')[0]}`;
+  
+  // Syntax per user: KHOASMM <username>
+  const username = (state.user && !state.user.isGuest) ? state.user.username : "khoa";
+  const memoCode = `${BANK_CONFIG.syntaxPrefix} ${username}`;
 
-  // Update bank info labels
   const bankNameEl = document.getElementById("depositBankName");
   const bankAccEl = document.getElementById("depositBankAcc");
   const bankOwnerEl = document.getElementById("depositBankOwner");
@@ -3866,7 +4069,6 @@ function updateDepositModal() {
   if (bankOwnerEl) bankOwnerEl.textContent = BANK_CONFIG.accountName;
   if (memoEl) memoEl.textContent = memoCode;
 
-  // Real Dynamic VietQR Generation
   const qrImg = document.getElementById("vietQrImage");
   if (qrImg) {
     const encodedMemo = encodeURIComponent(memoCode);
@@ -3875,18 +4077,36 @@ function updateDepositModal() {
   }
 }
 
-function simulateSuccessfulDeposit() {
+async function simulateSuccessfulDeposit() {
+  if (state.user.isGuest) {
+    showToast("Vui lòng đăng nhập trước!", "error");
+    return;
+  }
+
   const amountInput = document.getElementById("depositAmountInput");
   const amount = parseInt(amountInput ? amountInput.value : 50000) || 50000;
 
-  state.user.balance += amount;
-  state.user.totalDeposit += amount;
-  saveUserData();
-  initUserStats();
-  calculateTotalPrice();
+  try {
+    const res = await fetch('/api/user/deposit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-User-Token': state.token
+      },
+      body: JSON.stringify({ amount })
+    });
+    const data = await res.json();
 
-  closeModal("modalDeposit");
-  showToast(`Nạp thành công +${amount.toLocaleString('vi-VN')} đ vào tài khoản khoasmm.com!`, "success");
+    if (data.status === 'success') {
+      state.user.balance = data.newBalance;
+      state.user.totalDeposit = data.totalDeposit;
+      renderAuthenticatedUI();
+      closeModal("modalDeposit");
+      showToast(`Nạp thành công +${amount.toLocaleString('vi-VN')} đ vào tài khoản ${state.user.username}!`, "success");
+    }
+  } catch (err) {
+    showToast("Lỗi nạp tiền!", "error");
+  }
 }
 
 function copyText(text, label = "thông tin") {
@@ -3895,9 +4115,6 @@ function copyText(text, label = "thông tin") {
   });
 }
 
-// ==========================================================================
-// THEME & INTERFACE SETTINGS
-// ==========================================================================
 function toggleTheme() {
   const newTheme = state.theme === "light" ? "dark" : "light";
   applyTheme(newTheme);
@@ -3914,9 +4131,6 @@ function applyTheme(theme) {
   }
 }
 
-// ==========================================================================
-// MODAL CONTROLLERS & TOAST
-// ==========================================================================
 function openModal(modalId) {
   const modal = document.getElementById(modalId);
   if (modal) modal.classList.add("active");
@@ -3953,18 +4167,15 @@ function showToast(message, type = "info") {
 }
 
 function showFreeServiceToast() {
-  showToast("Dịch vụ Miễn Phí (Buff View/Like Free) mở vào 12h00 & 20h00 mỗi ngày!", "info");
+  showToast("Dịch vụ Miễn Phí mở vào 12h00 & 20h00 mỗi ngày!", "info");
 }
 
-// Event Listeners Registration
 function initEventListeners() {
-  // Global search
   const searchInput = document.getElementById("headerGlobalSearch");
   if (searchInput) {
     searchInput.addEventListener("input", (e) => {
       const q = e.target.value.toLowerCase().trim();
       if (!q) return;
-      // Search across categories
       for (const pKey in SERVICES_DATA) {
         const cat = SERVICES_DATA[pKey].categories.find(c => c.name.toLowerCase().includes(q));
         if (cat) {
@@ -3976,7 +4187,6 @@ function initEventListeners() {
     });
   }
 
-  // Close modals when clicking outside
   document.querySelectorAll(".modal-overlay").forEach(overlay => {
     overlay.addEventListener("click", (e) => {
       if (e.target === overlay) {
@@ -3986,16 +4196,13 @@ function initEventListeners() {
   });
 }
 
-</script>
+  </script>
   <script>
-    // Helper scripts
     function toggleFullScreen() {
       if (!document.fullscreenElement) {
         document.documentElement.requestFullscreen();
       } else {
-        if (document.exitFullscreen) {
-          document.exitFullscreen();
-        }
+        if (document.exitFullscreen) document.exitFullscreen();
       }
     }
 
