@@ -72,6 +72,10 @@ function loadDb() {
       };
       saveDb(parsed);
     }
+    if (!parsed.depositRequests) {
+      parsed.depositRequests = [];
+      saveDb(parsed);
+    }
     return parsed;
   } catch (e) {
     console.error('Error loading DB:', e);
@@ -293,27 +297,48 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  if (url === '/api/user/deposit' && req.method === 'POST') {
+  // CUSTOMER SUBMIT DEPOSIT NOTIFICATION: POST /api/user/deposit-notify
+  if (url === '/api/user/deposit-notify' && req.method === 'POST') {
     const user = getAuthUser();
     if (!user) {
       res.writeHead(401, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ error: 'Vui lòng đăng nhập trước khi nạp tiền!' }));
+      res.end(JSON.stringify({ error: 'Vui lòng đăng nhập trước khi gửi thông báo nạp tiền!' }));
       return;
     }
 
     const body = await readJsonBody();
-    const amount = parseInt(body.amount) || 50000;
+    const amount = parseInt(body.amount) || 0;
+    if (amount <= 0) {
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Số tiền nạp phải lớn hơn 0 đ!' }));
+      return;
+    }
 
     const db = loadDb();
-    db.users[user.username].balance += amount;
-    db.users[user.username].totalDeposit += amount;
+    if (!db.depositRequests) db.depositRequests = [];
+
+    const reqId = 'DEP-' + Math.floor(100000 + Math.random() * 900000);
+    const newReq = {
+      id: reqId,
+      username: user.username,
+      name: user.name || user.username,
+      amount: amount,
+      bank: body.bank || db.settings.bankName || 'MBBank',
+      txCode: body.txCode || '',
+      note: body.note || '',
+      status: 'pending',
+      statusText: 'Chờ duyệt',
+      createdAt: new Date().toISOString().replace('T', ' ').substring(0, 19)
+    };
+
+    db.depositRequests.unshift(newReq);
     saveDb(db);
 
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({
       status: 'success',
-      newBalance: db.users[user.username].balance,
-      totalDeposit: db.users[user.username].totalDeposit
+      message: `Đã gửi thông báo nạp ${amount.toLocaleString('vi-VN')} đ! Admin sẽ kiểm tra và cộng tiền trong 1-3 phút.`,
+      request: newReq
     }));
     return;
   }
@@ -349,7 +374,8 @@ const server = http.createServer(async (req, res) => {
       totalRevenue: totalRevenue,
       settings: db.settings,
       users: usersList,
-      orders: db.orders.slice(0, 50)
+      orders: db.orders.slice(0, 50),
+      depositRequests: db.depositRequests || []
     }));
     return;
   }
@@ -495,6 +521,63 @@ const server = http.createServer(async (req, res) => {
       order
     }));
     return;
+  }
+
+  // 6. ADMIN APPROVE OR REJECT DEPOSIT: POST /api/admin/deposit/action
+  if (url === '/api/admin/deposit/action' && req.method === 'POST') {
+    const user = getAuthUser();
+    if (!user || user.role !== 'Admin') {
+      res.writeHead(403, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Chỉ Admin mới có quyền thực hiện!' }));
+      return;
+    }
+
+    const body = await readJsonBody();
+    const { reqId, action } = body;
+    const db = loadDb();
+    if (!db.depositRequests) db.depositRequests = [];
+
+    const reqItem = db.depositRequests.find(d => d.id === reqId);
+    if (!reqItem) {
+      res.writeHead(404, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Không tìm thấy yêu cầu nạp tiền này!' }));
+      return;
+    }
+
+    if (action === 'approve') {
+      if (reqItem.status === 'approved') {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Yêu cầu này đã được duyệt trước đó rồi!' }));
+        return;
+      }
+
+      reqItem.status = 'approved';
+      reqItem.statusText = 'Đã cộng tiền';
+
+      if (db.users[reqItem.username]) {
+        db.users[reqItem.username].balance += reqItem.amount;
+        db.users[reqItem.username].totalDeposit += reqItem.amount;
+      }
+
+      saveDb(db);
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({
+        status: 'success',
+        message: `Đã duyệt nạp và cộng +${reqItem.amount.toLocaleString('vi-VN')} đ cho ${reqItem.username}!`,
+        newBalance: db.users[reqItem.username] ? db.users[reqItem.username].balance : 0
+      }));
+      return;
+    } else if (action === 'reject') {
+      reqItem.status = 'rejected';
+      reqItem.statusText = 'Đã từ chối';
+      saveDb(db);
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({
+        status: 'success',
+        message: `Đã từ chối yêu cầu nạp tiền ${reqId}!`
+      }));
+      return;
+    }
   }
 
   // =========================================================================

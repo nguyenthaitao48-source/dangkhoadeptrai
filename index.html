@@ -2013,6 +2013,463 @@ button, input, select, textarea {
   flex: 1;
 }
 
+/* ==========================================================================
+   USER PROFILE CARD & SIDEBAR AVATAR (STUNNING MODERN SAAS LOOK)
+   ========================================================================== */
+.sidebar-column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.user-profile-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 22px 18px;
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+  transition: var(--transition);
+}
+
+.user-profile-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: rgba(239, 68, 68, 0.25);
+}
+
+.user-avatar-wrap {
+  position: relative;
+  width: 74px;
+  height: 74px;
+  margin: 0 auto 12px;
+  border-radius: 50%;
+  padding: 3px;
+  background: linear-gradient(135deg, #ef4444, #f59e0b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-avatar-img {
+  width: 68px !important;
+  height: 68px !important;
+  max-width: 68px !important;
+  max-height: 68px !important;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  background: var(--bg-card);
+}
+
+.user-status-online {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 14px;
+  height: 14px;
+  background: #10b981;
+  border: 2px solid var(--bg-card);
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);
+}
+
+.user-info-text {
+  margin-bottom: 14px;
+}
+
+.user-name {
+  font-family: 'Outfit', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.user-rank-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 12px;
+  font-size: 11.5px;
+  font-weight: 800;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(249, 115, 22, 0.12));
+  color: var(--primary);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+.user-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  margin-bottom: 14px;
+  text-align: left;
+}
+
+.user-stat-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-stat-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-bottom: 3px;
+}
+
+.user-stat-value {
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.text-success {
+  color: #059669 !important;
+}
+
+.btn-deposit-sidebar {
+  width: 100%;
+  padding: 11px 16px;
+  font-size: 13px;
+  font-weight: 800;
+  border-radius: var(--radius-md);
+  border: none;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+  transition: var(--transition);
+}
+
+.btn-deposit-sidebar:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.35);
+}
+
+.user-meta-list {
+  border-top: 1px dashed var(--border-color);
+  padding-top: 12px;
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 12px;
+  text-align: left;
+}
+
+.user-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text-muted);
+}
+
+.meta-val {
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+/* SIDEBAR WIDGETS */
+.sidebar-widget {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.sidebar-widget-header {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+/* ==========================================================================
+   ORDER WORKSPACE: PRICE BOX & "MUA NGAY DỊCH VỤ"
+   ========================================================================== */
+.form-help-text {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  margin-top: 5px;
+}
+
+.price-calc-box {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.05), rgba(249, 115, 22, 0.08));
+  border: 1.5px solid rgba(239, 68, 68, 0.25);
+  border-radius: var(--radius-md);
+  padding: 10px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 46px;
+}
+
+.price-calc-val {
+  font-family: 'Outfit', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.price-calc-unit {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-left: 4px;
+}
+
+.price-formula {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 600;
+  font-family: monospace;
+}
+
+.order-action-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+  flex-wrap: wrap;
+}
+
+.btn-create-order {
+  padding: 13px 28px;
+  font-size: 15px;
+  font-weight: 800;
+  border-radius: var(--radius-md);
+  border: none;
+  background: linear-gradient(135deg, #ef4444, #f97316);
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35);
+  transition: var(--transition);
+}
+
+.btn-create-order:hover {
+  filter: brightness(1.08);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.45);
+}
+
+.btn-create-order:active {
+  transform: translateY(0);
+}
+
+.order-guarantee-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   DEPOSIT MODAL (VIETQR PRO)
+   ========================================================================== */
+.deposit-grid {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 640px) {
+  .deposit-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.vietqr-box {
+  text-align: center;
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 14px;
+}
+
+.vietqr-frame {
+  background: #ffffff;
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  display: inline-block;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.vietqr-img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.deposit-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.deposit-info-card {
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.deposit-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  padding: 4px 0;
+}
+
+.info-label {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.info-val {
+  color: var(--text-main);
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.font-mono {
+  font-family: monospace;
+}
+
+.copy-mini-btn {
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--primary);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.copy-mini-btn:hover {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+/* API DOCS & MISC */
+.api-doc-wrap {
+  padding: 10px 0;
+}
+
+.api-doc-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.api-box {
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-bottom: 14px;
+}
+
+.api-box-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 8px;
+}
+
+.api-code-block {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.admin-role-select {
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-main);
+  cursor: pointer;
+}
+
+/* ORDER TABLE */
+.order-table-container {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  margin-top: 14px;
+}
+
+.order-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  text-align: left;
+}
+
+.order-table th {
+  background: var(--bg-card-subtle);
+  padding: 12px 14px;
+  font-weight: 700;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-color);
+  white-space: nowrap;
+}
+
+.order-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-color);
+  vertical-align: middle;
+}
+
+.order-table tr:hover td {
+  background: rgba(239, 68, 68, 0.02);
+}
+
+
+
 
 
   </style>
@@ -2584,15 +3041,49 @@ button, input, select, textarea {
               </div>
             </div>
 
-            <div style="font-size: 12px; color: var(--text-muted); margin-top: 10px; line-height: 1.5;">
-              <i class="fas fa-exclamation-triangle" style="color: #f59e0b;"></i>
-              <strong>Lưu ý:</strong> Vui lòng điền chính xác nội dung chuyển khoản để hệ thống cộng tiền tự động sau 1-3 phút.
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 10px; line-height: 1.5; background: var(--bg-card); padding: 10px; border-radius: 6px; border: 1px dashed var(--border-color);">
+              <i class="fas fa-shield-alt" style="color: #10b981;"></i>
+              <strong>Đảm bảo an toàn:</strong> Tiền sẽ được cộng tự động vào ví sau khi nhận được chuyển khoản. Nếu cần cộng ngay hoặc hỗ trợ gấp, vui lòng bấm nút Zalo hoặc Telegram bên dưới.
             </div>
 
-            <div style="margin-top: 12px;">
-              <button class="btn-deposit-sidebar" style="background: linear-gradient(135deg, #10b981, #059669); color: #fff;" onclick="simulateSuccessfulDeposit()">
-                <i class="fas fa-check-circle"></i> Tôi đã chuyển khoản thành công
+            <!-- Action buttons for user -->
+            <div style="margin-top: 14px; display: flex; flex-direction: column; gap: 8px;">
+              <button class="btn-deposit-sidebar" onclick="toggleDepositConfirmBox()">
+                <i class="fas fa-paper-plane"></i> Tôi đã chuyển khoản - Gửi xác nhận
               </button>
+              
+              <div style="display: flex; gap: 8px;">
+                <a href="https://zalo.me/0987654321" target="_blank" class="copy-btn" style="flex: 1; text-align: center; text-decoration: none; padding: 9px; background: #0068ff; color: #fff; border-radius: 6px; font-weight: 700; font-size: 12px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                  <i class="fas fa-comment-dots"></i> Chat Zalo Admin
+                </a>
+                <a href="https://t.me/khoasmm" target="_blank" class="copy-btn" style="flex: 1; text-align: center; text-decoration: none; padding: 9px; background: #0088cc; color: #fff; border-radius: 6px; font-weight: 700; font-size: 12px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                  <i class="fab fa-telegram-plane"></i> Chat Telegram
+                </a>
+              </div>
+            </div>
+
+            <!-- Expandable confirmation form -->
+            <div id="depositNotifyFormBox" style="display: none; margin-top: 12px; background: var(--bg-card); border: 1.5px solid #10b981; border-radius: 8px; padding: 12px;">
+              <div style="font-weight: 700; font-size: 13px; color: #059669; margin-bottom: 8px;">
+                <i class="fas fa-receipt"></i> Gửi thông tin để Admin duyệt cộng tiền:
+              </div>
+              <form onsubmit="submitDepositNotification(event)">
+                <div class="form-group" style="margin-bottom: 8px;">
+                  <label style="font-size: 11.5px;">Số tiền đã chuyển (VNĐ):</label>
+                  <input type="number" id="depositNotifyAmount" class="form-control" style="font-size: 13px; padding: 6px 10px;" required>
+                </div>
+                <div class="form-group" style="margin-bottom: 8px;">
+                  <label style="font-size: 11.5px;">Mã giao dịch / Mã tham chiếu ngân hàng:</label>
+                  <input type="text" id="depositNotifyTxCode" class="form-control" placeholder="Ví dụ: FT24101499281..." style="font-size: 13px; padding: 6px 10px;">
+                </div>
+                <div class="form-group" style="margin-bottom: 10px;">
+                  <label style="font-size: 11.5px;">Ghi chú / STK gửi (nếu có):</label>
+                  <input type="text" id="depositNotifyNote" class="form-control" placeholder="Tên người gửi hoặc ghi chú..." style="font-size: 13px; padding: 6px 10px;">
+                </div>
+                <button type="submit" class="btn-deposit-quick" style="width: 100%; padding: 9px; font-size: 12.5px;">
+                  <i class="fas fa-check"></i> Xác nhận &amp; Gửi thông báo
+                </button>
+              </form>
             </div>
 
           </div>
@@ -2635,6 +3126,9 @@ button, input, select, textarea {
         </button>
         <button class="admin-nav-tab" data-tab="users" onclick="switchAdminTab('users')">
           <i class="fas fa-users-cog"></i> Quản lý Thành viên
+        </button>
+        <button class="admin-nav-tab" data-tab="deposits" onclick="switchAdminTab('deposits')">
+          <i class="fas fa-money-check-alt"></i> Duyệt Nạp Tiền <span id="adminDepositPendingBadge" class="server-badge badge-hot" style="display: none; padding: 2px 7px; font-size: 10px; margin-left: 4px;">0</span>
         </button>
         <button class="admin-nav-tab" data-tab="orders" onclick="switchAdminTab('orders')">
           <i class="fas fa-boxes"></i> Quản lý Đơn hàng
@@ -2779,6 +3273,33 @@ button, input, select, textarea {
                 </tr>
               </thead>
               <tbody id="adminUsersTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: DEPOSITS APPROVAL -->
+      <div id="adminTab_deposits" style="display: none;">
+        <div class="admin-card-section">
+          <div class="admin-section-header">
+            <i class="fas fa-money-check-alt" style="color: #059669;"></i>
+            <span>Danh Sách Yêu Cầu Nạp Tiền Của Khách Hàng (Duyệt Tiền)</span>
+          </div>
+          <div class="admin-table-container">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Mã YC</th>
+                  <th>Khách hàng</th>
+                  <th>Số tiền</th>
+                  <th>Mã GD ngân hàng</th>
+                  <th>Ghi chú</th>
+                  <th>Trạng thái</th>
+                  <th>Thời gian</th>
+                  <th>Thao tác duyệt</th>
+                </tr>
+              </thead>
+              <tbody id="adminDepositsTableBody"></tbody>
             </table>
           </div>
         </div>
@@ -4128,7 +4649,7 @@ function switchAdminTab(tab) {
     t.classList.toggle("active", t.getAttribute("data-tab") === tab);
   });
 
-  const tabs = ['overview', 'users', 'pricing', 'orders', 'settings'];
+  const tabs = ['overview', 'pricing', 'users', 'deposits', 'orders', 'settings'];
   tabs.forEach(t => {
     const el = document.getElementById(`adminTab_${t}`);
     if (el) el.style.display = (t === tab) ? "block" : "none";
@@ -4180,9 +4701,102 @@ async function loadAdminOverview() {
 
       // 4. Render Orders Table
       renderAdminOrdersTable(data.orders || []);
+
+      // 5. Render Deposit Requests Table & Badge
+      const depositRequests = data.depositRequests || [];
+      renderAdminDepositsTable(depositRequests);
+      const pendingCount = depositRequests.filter(d => d.status === 'pending').length;
+      const pendingBadge = document.getElementById("adminDepositPendingBadge");
+      if (pendingBadge) {
+        pendingBadge.textContent = pendingCount;
+        pendingBadge.style.display = pendingCount > 0 ? "inline-block" : "none";
+      }
     }
   } catch (err) {
     console.error('Error loading admin overview:', err);
+  }
+}
+
+function renderAdminDepositsTable(requests) {
+  const tbody = document.getElementById("adminDepositsTableBody");
+  if (!tbody) return;
+
+  let html = "";
+  requests.forEach(r => {
+    const isPending = r.status === 'pending';
+    const isApproved = r.status === 'approved';
+    const isRejected = r.status === 'rejected';
+    const badgeClass = isApproved ? 'badge-hot' : (isRejected ? 'badge-custom' : 'badge-primary');
+
+    html += `
+      <tr>
+        <td style="font-family: monospace; font-weight: 700;">${r.id}</td>
+        <td><strong>${r.username}</strong></td>
+        <td style="font-family: 'Outfit'; font-weight: 800; color: #059669;">${(r.amount || 0).toLocaleString('vi-VN')} đ</td>
+        <td><span style="font-family: monospace; font-weight: 600;">${r.txCode || 'Không có'}</span></td>
+        <td style="font-size: 11.5px; color: var(--text-muted);">${r.note || ''}</td>
+        <td><span class="server-badge ${badgeClass}">${r.statusText || r.status}</span></td>
+        <td style="font-size: 11px;">${r.createdAt}</td>
+        <td>
+          <div style="display: flex; gap: 4px;">
+            ${isPending ? `
+              <button class="admin-action-btn btn-add-money" onclick="adminApproveDeposit('${r.id}')"><i class="fas fa-check"></i> Duyệt +Cộng tiền</button>
+              <button class="admin-action-btn btn-deduct-money" onclick="adminRejectDeposit('${r.id}')"><i class="fas fa-times"></i> Từ chối</button>
+            ` : `<span style="font-size: 11px; color: var(--text-muted);">${r.statusText}</span>`}
+          </div>
+        </td>
+      </tr>
+    `;
+  });
+
+  tbody.innerHTML = html || `<tr><td colspan="8" style="text-align: center; padding: 25px; color: var(--text-muted);">Chưa có yêu cầu nạp tiền nào</td></tr>`;
+}
+
+async function adminApproveDeposit(reqId) {
+  if (!confirm(`Xác nhận DUYỆT và CỘNG TIỀN cho yêu cầu nạp ${reqId}?`)) return;
+
+  try {
+    const res = await fetch('/api/admin/deposit/action', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-User-Token': state.token
+      },
+      body: JSON.stringify({ reqId, action: 'approve' })
+    });
+    const data = await res.json();
+    if (data.status === 'success') {
+      showToast(data.message, "success");
+      loadAdminOverview();
+    } else {
+      showToast(data.error || "Không thể duyệt nạp tiền!", "error");
+    }
+  } catch (err) {
+    showToast("Lỗi kết nối máy chủ!", "error");
+  }
+}
+
+async function adminRejectDeposit(reqId) {
+  if (!confirm(`Xác nhận TỪ CHỐI yêu cầu nạp ${reqId}?`)) return;
+
+  try {
+    const res = await fetch('/api/admin/deposit/action', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-User-Token': state.token
+      },
+      body: JSON.stringify({ reqId, action: 'reject' })
+    });
+    const data = await res.json();
+    if (data.status === 'success') {
+      showToast(data.message, "info");
+      loadAdminOverview();
+    } else {
+      showToast(data.error || "Không thể từ chối!", "error");
+    }
+  } catch (err) {
+    showToast("Lỗi kết nối máy chủ!", "error");
   }
 }
 
@@ -5072,35 +5686,66 @@ function updateDepositModal() {
   }
 }
 
-async function simulateSuccessfulDeposit() {
+function toggleDepositConfirmBox() {
+  if (state.user.isGuest) {
+    showToast("Vui lòng đăng nhập trước khi nạp tiền!", "error");
+    openAuthModal("login");
+    return;
+  }
+  const amountInput = document.getElementById("depositAmountInput");
+  const amount = parseInt(amountInput ? amountInput.value : 50000) || 50000;
+  
+  const notifyAmount = document.getElementById("depositNotifyAmount");
+  if (notifyAmount) notifyAmount.value = amount;
+  
+  const formBox = document.getElementById("depositNotifyFormBox");
+  if (formBox) {
+    const isShown = formBox.style.display === "block";
+    formBox.style.display = isShown ? "none" : "block";
+    if (!isShown) {
+      setTimeout(() => formBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+    }
+  }
+}
+
+async function submitDepositNotification(e) {
+  if (e) e.preventDefault();
   if (state.user.isGuest) {
     showToast("Vui lòng đăng nhập trước!", "error");
     return;
   }
 
-  const amountInput = document.getElementById("depositAmountInput");
-  const amount = parseInt(amountInput ? amountInput.value : 50000) || 50000;
+  const amountInput = document.getElementById("depositNotifyAmount");
+  const amount = parseInt(amountInput ? amountInput.value : 0) || 0;
+  const txCode = (document.getElementById("depositNotifyTxCode")?.value || "").trim();
+  const note = (document.getElementById("depositNotifyNote")?.value || "").trim();
+
+  if (!amount || amount <= 0) {
+    showToast("Số tiền nạp phải lớn hơn 0 đ!", "error");
+    return;
+  }
 
   try {
-    const res = await fetch('/api/user/deposit', {
+    const res = await fetch('/api/user/deposit-notify', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'X-User-Token': state.token
       },
-      body: JSON.stringify({ amount })
+      body: JSON.stringify({ amount, txCode, note })
     });
     const data = await res.json();
 
     if (data.status === 'success') {
-      state.user.balance = data.newBalance;
-      state.user.totalDeposit = data.totalDeposit;
-      renderAuthenticatedUI();
+      showToast(data.message, "success");
+      const formBox = document.getElementById("depositNotifyFormBox");
+      if (formBox) formBox.style.display = "none";
       closeModal("modalDeposit");
-      showToast(`Nạp thành công +${amount.toLocaleString('vi-VN')} đ vào tài khoản ${state.user.username}!`, "success");
+    } else {
+      showToast(data.error || "Không thể gửi thông báo!", "error");
     }
   } catch (err) {
-    showToast("Lỗi nạp tiền!", "error");
+    showToast("Lỗi kết nối khi gửi thông báo nạp tiền!", "error");
   }
 }
 
