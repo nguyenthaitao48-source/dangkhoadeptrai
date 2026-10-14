@@ -68,7 +68,1624 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
   <!-- Custom Stylesheet -->
-  <link rel="stylesheet" href="css/style.css">
+  <style>
+/* ==========================================================================
+   KHOASMM.COM - STYLESHEET (Design System inspired by BaoStar & modern SMMs)
+   Warm Light Theme default + Cyber Dark Mode toggle + Glassmorphism
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap');
+
+:root {
+  /* Warm Light Mode Palette (Signature BaoStar vibe) */
+  --bg-app: #fcf9ee;
+  --bg-card: #ffffff;
+  --bg-card-subtle: #fbf8f1;
+  --bg-input: #ffffff;
+  --border-color: #eedcc0;
+  --border-light: #f3e9d8;
+  --text-main: #2d3748;
+  --text-muted: #718096;
+  --text-dim: #a0aec0;
+  
+  /* Primary & Accent Colors */
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --primary-light: #eff6ff;
+  --accent-gold: #d97706;
+  --accent-gold-bg: #fffbeb;
+  --danger: #ef4444;
+  --danger-bg: #fef2f2;
+  --success: #10b981;
+  --success-bg: #ecfdf5;
+  --warning: #f59e0b;
+  --warning-bg: #fffbeb;
+  --info: #06b6d4;
+  --info-bg: #ecfeff;
+  --purple: #8b5cf6;
+  --purple-bg: #f5f3ff;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.06);
+  --shadow-card: 0 2px 10px rgba(0, 0, 0, 0.03);
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+  
+  /* Transitions */
+  --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Cyber Dark Mode */
+[data-theme="dark"] {
+  --bg-app: #0b0f17;
+  --bg-card: #131b2a;
+  --bg-card-subtle: #192436;
+  --bg-input: #1a2538;
+  --border-color: #24344d;
+  --border-light: #1e2c42;
+  --text-main: #f1f5f9;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  
+  --primary: #3b82f6;
+  --primary-hover: #60a5fa;
+  --primary-light: #1e293b;
+  --accent-gold: #fbbf24;
+  --accent-gold-bg: #2d2411;
+  --danger: #f87171;
+  --danger-bg: #341a1a;
+  --success: #34d399;
+  --success-bg: #0f2e22;
+  --warning: #fbbf24;
+  --warning-bg: #2d2411;
+  --info: #38bdf8;
+  --info-bg: #0d2836;
+  --purple: #a78bfa;
+  --purple-bg: #261f3d;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.5);
+  --shadow-card: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* RESET & BASE */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  line-height: 1.5;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-app);
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: var(--radius-full);
+}
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: #334155;
+}
+
+/* ==========================================================================
+   TOP BAR & NAVIGATION
+   ========================================================================== */
+.top-header {
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: var(--shadow-sm);
+}
+
+.top-bar-inner {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 20px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* Brand Logo */
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: -0.5px;
+  color: var(--text-main);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.brand-badge-logo {
+  background: linear-gradient(135deg, #1e3a8a, #2563eb);
+  color: #ffffff;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.brand-badge-logo::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  animation: shine 3s infinite;
+}
+
+@keyframes shine {
+  0% { left: -100%; }
+  30%, 100% { left: 100%; }
+}
+
+.brand-domain {
+  font-size: 13px;
+  font-weight: 600;
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.12);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+/* Search Box */
+.header-search {
+  flex: 1;
+  max-width: 320px;
+  position: relative;
+}
+
+.header-search input {
+  width: 100%;
+  padding: 8px 14px 8px 36px;
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  font-size: 13.5px;
+  color: var(--text-main);
+  outline: none;
+  transition: var(--transition);
+}
+
+.header-search input:focus {
+  border-color: var(--primary);
+  background: var(--bg-card);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.header-search i {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* User Actions Right */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.action-icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card-subtle);
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+}
+
+.action-icon-btn:hover {
+  background: var(--primary-light);
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.action-icon-btn .badge-dot {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background: var(--danger);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 5px;
+  border-radius: var(--radius-full);
+  line-height: 1;
+}
+
+/* Balance Pill in Header */
+.header-balance-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(16, 185, 129, 0.08));
+  border: 1px solid var(--border-color);
+  padding: 5px 12px 5px 14px;
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.header-balance-amount {
+  color: var(--success);
+  font-weight: 700;
+  font-family: 'Outfit', sans-serif;
+}
+
+.btn-deposit-quick {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #fff;
+  border: none;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-deposit-quick:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+/* User Avatar Dropdown */
+.header-user-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--radius-full);
+  transition: var(--transition);
+}
+
+.header-user-badge:hover {
+  background: var(--bg-card-subtle);
+}
+
+.user-avatar-mini {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid #ec4899;
+  object-fit: cover;
+  background: #fdf2f8;
+}
+
+/* Platform Category Navigation Bar (Horizontal Scrollable) */
+.platform-navbar {
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-color);
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.platform-navbar-inner {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 48px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 14px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: var(--transition);
+  border: 1px solid transparent;
+}
+
+.nav-item i {
+  font-size: 15px;
+}
+
+.nav-item:hover {
+  color: var(--primary);
+  background: var(--bg-card-subtle);
+}
+
+.nav-item.active {
+  color: var(--primary);
+  background: var(--primary-light);
+  border-color: rgba(37, 99, 235, 0.2);
+}
+
+.nav-item.highlight-vip {
+  color: #d97706;
+}
+.nav-item.highlight-free {
+  color: #10b981;
+}
+
+.nav-item .tag-hot {
+  font-size: 9px;
+  background: #ef4444;
+  color: #fff;
+  padding: 1px 5px;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   MAIN LAYOUT CONTAINER
+   ========================================================================== */
+.main-layout {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+
+/* Page Header & Breadcrumb */
+.page-title-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.page-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.3px;
+  text-transform: uppercase;
+}
+
+.page-breadcrumb {
+  font-size: 13px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.page-breadcrumb span {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* Sub-service pills (Tabs for services like Follow, Like, View, Comment...) */
+.subservice-tabs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.subservice-tab-btn {
+  padding: 8px 18px;
+  font-size: 13.5px;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.subservice-tab-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.subservice-tab-btn.active {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff;
+  border-color: #2563eb;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+}
+
+/* Main Grid: Content (Left 70%) & Sidebar (Right 30%) */
+.app-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 1200px) {
+  .app-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   ORDER WORKSPACE (LEFT COLUMN)
+   ========================================================================== */
+.order-workspace-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-card);
+  padding: 24px;
+  transition: var(--transition);
+}
+
+/* Tabs: Tạo đơn hàng, Nhật ký đơn hàng, Hướng dẫn & Bảng giá, Hỗ trợ */
+.main-section-tabs {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 16px;
+  margin-bottom: 24px;
+}
+
+.section-tab-btn {
+  padding: 8px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  background: var(--bg-card-subtle);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-tab-btn:hover {
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.section-tab-btn.active {
+  background: #ffffff;
+  color: var(--primary);
+  border-color: var(--primary);
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.12);
+}
+
+[data-theme="dark"] .section-tab-btn.active {
+  background: var(--bg-card-subtle);
+  border-color: var(--primary);
+}
+
+/* Server Selection & Specification Split Grid */
+.server-section-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 900px) {
+  .server-section-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.section-label {
+  font-weight: 700;
+  font-size: 14.5px;
+  color: var(--text-main);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Server Radio List */
+.server-radio-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 480px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.server-radio-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+  gap: 10px;
+}
+
+.server-radio-item:hover {
+  border-color: var(--primary);
+  background: var(--bg-card-subtle);
+  transform: translateX(2px);
+}
+
+.server-radio-item.selected {
+  border-color: var(--primary);
+  background: var(--primary-light);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.12);
+}
+
+.server-radio-input {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #94a3b8;
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+
+.server-radio-input:checked {
+  border-color: var(--primary);
+  background-color: #ffffff;
+}
+
+.server-radio-input:checked::after {
+  content: '';
+  width: 9px;
+  height: 9px;
+  background: var(--primary);
+  border-radius: 50%;
+}
+
+.server-info-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.server-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.server-name {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.server-price {
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #ef4444;
+}
+
+/* Badges for Servers */
+.server-badge {
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: var(--radius-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+}
+
+.badge-hot {
+  background: #fef2f2;
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+.badge-success {
+  background: #ecfdf5;
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+.badge-info {
+  background: #ecfeff;
+  color: #0891b2;
+  border: 1px solid rgba(6, 182, 212, 0.25);
+}
+.badge-primary {
+  background: #eff6ff;
+  color: #2563eb;
+  border: 1px solid rgba(37, 99, 235, 0.25);
+}
+.badge-warning {
+  background: #fffbeb;
+  color: #d97706;
+  border: 1px solid rgba(217, 119, 6, 0.25);
+}
+.badge-danger {
+  background: #fff1f2;
+  color: #e11d48;
+  border: 1px solid rgba(225, 29, 72, 0.25);
+}
+
+/* ==========================================================================
+   DYNAMIC SERVER NOTE CARD (Exact BaoStar Replica)
+   ========================================================================== */
+.server-spec-card {
+  background: #f2fbf9;
+  border: 1px solid #c7ece6;
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: var(--transition);
+}
+
+[data-theme="dark"] .server-spec-card {
+  background: #0d2324;
+  border-color: #174b4d;
+}
+
+.spec-header-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #0f766e;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-bottom: 6px;
+  border-bottom: 1px dashed rgba(15, 118, 110, 0.2);
+}
+
+[data-theme="dark"] .spec-header-title {
+  color: #5eead4;
+}
+
+.spec-badge-id {
+  color: #15803d;
+  font-family: monospace;
+  font-weight: 700;
+}
+
+/* Pastel color-coded rows matching screenshot */
+.spec-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+
+.spec-row i {
+  font-size: 13px;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.spec-row-link {
+  background: #eef2ff;
+  color: #3730a3;
+  border: 1px solid #e0e7ff;
+}
+.spec-row-resource {
+  background: #f0fdfa;
+  color: #115e59;
+  border: 1px solid #ccfbf1;
+}
+.spec-row-speed {
+  background: #fefce8;
+  color: #854d0e;
+  border: 1px solid #fef08a;
+}
+.spec-row-warranty {
+  background: #fff1f2;
+  color: #9f1239;
+  border: 1px solid #ffe4e6;
+}
+.spec-row-support {
+  background: #faf5ff;
+  color: #6b21a8;
+  border: 1px solid #f3e8ff;
+}
+.spec-row-overlap {
+  background: #fff7ed;
+  color: #9a3412;
+  border: 1px solid #ffedd5;
+}
+.spec-row-drop {
+  background: #f8fafc;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+}
+
+[data-theme="dark"] .spec-row {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+[data-theme="dark"] .spec-row-link { color: #a5b4fc; }
+[data-theme="dark"] .spec-row-resource { color: #5eead4; }
+[data-theme="dark"] .spec-row-speed { color: #fde047; }
+[data-theme="dark"] .spec-row-warranty { color: #fda4af; }
+[data-theme="dark"] .spec-row-support { color: #d8b4fe; }
+[data-theme="dark"] .spec-row-overlap { color: #fdba74; }
+[data-theme="dark"] .spec-row-drop { color: #cbd5e1; }
+
+.spec-label-title {
+  font-weight: 700;
+  margin-right: 4px;
+}
+
+/* ==========================================================================
+   FORM INPUTS & ORDER CALCULATOR
+   ========================================================================== */
+.order-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .order-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-label-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.form-sub-link {
+  color: var(--primary);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.form-sub-link:hover {
+  text-decoration: underline;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  color: var(--text-main);
+  outline: none;
+  transition: var(--transition);
+}
+
+.form-control:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.form-control::placeholder {
+  color: var(--text-dim);
+}
+
+.quantity-quick-badges {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.qty-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.qty-badge:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* Reactions Picker for Facebook Like */
+.reactions-picker {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.reaction-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.reaction-btn.selected {
+  border-color: var(--primary);
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+/* Live Total Price & Submit Card */
+.order-summary-box {
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.summary-cost-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.summary-unit-rate {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.summary-total-price {
+  font-family: 'Outfit', sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  color: #ef4444;
+  letter-spacing: -0.5px;
+}
+
+.summary-discount-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11.5px;
+  color: var(--success);
+  font-weight: 700;
+  background: rgba(16, 185, 129, 0.1);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+.btn-submit-order {
+  padding: 12px 28px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition);
+}
+
+.btn-submit-order:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.45);
+}
+
+/* ==========================================================================
+   SIDEBAR (RIGHT COLUMN) - ACCOUNT INFO & SYSTEM NOTICE
+   ========================================================================== */
+.sidebar-sticky {
+  position: sticky;
+  top: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.account-info-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 20px;
+}
+
+.account-card-header {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-main);
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.account-profile-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.avatar-wrapper {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  margin-bottom: 10px;
+}
+
+.avatar-3d {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 3px solid #f472b6;
+  object-fit: cover;
+  background: #fdf2f8;
+  box-shadow: 0 4px 14px rgba(244, 114, 182, 0.3);
+}
+
+.avatar-status-dot {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #10b981;
+  border: 2px solid #ffffff;
+}
+
+.account-user-name {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.account-rank-pill {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #7c3aed;
+  background: #ede9fe;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  margin-top: 4px;
+}
+
+[data-theme="dark"] .account-rank-pill {
+  background: #2e1065;
+  color: #c4b5fd;
+}
+
+/* User Account Stats List */
+.account-details-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.account-stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px dashed var(--border-light);
+}
+
+.stat-label {
+  color: var(--text-muted);
+}
+
+.stat-value {
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.stat-balance-highlight {
+  font-family: 'Outfit', sans-serif;
+  color: #059669;
+  font-size: 15px;
+}
+
+/* Next Level Progress Bar */
+.level-progress-wrap {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.level-progress-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.progress-track {
+  width: 100%;
+  height: 9px;
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #06b6d4);
+  border-radius: var(--radius-full);
+  width: 100%;
+  transition: width 0.5s ease;
+}
+
+/* Quick Deposit Button in Card */
+.btn-deposit-card {
+  width: 100%;
+  margin-top: 16px;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: var(--transition);
+}
+
+.btn-deposit-card:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+/* Announcement Card */
+.notice-box-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  box-shadow: var(--shadow-card);
+}
+
+.notice-box-header {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #d97706;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.notice-box-content {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   ORDER LOG TABLE (Nhật ký đơn hàng)
+   ========================================================================== */
+.order-log-container {
+  display: none; /* hidden by default, toggled via tab */
+}
+
+.order-log-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.order-filter-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.order-filter-btn {
+  padding: 6px 12px;
+  font-size: 12.5px;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.order-filter-btn.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  text-align: left;
+}
+
+.data-table th {
+  background: var(--bg-card-subtle);
+  color: var(--text-muted);
+  font-weight: 700;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-color);
+  white-space: nowrap;
+}
+
+.data-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-light);
+  color: var(--text-main);
+  vertical-align: middle;
+}
+
+.data-table tr:hover td {
+  background: var(--bg-card-subtle);
+}
+
+.order-id-badge {
+  font-family: monospace;
+  font-weight: 700;
+  color: var(--primary);
+  background: var(--primary-light);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+}
+
+.order-status-badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  font-size: 11.5px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.status-completed {
+  background: #ecfdf5;
+  color: #059669;
+}
+.status-running {
+  background: #eff6ff;
+  color: #2563eb;
+}
+.status-processing {
+  background: #fffbeb;
+  color: #d97706;
+}
+.status-cancelled {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+/* ==========================================================================
+   FLOATING ACTION BUTTONS (Right Edge)
+   ========================================================================== */
+.floating-actions-bar {
+  position: fixed;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 999;
+}
+
+.floating-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 18px;
+}
+
+.floating-btn:hover {
+  transform: scale(1.1) translateX(-3px);
+}
+
+.floating-tele {
+  background: linear-gradient(135deg, #229ed9, #0088cc);
+}
+.floating-zalo {
+  background: linear-gradient(135deg, #0068ff, #0054cc);
+}
+.floating-fb {
+  background: linear-gradient(135deg, #1877f2, #0d65d9);
+}
+
+.floating-vertical-setting {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  background: #1e293b;
+  color: #ffffff;
+  padding: 14px 8px;
+  border-radius: 8px 0 0 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  box-shadow: -2px 4px 10px rgba(0, 0, 0, 0.2);
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.floating-vertical-setting:hover {
+  background: var(--primary);
+  padding-left: 12px;
+}
+
+.floating-renew-fast {
+  writing-mode: vertical-rl;
+  background: #0284c7;
+  color: #ffffff;
+  padding: 12px 7px;
+  border-radius: 8px 0 0 8px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: var(--transition);
+}
+
+.floating-renew-fast:hover {
+  background: #0369a1;
+  padding-left: 10px;
+}
+
+/* ==========================================================================
+   MODALS (Nạp tiền tự động, Cài đặt giao diện, Chi tiết đơn hàng)
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 16px;
+}
+
+.modal-overlay.active {
+  display: flex;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-window {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-header {
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-title {
+  font-size: 17px;
+  font-weight: 800;
+  font-family: 'Outfit', sans-serif;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-modal-close {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+}
+
+.btn-modal-close:hover {
+  color: var(--danger);
+  background: var(--bg-card-subtle);
+}
+
+.modal-body {
+  padding: 22px;
+}
+
+/* Nạp tiền VietQR Layout */
+.deposit-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 12px;
+}
+
+.deposit-tab-btn {
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  background: var(--bg-card-subtle);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.deposit-tab-btn.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+.qr-box-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.qr-code-img {
+  width: 200px;
+  height: 200px;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--border-color);
+  background: #ffffff;
+  padding: 6px;
+  box-shadow: var(--shadow-md);
+}
+
+.bank-info-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  margin-bottom: 16px;
+}
+
+.bank-info-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.copy-btn {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: var(--radius-sm);
+  background: var(--primary-light);
+  color: var(--primary);
+  border: 1px solid rgba(37, 99, 235, 0.3);
+  cursor: pointer;
+  margin-left: 6px;
+}
+
+.copy-btn:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+.test-deposit-bar {
+  background: var(--bg-card-subtle);
+  border: 1px dashed var(--border-color);
+  padding: 12px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.test-deposit-bar input {
+  padding: 6px 10px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  width: 140px;
+}
+
+/* Toast Notifications */
+.toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.toast {
+  pointer-events: auto;
+  min-width: 280px;
+  max-width: 380px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13.5px;
+  animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: var(--transition);
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.toast-success { border-left: 4px solid var(--success); }
+.toast-error { border-left: 4px solid var(--danger); }
+.toast-info { border-left: 4px solid var(--primary); }
+
+.toast i { font-size: 18px; }
+.toast-success i { color: var(--success); }
+.toast-error i { color: var(--danger); }
+.toast-info i { color: var(--primary); }
+
+</style>
 </head>
 <body>
 
@@ -723,8 +2340,1653 @@
   <div class="toast-container" id="toastContainer"></div>
 
   <!-- Custom Scripts -->
-  <script src="js/data.js"></script>
-  <script src="js/app.js"></script>
+  <script>
+/**
+ * KHOASMM.COM - Dữ liệu danh mục dịch vụ Mạng Xã Hội
+ * Đầy đủ các nền tảng: TikTok, Facebook, Instagram, YouTube, Telegram, Twitter (X), Threads, Shopee
+ */
+
+const SERVICES_DATA = {
+  tiktok: {
+    id: "tiktok",
+    name: "TikTok",
+    icon: "fab fa-tiktok",
+    categories: [
+      {
+        id: "tiktok_follow",
+        name: "Tăng FOLLOW TikTok",
+        title: "TĂNG FOLLOW TIKTOK",
+        breadcrumb: "TikTok > Tăng FOLLOW tiktok",
+        linkPlaceholder: "Nhập username / @username hoặc link profile TikTok (vd: https://www.tiktok.com/@khoasmm)",
+        servers: [
+          {
+            id: "tiktok_follow_sv19",
+            baostarServiceId: 16379,
+            name: "Tiktok FollowTây",
+            price: 138.33,
+            badge: "new Nhanh",
+            badgeClass: "badge-hot",
+            linkValid: "username / @username / https://www.tiktok.com/@username",
+            resource: "Tây (Quốc tế)",
+            startSpeed: "Sau khoảng 5 phút hoặc chậm hơn nếu quá tải / nền tảng fix",
+            warranty: "Không bảo hành",
+            support: "Không hỗ trợ nếu tài khoản riêng tư hoặc đổi username trong khi chạy",
+            noOverlap: "Không order cùng lúc với các máy chủ khác. Đợi đơn chạy xong mới order tiếp.",
+            dropRate: "Không xác định (phụ thuộc vào thuật toán TikTok)",
+            minQty: 50,
+            maxQty: 2000,
+            recommended: false
+          },
+          {
+            id: "tiktok_follow_sv28",
+            baostarServiceId: 16334,
+            name: "Tiktok Follow clone- (28-8)",
+            price: 181.62,
+            badge: "new Nhanh",
+            badgeClass: "badge-hot",
+            linkValid: "username / https://www.tiktok.com/@username",
+            resource: "Clone Việt + Ngoại",
+            startSpeed: "10 - 30 phút bắt đầu chạy",
+            warranty: "Bảo hành 7 ngày nếu tụt quá 15%",
+            support: "Hỗ trợ 24/7 kiểm tra tiến độ",
+            noOverlap: "Chạy xong đơn cũ mới mua tiếp trên link này.",
+            dropRate: "Tụt nhẹ 5 - 10%",
+            minQty: 50,
+            maxQty: 100000,
+            recommended: false
+          },
+          {
+            id: "tiktok_follow_sv_tay_nbh",
+            baostarServiceId: 16344,
+            name: "Tiktok Follow Tây | KHÔNG BẢO HÀNH",
+            price: 29.73,
+            badge: "Nên dùng-Rất nhanh",
+            badgeClass: "badge-success",
+            linkValid: "username / @username",
+            resource: "Tây chuẩn",
+            startSpeed: "1 - 5 phút (Tốc độ 10k - 50k / ngày)",
+            warranty: "Không bảo hành tụt",
+            support: "Hỗ trợ link công khai",
+            noOverlap: "Không đè đơn khác máy chủ",
+            dropRate: "Tùy thời điểm",
+            minQty: 50,
+            maxQty: 10000,
+            recommended: true
+          },
+          {
+            id: "tiktok_follow_s4",
+            baostarServiceId: 16369,
+            name: "S4 Follow TikTok Việt",
+            price: 30.00,
+            badge: "New-Nên dùng",
+            badgeClass: "badge-info",
+            linkValid: "Link profile hoặc username",
+            resource: "User Việt Nam thật có avatar, bio",
+            startSpeed: "15 - 45 phút",
+            warranty: "Bảo hành 30 ngày (Bấm nút bảo hành nếu tụt)",
+            support: "Hỗ trợ tài khoản chuẩn Việt",
+            noOverlap: "Nghiêm cấm đè đơn",
+            dropRate: "Cực thấp (1 - 3%)",
+            minQty: 50,
+            maxQty: 100000,
+            recommended: false
+          },
+          {
+            id: "tiktok_follow_s5",
+            baostarServiceId: 16354,
+            name: "S5 Follow TikTok sale new",
+            price: 24.00,
+            badge: "New-Nên dùng",
+            badgeClass: "badge-info",
+            linkValid: "Username hoặc link profile",
+            resource: "User Việt hỗn hợp",
+            startSpeed: "Bắt đầu sau 5-15 phút",
+            warranty: "Không bảo hành",
+            support: "Tài khoản mở chế độ công khai",
+            noOverlap: "Đợi đơn hoàn thành mới tạo tiếp",
+            dropRate: "Thấp",
+            minQty: 100,
+            maxQty: 100000,
+            recommended: false
+          },
+          {
+            id: "tiktok_follow_s6",
+            baostarServiceId: 16334,
+            name: "S6 Follow tiktok việt",
+            price: 21.00,
+            badge: "Ổn định",
+            badgeClass: "badge-primary",
+            linkValid: "username / @username / url",
+            resource: "Việt Nam",
+            startSpeed: "10 phút - 1 giờ",
+            warranty: "Bảo hành 15 ngày",
+            support: "Hỗ trợ qua ticket",
+            noOverlap: "Không mua cùng lúc",
+            dropRate: "3 - 7%",
+            minQty: 50,
+            maxQty: 100000,
+            recommended: false
+          },
+          {
+            id: "tiktok_follow_high",
+            baostarServiceId: 16349,
+            name: "Follow TikTok Việt High",
+            price: 43.00,
+            badge: "nhanh",
+            badgeClass: "badge-warning",
+            linkValid: "Link kênh TikTok",
+            resource: "User Việt hoạt động chất lượng cao",
+            startSpeed: "Ngay lập tức (1-3 phút)",
+            warranty: "Bảo hành 60 ngày",
+            support: "Hỗ trợ ưu tiên VIP",
+            noOverlap: "Không mua trùng",
+            dropRate: "Gần như không tụt",
+            minQty: 50,
+            maxQty: 100000,
+            recommended: false
+          },
+          {
+            id: "tiktok_follow_s2_high",
+            baostarServiceId: 16374,
+            name: "S2 Follow TikTok Việt High",
+            price: 69.00,
+            badge: "Rất nhanh",
+            badgeClass: "badge-danger",
+            linkValid: "https://www.tiktok.com/@username",
+            resource: "Việt Nam 100% người thật",
+            startSpeed: "Tức thì (Tốc độ 50k/ngày)",
+            warranty: "Bảo hành trọn đời vĩnh viễn",
+            support: "Chăm sóc viên riêng",
+            noOverlap: "Không chạy đè đơn",
+            dropRate: "0 - 1%",
+            minQty: 50,
+            maxQty: 100000,
+            recommended: false
+          }
+        ]
+      },
+      {
+        id: "tiktok_like",
+        name: "Tăng Like / Tim Video",
+        title: "TĂNG TIM TIKTOK VIỆT & NGOẠI",
+        breadcrumb: "TikTok > Tăng Like video tiktok",
+        linkPlaceholder: "Nhập link video TikTok (vd: https://www.tiktok.com/@user/video/123456789)",
+        servers: [
+          {
+            id: "tiktok_like_sv1",
+            name: "SV1 Tim TikTok Việt Siêu Tốc",
+            price: 8.50,
+            badge: "Nhanh - Giá rẻ",
+            badgeClass: "badge-success",
+            linkValid: "Link video TikTok công khai",
+            resource: "Việt Nam có avatar",
+            startSpeed: "1 - 3 phút bắt đầu chạy",
+            warranty: "Bảo hành 30 ngày",
+            support: "Hỗ trợ 24/7",
+            noOverlap: "Không đè đơn",
+            dropRate: "1 - 3%",
+            minQty: 100,
+            maxQty: 100000
+          },
+          {
+            id: "tiktok_like_sv2",
+            name: "SV2 Tim TikTok Tây Giá Rẻ",
+            price: 4.20,
+            badge: "Siêu rẻ",
+            badgeClass: "badge-primary",
+            linkValid: "Link video TikTok",
+            resource: "Quốc tế",
+            startSpeed: "Ngay sau khi đặt đơn",
+            warranty: "Không bảo hành",
+            support: "Hỗ trợ đơn lỗi",
+            noOverlap: "Không đè đơn",
+            dropRate: "5 - 10%",
+            minQty: 100,
+            maxQty: 500000
+          }
+        ]
+      },
+      {
+        id: "tiktok_view",
+        name: "Tăng View Video",
+        title: "TĂNG VIEW VIDEO TIKTOK",
+        breadcrumb: "TikTok > Tăng View video tiktok",
+        linkPlaceholder: "Nhập link video TikTok cần buff view",
+        servers: [
+          {
+            id: "tiktok_view_sv1",
+            name: "SV1 View TikTok Siêu Tốc (Cắn Xu Hướng)",
+            price: 0.85,
+            badge: "Hỗ trợ xu hướng",
+            badgeClass: "badge-hot",
+            linkValid: "Link video chuẩn",
+            resource: "Traffic thực kéo đề xuất",
+            startSpeed: "Chạy ngay lập tức (100k view/phút)",
+            warranty: "Không tụt view",
+            support: "Hỗ trợ 24/7",
+            noOverlap: "Chạy được nhiều đơn cùng lúc",
+            dropRate: "0%",
+            minQty: 1000,
+            maxQty: 10000000
+          },
+          {
+            id: "tiktok_view_sv2",
+            name: "SV2 View TikTok Rẻ Nhất",
+            price: 0.35,
+            badge: "Rẻ nhất thị trường",
+            badgeClass: "badge-success",
+            linkValid: "Link video chuẩn",
+            resource: "Bot view tốc độ cao",
+            startSpeed: "1 - 5 phút",
+            warranty: "Không bảo hành",
+            support: "Hỗ trợ cơ bản",
+            noOverlap: "Không đè đơn",
+            dropRate: "0%",
+            minQty: 1000,
+            maxQty: 5000000
+          }
+        ]
+      },
+      {
+        id: "tiktok_comment",
+        name: "Tăng Comment / Bình luận",
+        title: "TĂNG BÌNH LUẬN THEO Ý MUỐN",
+        breadcrumb: "TikTok > Tăng Comment tiktok",
+        linkPlaceholder: "Nhập link video TikTok",
+        isCommentService: true,
+        servers: [
+          {
+            id: "tiktok_cmt_sv1",
+            name: "SV1 Comment Việt Nội Dung Tự Chọn",
+            price: 180.00,
+            badge: "Người thật",
+            badgeClass: "badge-success",
+            linkValid: "Link video TikTok",
+            resource: "User Việt bình luận đúng nội dung",
+            startSpeed: "5 - 15 phút",
+            warranty: "Bảo hành 15 ngày",
+            support: "Hỗ trợ lọc spam",
+            noOverlap: "Không đè đơn",
+            dropRate: "Không tụt",
+            minQty: 10,
+            maxQty: 1000
+          }
+        ]
+      },
+      {
+        id: "tiktok_share",
+        name: "Tăng Chia sẻ & Save Bookmark",
+        title: "TĂNG SHARE & SAVE TIKTOK",
+        breadcrumb: "TikTok > Tăng Chia sẻ & Bookmark",
+        linkPlaceholder: "Nhập link video TikTok",
+        servers: [
+          {
+            id: "tiktok_share_sv1",
+            name: "SV1 Share TikTok Kéo Tương Tác",
+            price: 3.50,
+            badge: "Đẩy đề xuất",
+            badgeClass: "badge-info",
+            linkValid: "Link video",
+            resource: "Tài khoản thực",
+            startSpeed: "Ngay sau khi order",
+            warranty: "Bảo hành vĩnh viễn",
+            support: "Hỗ trợ mọi video",
+            noOverlap: "Không đè đơn",
+            dropRate: "0%",
+            minQty: 100,
+            maxQty: 50000
+          }
+        ]
+      },
+      {
+        id: "tiktok_live",
+        name: "Tăng Mắt Xem Livestream",
+        title: "TĂNG MẮT LIVE TIKTOK (DUY TRÌ 30-120 PHÚT)",
+        breadcrumb: "TikTok > Mắt xem Livestream",
+        linkPlaceholder: "Nhập link livestream đang phát trực tiếp",
+        servers: [
+          {
+            id: "tiktok_live_30p",
+            name: "SV1 Mắt Live Duy Trì 30 Phút",
+            price: 12.00,
+            badge: "Lên ngay 30s",
+            badgeClass: "badge-hot",
+            linkValid: "Link phiên live đang phát",
+            resource: "User giữ mắt ổn định",
+            startSpeed: "30s - 1 phút là đủ mắt",
+            warranty: "Bù đủ thời gian live",
+            support: "Hỗ trợ live",
+            noOverlap: "Order trước khi live hoặc khi đang live",
+            dropRate: "Ổn định suốt 30 phút",
+            minQty: 50,
+            maxQty: 5000
+          },
+          {
+            id: "tiktok_live_60p",
+            name: "SV2 Mắt Live Duy Trì 60 Phút",
+            price: 22.00,
+            badge: "Ổn định 1h",
+            badgeClass: "badge-success",
+            linkValid: "Link livestream",
+            resource: "User xem live ổn định",
+            startSpeed: "1 phút lên đủ",
+            warranty: "Bù đủ 60 phút",
+            support: "Hỗ trợ 24/7",
+            noOverlap: "Không đè đơn",
+            dropRate: "Dao động tự nhiên",
+            minQty: 50,
+            maxQty: 5000
+          }
+        ]
+      }
+    ]
+  },
+
+  facebook: {
+    id: "facebook",
+    name: "Facebook",
+    icon: "fab fa-facebook",
+    categories: [
+      {
+        id: "fb_like",
+        name: "Tăng Like / Cảm Xúc Bài Viết",
+        title: "TĂNG LIKE / REACTIONS FACEBOOK",
+        breadcrumb: "Facebook > Tăng Like bài viết",
+        linkPlaceholder: "Nhập link bài viết hoặc ID bài viết Facebook",
+        hasReactions: true,
+        servers: [
+          {
+            id: "fb_like_sv1",
+            name: "SV1 Like Việt Tốc Độ Cao (Tuỳ chọn cảm xúc)",
+            price: 7.20,
+            badge: "Nhanh - Nên dùng",
+            badgeClass: "badge-success",
+            linkValid: "Link bài viết để chế độ công khai (Nút chia sẻ)",
+            resource: "User Việt Nam người thật",
+            startSpeed: "1 - 5 phút",
+            warranty: "Không tụt",
+            support: "Hỗ trợ mọi loại bài viết cá nhân & fanpage",
+            noOverlap: "Không đặt 2 đơn cùng 1 lúc",
+            dropRate: "1 - 2%",
+            minQty: 50,
+            maxQty: 50000
+          },
+          {
+            id: "fb_like_sv2",
+            name: "SV2 Like Bài Viết Siêu Rẻ",
+            price: 3.50,
+            badge: "Giá rẻ",
+            badgeClass: "badge-primary",
+            linkValid: "Link bài viết",
+            resource: "Clone Việt",
+            startSpeed: "5 - 15 phút",
+            warranty: "Không bảo hành",
+            support: "Công khai",
+            noOverlap: "Không đè",
+            dropRate: "5%",
+            minQty: 100,
+            maxQty: 20000
+          }
+        ]
+      },
+      {
+        id: "fb_sub",
+        name: "Tăng Sub / Follow Cá Nhân",
+        title: "TĂNG THEO DÕI TRANG CÁ NHÂN (SUB PROFILE)",
+        breadcrumb: "Facebook > Tăng Follow Facebook",
+        linkPlaceholder: "Nhập link trang cá nhân Facebook (vd: https://facebook.com/khoasmm)",
+        servers: [
+          {
+            id: "fb_sub_sv1",
+            name: "SV1 Follow Profile Việt VIP (Bảo hành 30 ngày)",
+            price: 32.00,
+            badge: "VIP Bảo hành",
+            badgeClass: "badge-hot",
+            linkValid: "Link cá nhân bật nút theo dõi công khai",
+            resource: "Nick Việt tương tác cao",
+            startSpeed: "10 - 30 phút",
+            warranty: "Bảo hành 30 ngày tụt bù",
+            support: "Hỗ trợ 24/7",
+            noOverlap: "Đợi đơn hoàn thành",
+            dropRate: "Rất thấp (1 - 3%)",
+            minQty: 100,
+            maxQty: 100000
+          },
+          {
+            id: "fb_sub_sv2",
+            name: "SV2 Follow Beta Giá Rẻ",
+            price: 18.50,
+            badge: "Tiết kiệm",
+            badgeClass: "badge-info",
+            linkValid: "Link Profile",
+            resource: "User Việt",
+            startSpeed: "15 - 60 phút",
+            warranty: "Không bảo hành",
+            support: "Cơ bản",
+            noOverlap: "Không đè",
+            dropRate: "3 - 5%",
+            minQty: 100,
+            maxQty: 50000
+          }
+        ]
+      },
+      {
+        id: "fb_page",
+        name: "Tăng Like / Follow Fanpage",
+        title: "TĂNG LIKE & THEO DÕI FANPAGE",
+        breadcrumb: "Facebook > Tăng Like Fanpage",
+        linkPlaceholder: "Nhập link Fanpage Facebook",
+        servers: [
+          {
+            id: "fb_page_sv1",
+            name: "SV1 Like & Follow Fanpage Pro (Tăng cả Like & Sub)",
+            price: 38.00,
+            badge: "Chất lượng cao",
+            badgeClass: "badge-success",
+            linkValid: "Link Page chuẩn",
+            resource: "Người dùng thật Việt Nam",
+            startSpeed: "30 phút",
+            warranty: "Bảo hành 60 ngày",
+            support: "Hỗ trợ fanpage truyền thống & profile",
+            noOverlap: "Không chạy đè",
+            dropRate: "0 - 2%",
+            minQty: 100,
+            maxQty: 500000
+          }
+        ]
+      },
+      {
+        id: "fb_group",
+        name: "Tăng Thành Viên Group",
+        title: "TĂNG THÀNH VIÊN NHÓM FACEBOOK",
+        breadcrumb: "Facebook > Tăng Member Group",
+        linkPlaceholder: "Nhập link Nhóm Facebook (Group mở duyệt thành viên)",
+        servers: [
+          {
+            id: "fb_group_sv1",
+            name: "SV1 Member Group Việt (Công khai & Kín)",
+            price: 25.00,
+            badge: "Member thật",
+            badgeClass: "badge-primary",
+            linkValid: "Link Group",
+            resource: "User Việt Nam",
+            startSpeed: "1 - 2 giờ",
+            warranty: "Bảo hành 15 ngày",
+            support: "Cần tắt phê duyệt thành viên",
+            noOverlap: "Không đè đơn",
+            dropRate: "3%",
+            minQty: 500,
+            maxQty: 100000
+          }
+        ]
+      }
+    ]
+  },
+
+  instagram: {
+    id: "instagram",
+    name: "Instagram",
+    icon: "fab fa-instagram",
+    categories: [
+      {
+        id: "ig_follow",
+        name: "Tăng Follow Instagram",
+        title: "TĂNG THEO DÕI INSTAGRAM VIỆT & NGOẠI",
+        breadcrumb: "Instagram > Tăng Follow Instagram",
+        linkPlaceholder: "Nhập username Instagram (vd: khoasmm hoặc link profile)",
+        servers: [
+          {
+            id: "ig_follow_sv1",
+            name: "SV1 Follow Instagram Việt Nam Thật",
+            price: 45.00,
+            badge: "User Việt",
+            badgeClass: "badge-success",
+            linkValid: "Username không chứa ký tự lạ, nick công khai",
+            resource: "Người dùng Việt hoạt động",
+            startSpeed: "5 - 15 phút",
+            warranty: "Bảo hành 30 ngày",
+            support: "Hỗ trợ 24/7",
+            noOverlap: "Không mua đè đơn",
+            dropRate: "Dưới 3%",
+            minQty: 100,
+            maxQty: 20000
+          },
+          {
+            id: "ig_follow_sv2",
+            name: "SV2 Follow Tây Không Tụt (Bảo hành 365 ngày)",
+            price: 28.00,
+            badge: "Bảo hành 1 năm",
+            badgeClass: "badge-hot",
+            linkValid: "Username Instagram",
+            resource: "Quốc tế chất lượng cao",
+            startSpeed: "1 - 5 phút",
+            warranty: "Bảo hành 365 ngày tự động refill",
+            support: "Hỗ trợ kiểm tra định kỳ",
+            noOverlap: "Không đè",
+            dropRate: "0 - 1%",
+            minQty: 100,
+            maxQty: 200000
+          }
+        ]
+      },
+      {
+        id: "ig_like",
+        name: "Tăng Like Bài Viết Instagram",
+        title: "TĂNG LIKE BÀI VIẾT / REELS INSTAGRAM",
+        breadcrumb: "Instagram > Tăng Like Instagram",
+        linkPlaceholder: "Nhập link bài viết hoặc Reels Instagram",
+        servers: [
+          {
+            id: "ig_like_sv1",
+            name: "SV1 Like Instagram Siêu Tốc Giá Rẻ",
+            price: 5.50,
+            badge: "Siêu tốc",
+            badgeClass: "badge-primary",
+            linkValid: "Link bài viết công khai",
+            resource: "Quốc tế + Việt",
+            startSpeed: "Ngay sau khi order",
+            warranty: "Không tụt",
+            support: "Hỗ trợ nhanh",
+            noOverlap: "Không đè đơn",
+            dropRate: "0%",
+            minQty: 50,
+            maxQty: 100000
+          }
+        ]
+      }
+    ]
+  },
+
+  youtube: {
+    id: "youtube",
+    name: "Youtube",
+    icon: "fab fa-youtube",
+    categories: [
+      {
+        id: "yt_sub",
+        name: "Tăng Đăng Ký (Subscriber)",
+        title: "TĂNG SUBSCRIBER KÊNH YOUTUBE BẬT KIẾM TIỀN",
+        breadcrumb: "YouTube > Tăng Subscribe YouTube",
+        linkPlaceholder: "Nhập link kênh YouTube (vd: https://youtube.com/@khoasmm)",
+        servers: [
+          {
+            id: "yt_sub_sv1",
+            name: "SV1 Sub YouTube An Toàn Bật Kiếm Tiền (Bảo hành vĩnh viễn)",
+            price: 195.00,
+            badge: "Đạt chuẩn BKT",
+            badgeClass: "badge-hot",
+            linkValid: "Link kênh YouTube có ít nhất 1 video",
+            resource: "Tài khoản Google hoạt động có kênh",
+            startSpeed: "2 - 12 giờ bắt đầu phân phối tự nhiên",
+            warranty: "Bảo hành trọn đời không tụt",
+            support: "Hỗ trợ xét duyệt kênh kiếm tiền",
+            noOverlap: "Không đè đơn khác",
+            dropRate: "0 - 2%",
+            minQty: 50,
+            maxQty: 10000
+          }
+        ]
+      },
+      {
+        id: "yt_view",
+        name: "Tăng View Video YouTube",
+        title: "TĂNG VIEW YOUTUBE CÓ ĐỀ XUẤT",
+        breadcrumb: "YouTube > Tăng View YouTube",
+        linkPlaceholder: "Nhập link video YouTube cần tăng view",
+        servers: [
+          {
+            id: "yt_view_sv1",
+            name: "SV1 View YouTube Nguồn Đề Xuất (Retention cao)",
+            price: 25.00,
+            badge: "Kéo đề xuất",
+            badgeClass: "badge-success",
+            linkValid: "Link video YouTube",
+            resource: "Traffic người xem tự nhiên",
+            startSpeed: "1 - 6 giờ",
+            warranty: "Bảo hành 30 ngày",
+            support: "Không vi phạm chính sách YouTube",
+            noOverlap: "Không đè đơn",
+            dropRate: "0%",
+            minQty: 1000,
+            maxQty: 1000000
+          }
+        ]
+      }
+    ]
+  },
+
+  telegram: {
+    id: "telegram",
+    name: "Telegram",
+    icon: "fab fa-telegram",
+    categories: [
+      {
+        id: "tele_mem",
+        name: "Tăng Member Channel / Group",
+        title: "TĂNG THÀNH VIÊN KÊNH & NHÓM TELEGRAM",
+        breadcrumb: "Telegram > Tăng Member Telegram",
+        linkPlaceholder: "Nhập link Channel hoặc Group Telegram (vd: https://t.me/khoasmm)",
+        servers: [
+          {
+            id: "tele_mem_sv1",
+            name: "SV1 Member Telegram Quốc Tế Không Tụt (Refill 30 ngày)",
+            price: 26.00,
+            badge: "Không tụt",
+            badgeClass: "badge-success",
+            linkValid: "Link Telegram công khai (t.me/...)",
+            resource: "Quốc tế",
+            startSpeed: "5 - 15 phút",
+            warranty: "Bảo hành 30 ngày tự động bù",
+            support: "Hỗ trợ 24/7",
+            noOverlap: "Không chạy cùng lúc nhiều nguồn",
+            dropRate: "Dưới 2%",
+            minQty: 100,
+            maxQty: 50000
+          },
+          {
+            id: "tele_mem_sv2",
+            name: "SV2 Member Telegram Việt Nam",
+            price: 65.00,
+            badge: "User Việt",
+            badgeClass: "badge-hot",
+            linkValid: "Link t.me",
+            resource: "Tài khoản Telegram Việt Nam",
+            startSpeed: "30 - 60 phút",
+            warranty: "Bảo hành 15 ngày",
+            support: "Tất cả kênh/nhóm",
+            noOverlap: "Không đè đơn",
+            dropRate: "3 - 5%",
+            minQty: 50,
+            maxQty: 10000
+          }
+        ]
+      }
+    ]
+  },
+
+  shopee: {
+    id: "shopee",
+    name: "Shopee",
+    icon: "fas fa-shopping-bag",
+    categories: [
+      {
+        id: "shopee_follow",
+        name: "Tăng Theo Dõi Shop (Followers)",
+        title: "TĂNG FOLLOW SHOP SHOPEE TĂNG TỶ LỆ CHỐT ĐƠN",
+        breadcrumb: "Shopee > Tăng Follow Shop",
+        linkPlaceholder: "Nhập link shop Shopee (vd: https://shopee.vn/khoasmm)",
+        servers: [
+          {
+            id: "shopee_follow_sv1",
+            name: "SV1 Follow Shopee Tài Khoản Việt Nam Thật",
+            price: 55.00,
+            badge: "Chuẩn Shopee",
+            badgeClass: "badge-hot",
+            linkValid: "Link shop Shopee hoạt động",
+            resource: "Tài khoản mua sắm Shopee Việt",
+            startSpeed: "15 - 30 phút",
+            warranty: "Bảo hành 30 ngày",
+            support: "An toàn tuyệt đối cho shop",
+            noOverlap: "Không chạy đè",
+            dropRate: "1%",
+            minQty: 100,
+            maxQty: 20000
+          }
+        ]
+      }
+    ]
+  },
+
+  twitter: {
+    id: "twitter",
+    name: "Twitter (X)",
+    icon: "fab fa-x-twitter",
+    categories: [
+      {
+        id: "x_follow",
+        name: "Tăng Follow Twitter (X)",
+        title: "TĂNG FOLLOW TWITTER (X) CÓ TÍCH XANH HOẶC THƯỜNG",
+        breadcrumb: "Twitter (X) > Tăng Follow Twitter",
+        linkPlaceholder: "Nhập username hoặc link profile X (vd: https://x.com/khoasmm)",
+        servers: [
+          {
+            id: "x_follow_sv1",
+            name: "SV1 Follow Twitter Tây Chuẩn Nhanh",
+            price: 38.00,
+            badge: "Nhanh - Ổn định",
+            badgeClass: "badge-primary",
+            linkValid: "Link profile Twitter (X)",
+            resource: "User Quốc tế chất lượng",
+            startSpeed: "5 - 10 phút",
+            warranty: "Bảo hành 30 ngày",
+            support: "Hỗ trợ 24/7",
+            noOverlap: "Không đè đơn",
+            dropRate: "2 - 5%",
+            minQty: 100,
+            maxQty: 50000
+          }
+        ]
+      }
+    ]
+  },
+
+  threads: {
+    id: "threads",
+    name: "Threads",
+    icon: "fab fa-threads",
+    categories: [
+      {
+        id: "threads_follow",
+        name: "Tăng Follow Threads",
+        title: "TĂNG FOLLOWER MẠNG XÃ HỘI THREADS",
+        breadcrumb: "Threads > Tăng Follow Threads",
+        linkPlaceholder: "Nhập link tài khoản Threads (vd: https://www.threads.net/@khoasmm)",
+        servers: [
+          {
+            id: "threads_follow_sv1",
+            name: "SV1 Follow Threads Việt Thật",
+            price: 52.00,
+            badge: "Trending Hot",
+            badgeClass: "badge-hot",
+            linkValid: "Link trang cá nhân Threads",
+            resource: "User Threads Việt Nam",
+            startSpeed: "10 - 20 phút",
+            warranty: "Bảo hành 30 ngày",
+            support: "Hỗ trợ ưu tiên",
+            noOverlap: "Không đè",
+            dropRate: "1 - 3%",
+            minQty: 50,
+            maxQty: 10000
+          }
+        ]
+      }
+    ]
+  }
+};
+
+// Initial Sample Orders for Demonstration (Order Log)
+const INITIAL_ORDERS = [
+  {
+    id: "KHOA-884920",
+    serviceName: "Tăng FOLLOW TikTok",
+    serverName: "Tiktok FollowTây",
+    target: "@khoaprono1",
+    quantity: 1000,
+    startCount: 1540,
+    remains: 0,
+    price: 138330,
+    status: "completed",
+    statusText: "Đã hoàn thành",
+    createdAt: "2026-10-14 18:42:15"
+  },
+  {
+    id: "KHOA-884912",
+    serviceName: "Tăng Tim Video TikTok",
+    serverName: "SV1 Tim TikTok Việt Siêu Tốc",
+    target: "https://www.tiktok.com/@khoaprono1/video/73918237192",
+    quantity: 500,
+    startCount: 220,
+    remains: 45,
+    price: 4250,
+    status: "running",
+    statusText: "Đang chạy",
+    createdAt: "2026-10-14 20:10:05"
+  },
+  {
+    id: "KHOA-884890",
+    serviceName: "Tăng Like Facebook",
+    serverName: "SV1 Like Việt Tốc Độ Cao",
+    target: "https://facebook.com/100092837192/posts/10293812",
+    quantity: 300,
+    startCount: 45,
+    remains: 0,
+    price: 2160,
+    status: "completed",
+    statusText: "Đã hoàn thành",
+    createdAt: "2026-10-14 15:20:44"
+  },
+  {
+    id: "KHOA-884815",
+    serviceName: "Tăng View Video YouTube",
+    serverName: "SV1 View YouTube Nguồn Đề Xuất",
+    target: "https://youtube.com/watch?v=kSMM92910aa",
+    quantity: 5000,
+    startCount: 1200,
+    remains: 1800,
+    price: 125000,
+    status: "running",
+    statusText: "Đang chạy",
+    createdAt: "2026-10-14 11:05:30"
+  }
+];
+
+// User Info Default State
+const DEFAULT_USER = {
+  name: "Luong Dang Khoa",
+  email: "khoaprono1@gmail.com",
+  role: "Cao cấp",
+  balance: 1310, // matching screenshot 1,310
+  totalDeposit: 133059931, // matching screenshot 133,059,931 d
+  joinDate: "2021-04-01 19:27:50",
+  targetDeposit: 99999999999,
+  discountPercent: 5 // 5% discount for "Cao cấp" tier
+};
+
+// Bank Details for Auto Deposit System (VietQR)
+const BANK_CONFIG = {
+  bankName: "MBBank (Quân Đội)",
+  bankCode: "MB",
+  accountNumber: "0987654321",
+  accountName: "LUONG DANG KHOA",
+  branch: "Hà Nội",
+  syntaxPrefix: "KHOASMM",
+  momoPhone: "0987654321",
+  momoName: "LUONG DANG KHOA",
+  usdtTrc20: "TX9Kz8KhoaSmmCryptoTrxNet882910",
+  exchangeRateUsdt: 25450
+};
+
+</script>
+  <script>
+/**
+ * KHOASMM.COM - Core Application Logic
+ * Pair programming with user for SMM platform
+ */
+
+// Application State
+let state = {
+  currentPlatform: "tiktok",
+  currentCategory: null,
+  currentServer: null,
+  quantity: 100,
+  targetLink: "",
+  selectedReaction: "like",
+  orderNotes: "",
+  activeMainTab: "order_create", // "order_create", "order_log", "api_docs", "support"
+  orderFilter: "all",
+  searchKeyword: "",
+  
+  // User Profile
+  user: { ...DEFAULT_USER },
+  
+  // Orders
+  orders: [...INITIAL_ORDERS],
+  
+  // Theme
+  theme: localStorage.getItem("khoasmm_theme") || "light"
+};
+
+// Initialize App on DOMContentLoaded
+document.addEventListener("DOMContentLoaded", () => {
+  loadStoredData();
+  applyTheme(state.theme);
+  initUserStats();
+  initPlatformNavbar();
+  renderCurrentService();
+  renderOrderLog();
+  initEventListeners();
+  updateDepositModal();
+  checkBaoStarApiStatus();
+});
+
+// Check Live Connection to BaoStar API
+async function checkBaoStarApiStatus() {
+  const pill = document.getElementById("baostarBalanceLive");
+  if (!pill) return;
+
+  try {
+    const res = await fetch('/api/baostar/balance');
+    const data = await res.json();
+    if (data && data.balance !== undefined) {
+      pill.textContent = `${data.balance} ${data.currency || 'USD'} (Sẵn sàng)`;
+      pill.title = `Tài khoản BaoStar trực tuyến. Số dư: ${data.balance} ${data.currency}`;
+    } else if (data && data.error) {
+      pill.textContent = "Lỗi kết nối";
+      pill.style.color = "var(--danger)";
+    }
+  } catch (err) {
+    pill.textContent = "Offline (Local)";
+    pill.style.color = "var(--text-muted)";
+  }
+}
+
+// Load state from localStorage if available
+function loadStoredData() {
+  const savedUser = localStorage.getItem("khoasmm_user");
+  if (savedUser) {
+    try {
+      state.user = { ...state.user, ...JSON.parse(savedUser) };
+    } catch (e) {
+      console.error("Error loading user:", e);
+    }
+  }
+
+  const savedOrders = localStorage.getItem("khoasmm_orders");
+  if (savedOrders) {
+    try {
+      state.orders = JSON.parse(savedOrders);
+    } catch (e) {
+      console.error("Error loading orders:", e);
+    }
+  }
+}
+
+function saveUserData() {
+  localStorage.setItem("khoasmm_user", JSON.stringify(state.user));
+}
+
+function saveOrdersData() {
+  localStorage.setItem("khoasmm_orders", JSON.stringify(state.orders));
+}
+
+// ==========================================================================
+// NAVIGATION & PLATFORM SELECTION
+// ==========================================================================
+function initPlatformNavbar() {
+  const container = document.getElementById("platformNavContainer");
+  if (!container) return;
+
+  const platforms = Object.keys(SERVICES_DATA);
+  let html = `
+    <div class="nav-item" onclick="switchMainTab('support')">
+      <i class="fas fa-server"></i> Hệ thống <i class="fas fa-angle-down" style="font-size: 11px;"></i>
+    </div>
+    <div class="nav-item highlight-free" onclick="showFreeServiceToast()">
+      <i class="fas fa-gift"></i> Dịch vụ miễn phí
+    </div>
+  `;
+
+  platforms.forEach((key) => {
+    const item = SERVICES_DATA[key];
+    const isActive = state.currentPlatform === key ? "active" : "";
+    html += `
+      <div class="nav-item ${isActive}" data-platform="${key}" onclick="selectPlatform('${key}')">
+        <i class="${item.icon}"></i> ${item.name}
+        ${key === 'tiktok' ? '<span class="tag-hot">HOT</span>' : ''}
+      </div>
+    `;
+  });
+
+  html += `
+    <div class="nav-item" onclick="openModal('modalSettings')">
+      <i class="fas fa-ellipsis-h"></i> Thêm
+    </div>
+  `;
+
+  container.innerHTML = html;
+}
+
+function selectPlatform(platformKey) {
+  if (!SERVICES_DATA[platformKey]) return;
+  state.currentPlatform = platformKey;
+  state.currentCategory = null;
+  state.currentServer = null;
+
+  // Update active state in navbar
+  document.querySelectorAll(".platform-navbar .nav-item").forEach(el => {
+    el.classList.toggle("active", el.getAttribute("data-platform") === platformKey);
+  });
+
+  // Switch to order tab
+  switchMainTab("order_create");
+  renderCurrentService();
+}
+
+function renderCurrentService() {
+  const platform = SERVICES_DATA[state.currentPlatform];
+  if (!platform) return;
+
+  // Set default category if none selected
+  if (!state.currentCategory) {
+    state.currentCategory = platform.categories[0];
+  }
+
+  // Update Breadcrumb & Title
+  document.getElementById("pageTitle").textContent = state.currentCategory.title || state.currentCategory.name.toUpperCase();
+  document.getElementById("breadcrumbText").innerHTML = `<span>${platform.name}</span> &gt; ${state.currentCategory.name}`;
+
+  // Render Sub-service Tabs
+  renderSubserviceTabs(platform);
+
+  // Render Server List
+  renderServerList(state.currentCategory);
+
+  // Update Input placeholders
+  const linkInput = document.getElementById("targetLinkInput");
+  if (linkInput) {
+    linkInput.placeholder = state.currentCategory.linkPlaceholder || "Nhập link cần chạy";
+    linkInput.value = state.targetLink;
+  }
+
+  // Reaction picker visibility for Facebook
+  const reactionContainer = document.getElementById("reactionsPickerContainer");
+  if (reactionContainer) {
+    reactionContainer.style.display = state.currentCategory.hasReactions ? "block" : "none";
+  }
+
+  // Recalculate
+  calculateTotalPrice();
+}
+
+function renderSubserviceTabs(platform) {
+  const container = document.getElementById("subserviceTabsContainer");
+  if (!container) return;
+
+  let html = "";
+  platform.categories.forEach((cat) => {
+    const isActive = state.currentCategory.id === cat.id ? "active" : "";
+    html += `
+      <button class="subservice-tab-btn ${isActive}" onclick="selectCategory('${cat.id}')">
+        ${cat.name}
+      </button>
+    `;
+  });
+
+  container.innerHTML = html;
+}
+
+function selectCategory(categoryId) {
+  const platform = SERVICES_DATA[state.currentPlatform];
+  const cat = platform.categories.find(c => c.id === categoryId);
+  if (!cat) return;
+
+  state.currentCategory = cat;
+  state.currentServer = null;
+  renderCurrentService();
+}
+
+// ==========================================================================
+// SERVER LIST & DETAILED SPECIFICATION CARD
+// ==========================================================================
+function renderServerList(category) {
+  const container = document.getElementById("serverRadioList");
+  if (!container) return;
+
+  if (!state.currentServer && category.servers.length > 0) {
+    // Pick the recommended server or the first one
+    const recommended = category.servers.find(s => s.recommended) || category.servers[0];
+    state.currentServer = recommended;
+  }
+
+  let html = "";
+  category.servers.forEach((srv) => {
+    const isSelected = state.currentServer && state.currentServer.id === srv.id;
+    html += `
+      <div class="server-radio-item ${isSelected ? 'selected' : ''}" onclick="selectServer('${srv.id}')">
+        <input type="radio" name="server_choice" class="server-radio-input" ${isSelected ? 'checked' : ''} />
+        <div class="server-info-content">
+          <div class="server-title-wrap">
+            <span class="server-name">${srv.name}</span>
+            <span class="server-price">${srv.price.toLocaleString('vi-VN', { minimumFractionDigits: 0, maximumFractionDigits: 2 })} vnd</span>
+            ${srv.badge ? `<span class="server-badge ${srv.badgeClass || 'badge-primary'}">${srv.badge}</span>` : ''}
+          </div>
+        </div>
+      </div>
+    `;
+  });
+
+  container.innerHTML = html;
+  renderServerSpecCard(state.currentServer);
+}
+
+function selectServer(serverId) {
+  const srv = state.currentCategory.servers.find(s => s.id === serverId);
+  if (!srv) return;
+
+  state.currentServer = srv;
+  
+  // Re-render selection highlight
+  document.querySelectorAll(".server-radio-item").forEach(item => {
+    item.classList.remove("selected");
+    const radio = item.querySelector("input");
+    if (radio) radio.checked = false;
+  });
+
+  // Re-highlight the chosen item
+  const allItems = document.querySelectorAll(".server-radio-item");
+  state.currentCategory.servers.forEach((s, idx) => {
+    if (s.id === serverId && allItems[idx]) {
+      allItems[idx].classList.add("selected");
+      const radio = allItems[idx].querySelector("input");
+      if (radio) radio.checked = true;
+    }
+  });
+
+  renderServerSpecCard(srv);
+  calculateTotalPrice();
+}
+
+// Render dynamic server specification note card (Replica of BaoStar's colorful pastel notes)
+function renderServerSpecCard(srv) {
+  const container = document.getElementById("serverSpecCardContainer");
+  if (!container) return;
+
+  if (!srv) {
+    container.innerHTML = `<div style="color: var(--text-muted); padding: 12px;">Chưa chọn máy chủ</div>`;
+    return;
+  }
+
+  container.innerHTML = `
+    <div class="server-spec-card">
+      <div class="spec-header-title">
+        <i class="fas fa-info-circle"></i>
+        <span>Ghi chú gói <strong>${srv.name}</strong> - Mã gói : <span class="spec-badge-id">${srv.id}</span></span>
+      </div>
+
+      <div class="spec-row spec-row-link">
+        <i class="fas fa-link"></i>
+        <div><span class="spec-label-title">Link hợp lệ:</span> ${srv.linkValid || "username / @username / url"}</div>
+      </div>
+
+      <div class="spec-row spec-row-resource">
+        <i class="fas fa-globe"></i>
+        <div><span class="spec-label-title">Tài nguyên:</span> ${srv.resource || "Quốc tế"}</div>
+      </div>
+
+      <div class="spec-row spec-row-speed">
+        <i class="fas fa-bolt"></i>
+        <div><span class="spec-label-title">Bắt đầu:</span> ${srv.startSpeed || "Sau 5 - 15 phút"}</div>
+      </div>
+
+      <div class="spec-row spec-row-warranty">
+        <i class="fas fa-shield-alt"></i>
+        <div><span class="spec-label-title">Bảo hành:</span> ${srv.warranty || "Không bảo hành"}</div>
+      </div>
+
+      <div class="spec-row spec-row-support">
+        <i class="fas fa-user-shield"></i>
+        <div><span class="spec-label-title">Hỗ trợ:</span> ${srv.support || "Hỗ trợ tài khoản công khai"}</div>
+      </div>
+
+      <div class="spec-row spec-row-overlap">
+        <i class="fas fa-ban"></i>
+        <div><span class="spec-label-title">Không đè đơn:</span> ${srv.noOverlap || "Không order cùng lúc với các máy chủ khác."}</div>
+      </div>
+
+      <div class="spec-row spec-row-drop">
+        <i class="fas fa-chart-line"></i>
+        <div><span class="spec-label-title">Tỉ lệ tụt:</span> ${srv.dropRate || "Không xác định (phụ thuộc vào thuật toán)"}</div>
+      </div>
+    </div>
+  `;
+}
+
+// ==========================================================================
+// PRICE CALCULATION & ORDER SUBMISSION
+// ==========================================================================
+function calculateTotalPrice() {
+  if (!state.currentServer) return;
+
+  const qtyInput = document.getElementById("orderQuantityInput");
+  const qty = parseInt(qtyInput ? qtyInput.value : state.quantity) || 0;
+  state.quantity = qty;
+
+  const rawUnitRate = state.currentServer.price;
+  const rawTotal = qty * rawUnitRate;
+
+  // Apply User Tier Discount
+  const discountRate = state.user.discountPercent || 0;
+  const discountAmount = (rawTotal * discountRate) / 100;
+  const finalTotal = Math.max(0, Math.round(rawTotal - discountAmount));
+
+  // Update Summary Box
+  const rateDisplay = document.getElementById("summaryUnitRate");
+  const totalDisplay = document.getElementById("summaryTotalPrice");
+  const discountDisplay = document.getElementById("summaryDiscount");
+
+  if (rateDisplay) {
+    rateDisplay.textContent = `Giá: ${rawUnitRate.toLocaleString('vi-VN')} đ / 1 đơn vị | Số lượng: ${qty.toLocaleString('vi-VN')}`;
+  }
+
+  if (discountDisplay) {
+    if (discountRate > 0) {
+      discountDisplay.style.display = "inline-flex";
+      discountDisplay.innerHTML = `<i class="fas fa-check-circle"></i> Giảm ${discountRate}% (${state.user.role}): -${Math.round(discountAmount).toLocaleString('vi-VN')} đ`;
+    } else {
+      discountDisplay.style.display = "none";
+    }
+  }
+
+  if (totalDisplay) {
+    totalDisplay.textContent = `${finalTotal.toLocaleString('vi-VN')} đ`;
+  }
+}
+
+function handleQuantityChange(value) {
+  const qtyInput = document.getElementById("orderQuantityInput");
+  if (!qtyInput) return;
+
+  let qty = parseInt(value);
+  if (isNaN(qty) || qty < 1) qty = 1;
+  qtyInput.value = qty;
+  state.quantity = qty;
+  calculateTotalPrice();
+}
+
+function setQuickQuantity(delta) {
+  const qtyInput = document.getElementById("orderQuantityInput");
+  if (!qtyInput) return;
+
+  let current = parseInt(qtyInput.value) || 0;
+  qtyInput.value = current + delta;
+  calculateTotalPrice();
+}
+
+function setAbsoluteQuantity(qty) {
+  const qtyInput = document.getElementById("orderQuantityInput");
+  if (!qtyInput) return;
+
+  qtyInput.value = qty;
+  calculateTotalPrice();
+}
+
+function submitOrder() {
+  const linkInput = document.getElementById("targetLinkInput");
+  const targetLink = linkInput ? linkInput.value.trim() : "";
+  const notesInput = document.getElementById("orderNotesInput");
+  const notes = notesInput ? notesInput.value.trim() : "";
+
+  if (!targetLink) {
+    showToast("Vui lòng nhập link hoặc username hợp lệ!", "error");
+    if (linkInput) linkInput.focus();
+    return;
+  }
+
+  if (!state.currentServer) {
+    showToast("Vui lòng chọn một máy chủ!", "error");
+    return;
+  }
+
+  const qty = state.quantity;
+  if (qty < (state.currentServer.minQty || 10)) {
+    showToast(`Số lượng tối thiểu của gói này là ${(state.currentServer.minQty || 10).toLocaleString('vi-VN')}`, "error");
+    return;
+  }
+
+  const rawUnitRate = state.currentServer.price;
+  const rawTotal = qty * rawUnitRate;
+  const discountAmount = (rawTotal * (state.user.discountPercent || 0)) / 100;
+  const finalTotal = Math.round(rawTotal - discountAmount);
+
+  // Check balance
+  if (state.user.balance < finalTotal) {
+    const shortage = finalTotal - state.user.balance;
+    showToast(`Số dư không đủ! Bạn cần thêm ${shortage.toLocaleString('vi-VN')} đ. Đang mở nạp tiền...`, "error");
+    setTimeout(() => {
+      openDepositModal(shortage);
+    }, 1200);
+    return;
+  }
+
+  // Deduct balance
+  state.user.balance -= finalTotal;
+  saveUserData();
+  initUserStats();
+
+  // Create new order entry
+  const newOrderId = `KHOA-${Math.floor(100000 + Math.random() * 900000)}`;
+  const now = new Date();
+  const dateStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+
+  const orderItem = {
+    id: newOrderId,
+    serviceName: state.currentCategory.name,
+    serverName: state.currentServer.name,
+    target: targetLink,
+    quantity: qty,
+    startCount: 0,
+    remains: qty,
+    price: finalTotal,
+    status: "running",
+    statusText: "Đang chạy",
+    createdAt: dateStr,
+    notes: notes,
+    baostarServiceId: state.currentServer.baostarServiceId || null
+  };
+
+  state.orders.unshift(orderItem);
+  saveOrdersData();
+  renderOrderLog();
+
+  // Reset link input
+  if (linkInput) linkInput.value = "";
+  if (notesInput) notesInput.value = "";
+  state.targetLink = "";
+
+  // REAL API DISPATCH TO BAOSTAR
+  if (state.currentServer.baostarServiceId) {
+    showToast(`Đang đẩy đơn #${newOrderId} sang hệ thống BaoStar...`, "info");
+    
+    fetch('/api/baostar/order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        service: state.currentServer.baostarServiceId,
+        link: targetLink,
+        quantity: qty
+      })
+    })
+    .then(res => res.json())
+    .then(resData => {
+      console.log('BaoStar Order Response:', resData);
+      if (resData.response && resData.response.order) {
+        orderItem.id = `BAO-${resData.response.order}`;
+        orderItem.statusText = "Đang chạy (BaoStar)";
+        orderItem.notes = `BaoStar Order ID: ${resData.response.order}`;
+        saveOrdersData();
+        renderOrderLog();
+        showToast(`BaoStar đã nhận đơn #${resData.response.order} thành công!`, "success");
+      } else if (resData.response && resData.response.error) {
+        orderItem.status = "processing";
+        orderItem.statusText = "Chờ xử lý (Nguồn)";
+        orderItem.notes = `BaoStar: ${resData.response.error}`;
+        saveOrdersData();
+        renderOrderLog();
+        showToast(`Đã lưu đơn vào khoasmm.com. Phản hồi BaoStar: ${resData.response.error}`, "info");
+      } else {
+        showToast(`Tạo đơn #${newOrderId} thành công!`, "success");
+      }
+    })
+    .catch(err => {
+      console.error('Error dispatching to BaoStar:', err);
+      showToast(`Đã lưu đơn #${newOrderId} trên khoasmm.com!`, "success");
+    });
+  } else {
+    showToast(`Tạo đơn hàng #${newOrderId} thành công! Hệ thống đang xử lý.`, "success");
+  }
+}
+
+// ==========================================================================
+// ORDER LOG & FILTERING
+// ==========================================================================
+function renderOrderLog() {
+  const tbody = document.getElementById("orderLogTableBody");
+  if (!tbody) return;
+
+  let filtered = state.orders;
+
+  // Filter by status
+  if (state.orderFilter !== "all") {
+    filtered = filtered.filter(o => o.status === state.orderFilter);
+  }
+
+  // Search filter
+  if (state.searchKeyword) {
+    const kw = state.searchKeyword.toLowerCase();
+    filtered = filtered.filter(o => 
+      o.id.toLowerCase().includes(kw) || 
+      o.target.toLowerCase().includes(kw) || 
+      o.serviceName.toLowerCase().includes(kw)
+    );
+  }
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="8" style="text-align: center; padding: 40px; color: var(--text-muted);">
+          <i class="fas fa-inbox" style="font-size: 32px; margin-bottom: 10px; display: block; opacity: 0.5;"></i>
+          Không tìm thấy đơn hàng nào phù hợp
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  let html = "";
+  filtered.forEach(order => {
+    let statusClass = "status-running";
+    if (order.status === "completed") statusClass = "status-completed";
+    else if (order.status === "processing") statusClass = "status-processing";
+    else if (order.status === "cancelled") statusClass = "status-cancelled";
+
+    html += `
+      <tr>
+        <td><span class="order-id-badge">${order.id}</span></td>
+        <td>
+          <div style="font-weight: 700;">${order.serviceName}</div>
+          <div style="font-size: 11px; color: var(--text-muted);">${order.serverName}</div>
+        </td>
+        <td>
+          <div style="max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: monospace;" title="${order.target}">
+            ${order.target}
+          </div>
+        </td>
+        <td style="font-weight: 700;">${order.quantity.toLocaleString('vi-VN')}</td>
+        <td style="font-family: 'Outfit'; font-weight: 700; color: #ef4444;">${order.price.toLocaleString('vi-VN')} đ</td>
+        <td><span class="order-status-badge ${statusClass}">${order.statusText}</span></td>
+        <td style="font-size: 11.5px; color: var(--text-muted);">${order.createdAt}</td>
+        <td>
+          <button class="copy-btn" onclick="copyOrderDetails('${order.id}')" title="Sao chép ID">
+            <i class="fas fa-copy"></i>
+          </button>
+        </td>
+      </tr>
+    `;
+  });
+
+  tbody.innerHTML = html;
+}
+
+function filterOrders(status) {
+  state.orderFilter = status;
+  document.querySelectorAll(".order-filter-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.getAttribute("data-status") === status);
+  });
+  renderOrderLog();
+}
+
+function handleOrderSearch(keyword) {
+  state.searchKeyword = keyword.trim();
+  renderOrderLog();
+}
+
+function copyOrderDetails(orderId) {
+  navigator.clipboard.writeText(orderId).then(() => {
+    showToast(`Đã sao chép mã đơn: ${orderId}`, "info");
+  });
+}
+
+// ==========================================================================
+// TABS SWITCHER (Tạo đơn hàng vs Nhật ký đơn hàng vs Bảng giá vs Hỗ trợ)
+// ==========================================================================
+function switchMainTab(tabId) {
+  state.activeMainTab = tabId;
+
+  // Toggle buttons
+  document.querySelectorAll(".section-tab-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.getAttribute("data-tab") === tabId);
+  });
+
+  const createContainer = document.getElementById("orderCreateContainer");
+  const logContainer = document.getElementById("orderLogContainer");
+  const apiContainer = document.getElementById("apiDocsContainer");
+  const supportContainer = document.getElementById("supportContainer");
+
+  if (createContainer) createContainer.style.display = tabId === "order_create" ? "block" : "none";
+  if (logContainer) logContainer.style.display = tabId === "order_log" ? "block" : "none";
+  if (apiContainer) apiContainer.style.display = tabId === "api_docs" ? "block" : "none";
+  if (supportContainer) supportContainer.style.display = tabId === "support" ? "block" : "none";
+
+  if (tabId === "order_log") {
+    renderOrderLog();
+  }
+}
+
+// ==========================================================================
+// USER STATS & WALLET (Sidebar & Header)
+// ==========================================================================
+function initUserStats() {
+  // Balance Header
+  const headerBalance = document.getElementById("headerBalanceAmount");
+  if (headerBalance) {
+    headerBalance.textContent = `${state.user.balance.toLocaleString('vi-VN')} đ`;
+  }
+
+  // Sidebar Card
+  const userNameEl = document.getElementById("cardUserName");
+  const userRankEl = document.getElementById("cardUserRank");
+  const userBalanceEl = document.getElementById("cardUserBalance");
+  const userTotalDepositEl = document.getElementById("cardUserTotalDeposit");
+  const userEmailEl = document.getElementById("cardUserEmail");
+  const userJoinDateEl = document.getElementById("cardUserJoinDate");
+  const userNextTierEl = document.getElementById("cardUserNextTier");
+
+  if (userNameEl) userNameEl.textContent = state.user.name;
+  if (userRankEl) userRankEl.textContent = state.user.role;
+  if (userBalanceEl) userBalanceEl.textContent = `${state.user.balance.toLocaleString('vi-VN')} đ`;
+  if (userTotalDepositEl) userTotalDepositEl.textContent = `${state.user.totalDeposit.toLocaleString('vi-VN')} đ`;
+  if (userEmailEl) userEmailEl.textContent = state.user.email;
+  if (userJoinDateEl) userJoinDateEl.textContent = state.user.joinDate;
+  if (userNextTierEl) userNextTierEl.textContent = `${state.user.role} ${state.user.totalDeposit.toLocaleString('vi-VN')}/99,999,999,999`;
+}
+
+// ==========================================================================
+// AUTOMATED DEPOSIT SYSTEM (VietQR & Simulator)
+// ==========================================================================
+function openDepositModal(defaultAmount = 50000) {
+  const amountInput = document.getElementById("depositAmountInput");
+  if (amountInput) amountInput.value = Math.max(10000, defaultAmount);
+  updateDepositModal();
+  openModal("modalDeposit");
+}
+
+function updateDepositModal() {
+  const amountInput = document.getElementById("depositAmountInput");
+  const amount = parseInt(amountInput ? amountInput.value : 50000) || 50000;
+  const memoCode = `${BANK_CONFIG.syntaxPrefix} ${state.user.email.split('@')[0]}`;
+
+  // Update bank info labels
+  const bankNameEl = document.getElementById("depositBankName");
+  const bankAccEl = document.getElementById("depositBankAcc");
+  const bankOwnerEl = document.getElementById("depositBankOwner");
+  const memoEl = document.getElementById("depositMemo");
+
+  if (bankNameEl) bankNameEl.textContent = BANK_CONFIG.bankName;
+  if (bankAccEl) bankAccEl.textContent = BANK_CONFIG.accountNumber;
+  if (bankOwnerEl) bankOwnerEl.textContent = BANK_CONFIG.accountName;
+  if (memoEl) memoEl.textContent = memoCode;
+
+  // Real Dynamic VietQR Generation
+  const qrImg = document.getElementById("vietQrImage");
+  if (qrImg) {
+    const encodedMemo = encodeURIComponent(memoCode);
+    const encodedOwner = encodeURIComponent(BANK_CONFIG.accountName);
+    qrImg.src = `https://img.vietqr.io/image/${BANK_CONFIG.bankCode}-${BANK_CONFIG.accountNumber}-compact2.png?amount=${amount}&addInfo=${encodedMemo}&accountName=${encodedOwner}`;
+  }
+}
+
+function simulateSuccessfulDeposit() {
+  const amountInput = document.getElementById("depositAmountInput");
+  const amount = parseInt(amountInput ? amountInput.value : 50000) || 50000;
+
+  state.user.balance += amount;
+  state.user.totalDeposit += amount;
+  saveUserData();
+  initUserStats();
+  calculateTotalPrice();
+
+  closeModal("modalDeposit");
+  showToast(`Nạp thành công +${amount.toLocaleString('vi-VN')} đ vào tài khoản khoasmm.com!`, "success");
+}
+
+function copyText(text, label = "thông tin") {
+  navigator.clipboard.writeText(text).then(() => {
+    showToast(`Đã sao chép ${label}!`, "info");
+  });
+}
+
+// ==========================================================================
+// THEME & INTERFACE SETTINGS
+// ==========================================================================
+function toggleTheme() {
+  const newTheme = state.theme === "light" ? "dark" : "light";
+  applyTheme(newTheme);
+}
+
+function applyTheme(theme) {
+  state.theme = theme;
+  localStorage.setItem("khoasmm_theme", theme);
+  document.documentElement.setAttribute("data-theme", theme);
+
+  const themeIcon = document.getElementById("themeToggleIcon");
+  if (themeIcon) {
+    themeIcon.className = theme === "light" ? "fas fa-moon" : "fas fa-sun";
+  }
+}
+
+// ==========================================================================
+// MODAL CONTROLLERS & TOAST
+// ==========================================================================
+function openModal(modalId) {
+  const modal = document.getElementById(modalId);
+  if (modal) modal.classList.add("active");
+}
+
+function closeModal(modalId) {
+  const modal = document.getElementById(modalId);
+  if (modal) modal.classList.remove("active");
+}
+
+function showToast(message, type = "info") {
+  const container = document.getElementById("toastContainer");
+  if (!container) return;
+
+  const toast = document.createElement("div");
+  toast.className = `toast toast-${type}`;
+
+  let icon = "fa-info-circle";
+  if (type === "success") icon = "fa-check-circle";
+  else if (type === "error") icon = "fa-exclamation-circle";
+
+  toast.innerHTML = `
+    <i class="fas ${icon}"></i>
+    <div>${message}</div>
+  `;
+
+  container.appendChild(toast);
+
+  setTimeout(() => {
+    toast.style.opacity = "0";
+    toast.style.transform = "translateX(100%)";
+    setTimeout(() => toast.remove(), 300);
+  }, 4000);
+}
+
+function showFreeServiceToast() {
+  showToast("Dịch vụ Miễn Phí (Buff View/Like Free) mở vào 12h00 & 20h00 mỗi ngày!", "info");
+}
+
+// Event Listeners Registration
+function initEventListeners() {
+  // Global search
+  const searchInput = document.getElementById("headerGlobalSearch");
+  if (searchInput) {
+    searchInput.addEventListener("input", (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      if (!q) return;
+      // Search across categories
+      for (const pKey in SERVICES_DATA) {
+        const cat = SERVICES_DATA[pKey].categories.find(c => c.name.toLowerCase().includes(q));
+        if (cat) {
+          selectPlatform(pKey);
+          selectCategory(cat.id);
+          break;
+        }
+      }
+    });
+  }
+
+  // Close modals when clicking outside
+  document.querySelectorAll(".modal-overlay").forEach(overlay => {
+    overlay.addEventListener("click", (e) => {
+      if (e.target === overlay) {
+        overlay.classList.remove("active");
+      }
+    });
+  });
+}
+
+</script>
   <script>
     // Helper scripts
     function toggleFullScreen() {
