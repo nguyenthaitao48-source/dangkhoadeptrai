@@ -2468,6 +2468,273 @@ button, input, select, textarea {
   background: rgba(239, 68, 68, 0.02);
 }
 
+/* ==========================================================================
+   AUTHENTIC BAOSTAR DUAL-COLUMN LAYOUT WITH VERTICAL LEFT SIDEBAR
+   ========================================================================== */
+.baostar-app-wrapper {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--bg-app);
+}
+
+/* LEFT SIDEBAR NAVIGATION */
+.baostar-sidebar {
+  width: 260px;
+  background: var(--bg-card);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1050;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.03);
+}
+
+.sidebar-brand-box {
+  height: 64px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-card);
+  flex-shrink: 0;
+}
+
+.sidebar-user-quick {
+  padding: 14px 18px;
+  background: var(--bg-card-subtle);
+  border-bottom: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+
+.sidebar-avatar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.sidebar-avatar-img {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid #f97316;
+  background: #fff;
+}
+
+.sidebar-user-names {
+  flex: 1;
+  overflow: hidden;
+}
+
+.sidebar-uname {
+  font-weight: 800;
+  font-size: 13.5px;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-role {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.sidebar-wallet-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-card);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+}
+
+.sidebar-balance-text {
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  color: #059669;
+}
+
+.btn-deposit-mini {
+  padding: 4px 10px;
+  font-size: 11.5px;
+  font-weight: 800;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);
+  transition: var(--transition);
+}
+
+.btn-deposit-mini:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+.sidebar-nav-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 10px 30px;
+}
+
+.sidebar-nav-section-title {
+  font-size: 10.5px;
+  font-weight: 800;
+  color: var(--text-muted);
+  letter-spacing: 0.8px;
+  padding: 12px 12px 6px;
+  text-transform: uppercase;
+}
+
+.sidebar-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-muted);
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+  margin-bottom: 2px;
+  position: relative;
+}
+
+.sidebar-nav-link i {
+  font-size: 15px;
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.sidebar-nav-link:hover {
+  background: var(--bg-card-subtle);
+  color: var(--primary);
+}
+
+.sidebar-nav-link.active {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.08), rgba(249, 115, 22, 0.12));
+  color: var(--primary);
+  border-left: 3px solid var(--primary);
+}
+
+.sidebar-badge-hot {
+  margin-left: auto;
+  background: #ef4444;
+  color: #ffffff;
+  font-size: 9.5px;
+  font-weight: 800;
+  padding: 1px 6px;
+  border-radius: var(--radius-full);
+}
+
+/* MAIN CONTENT COLUMN (DESKTOP) */
+.baostar-main-column {
+  flex: 1;
+  margin-left: 260px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 992px) {
+  .baostar-sidebar {
+    transform: translateX(-100%);
+  }
+  .baostar-sidebar.open {
+    transform: translateX(0);
+  }
+  .baostar-main-column {
+    margin-left: 0;
+  }
+}
+
+.sidebar-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1040;
+}
+
+.sidebar-backdrop.active {
+  display: block;
+}
+
+.btn-sidebar-toggle {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  color: var(--text-main);
+  cursor: pointer;
+  padding: 6px 10px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+}
+
+.btn-sidebar-toggle:hover {
+  background: var(--bg-card-subtle);
+}
+
+.btn-sidebar-close {
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  display: none;
+}
+
+.btn-sidebar-close:hover {
+  color: var(--danger);
+}
+
+@media (max-width: 992px) {
+  .btn-sidebar-toggle {
+    display: inline-flex;
+  }
+  .btn-sidebar-close {
+    display: inline-flex;
+  }
+  .mobile-only-brand {
+    display: flex !important;
+  }
+}
+
+/* QUICK QUANTITY BUTTONS */
+.btn-quick-qty {
+  padding: 4px 10px;
+  font-size: 11.5px;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-main);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-quick-qty:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--bg-card-subtle);
+}
+
+
 
 
 
@@ -2476,90 +2743,215 @@ button, input, select, textarea {
 </head>
 <body>
 
-  <!-- ==========================================================================
-       TOP HEADER BAR
-       ========================================================================== -->
-  <header class="top-header">
-    <div class="top-bar-inner">
-      <!-- Brand Logo -->
-      <div class="brand-logo" onclick="selectPlatform('tiktok')">
-        <div class="brand-badge-logo">
-          <i class="fas fa-rocket"></i>
-          <span>KHOA SMM</span>
-        </div>
-        <span class="brand-domain">khoasmm.com</span>
-      </div>
+  <!-- Overlay Backdrop for Mobile Sidebar -->
+  <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleMobileSidebar()"></div>
 
-      <!-- Quick Search Services -->
-      <div class="header-search">
-        <i class="fas fa-search"></i>
-        <input type="text" id="headerGlobalSearch" placeholder="Tìm kiếm dịch vụ (TikTok, FB, IG...)..." autocomplete="off">
-      </div>
+  <!-- AUTHENTIC BAOSTAR DUAL LAYOUT WRAPPER -->
+  <div class="baostar-app-wrapper">
 
-      <!-- Right Header Actions -->
-      <div class="header-actions">
-        
-        <!-- 1. GUEST STATE: SHOW LOGIN & REGISTER BUTTONS -->
-        <div id="headerAuthGuest" class="header-auth-group">
-          <button class="btn-auth-login" onclick="openAuthModal('login')">
-            <i class="fas fa-sign-in-alt"></i> Đăng nhập
-          </button>
-          <button class="btn-auth-register" onclick="openAuthModal('register')">
-            <i class="fas fa-user-plus"></i> Đăng ký
-          </button>
-        </div>
-
-        <!-- 2. LOGGED-IN USER STATE: SHOW USER WALLET & PROFILE -->
-        <div id="headerAuthUser" style="display: none; align-items: center; gap: 10px;">
-          <!-- Exclusive Admin Panel Button -->
-          <button class="btn-admin-header" id="headerAdminBtn" style="display: none;" onclick="openAdminPanel()" title="Mở Bảng Quản Trị Website">
-            <i class="fas fa-crown"></i> Quản Trị Website
-          </button>
-
-          <!-- Live BaoStar API Status Pill -->
-          <div class="header-balance-pill" id="baostarApiPill" style="background: rgba(16, 185, 129, 0.08); border-color: rgba(16, 185, 129, 0.3); font-size: 12px; cursor: pointer;" onclick="openModal('modalSettings')" title="Xem trạng thái kết nối BaoStar">
-            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #10b981;"></span>
-            <span style="color: var(--text-muted);">API BaoStar:</span>
-            <strong style="color: #059669;" id="baostarBalanceLive">Đang kết nối...</strong>
+    <!-- ==========================================================================
+         LEFT PERSISTENT SIDEBAR (BAOSTAR STYLE)
+         ========================================================================== -->
+    <aside class="baostar-sidebar" id="baostarSidebar">
+      <!-- Brand Logo Box -->
+      <div class="sidebar-brand-box">
+        <div class="brand-logo" onclick="selectPlatform('tiktok')" style="cursor: pointer;">
+          <div class="brand-badge-logo">
+            <i class="fas fa-rocket"></i>
+            <span>KHOA SMM</span>
           </div>
-
-          <!-- User Balance Pill with Quick Deposit -->
-          <div class="header-balance-pill">
-            <span>Số dư:</span>
-            <span class="header-balance-amount" id="headerBalanceAmount">0 đ</span>
-            <button class="btn-deposit-quick" onclick="openDepositModal()">+ Nạp tiền</button>
-          </div>
-
-          <!-- User Profile Avatar Badge & Logout -->
-          <div class="header-user-badge" onclick="handleLogout()" title="Bấm để Đăng xuất">
-            <img src="https://api.dicebear.com/7.x/bottts/svg?seed=User&backgroundColor=fce7f3" alt="Avatar" class="user-avatar-mini">
-            <span style="font-size: 12px; font-weight: 700; color: var(--danger); margin-left: 2px;"><i class="fas fa-sign-out-alt"></i></span>
-          </div>
+          <span class="brand-domain">khoasmm.com</span>
         </div>
-
-        <!-- Fullscreen toggle -->
-        <button class="action-icon-btn" onclick="toggleFullScreen()" title="Toàn màn hình">
-          <i class="fas fa-expand"></i>
-        </button>
-
-        <!-- Theme Toggle (Light / Dark) -->
-        <button class="action-icon-btn" onclick="toggleTheme()" title="Đổi giao diện Sáng / Tối">
-          <i class="fas fa-moon" id="themeToggleIcon"></i>
-        </button>
-
-        <!-- Notification Bell -->
-        <button class="action-icon-btn" onclick="openModal('modalNotifications')" title="Thông báo hệ thống">
-          <i class="far fa-bell"></i>
-          <span class="badge-dot">NEW</span>
+        <button class="btn-sidebar-close" onclick="toggleMobileSidebar()" title="Đóng menu">
+          <i class="fas fa-times"></i>
         </button>
       </div>
-    </div>
 
-    <!-- Platform Categories Navigation Bar -->
-    <nav class="platform-navbar">
-      <div class="platform-navbar-inner" id="platformNavContainer"></div>
-    </nav>
-  </header>
+      <!-- Quick User / Wallet Card in Sidebar -->
+      <div class="sidebar-user-quick">
+        <div class="sidebar-avatar-row">
+          <img src="https://api.dicebear.com/7.x/bottts/svg?seed=User&backgroundColor=fce7f3" alt="Avatar" class="sidebar-avatar-img" id="sidebarAvatarImg">
+          <div class="sidebar-user-names">
+            <div class="sidebar-uname" id="sidebarUname">Khách vãng lai</div>
+            <div class="sidebar-role" id="sidebarRole">Chưa đăng nhập</div>
+          </div>
+        </div>
+        <div class="sidebar-wallet-row">
+          <div>
+            <span style="font-size: 11px; color: var(--text-muted); display: block;">Số dư ví:</span>
+            <span class="sidebar-balance-text" id="sidebarBalanceText">0 đ</span>
+          </div>
+          <button class="btn-deposit-mini" onclick="openDepositModal()">+ Nạp tiền</button>
+        </div>
+      </div>
+
+      <!-- Navigation Links Scroll -->
+      <div class="sidebar-nav-scroll">
+        <div class="sidebar-nav-section-title">Menu Chính</div>
+        <a class="sidebar-nav-link active" href="javascript:void(0)" onclick="selectPlatform('tiktok'); switchMainTab('order_create');">
+          <i class="fas fa-cart-plus" style="color: #ef4444;"></i>
+          <span>Tạo Đơn Hàng</span>
+        </a>
+        <a class="sidebar-nav-link" href="javascript:void(0)" onclick="openDepositModal()">
+          <i class="fas fa-qrcode" style="color: #10b981;"></i>
+          <span>Nạp Tiền VietQR</span>
+        </a>
+        <a class="sidebar-nav-link" href="javascript:void(0)" onclick="switchMainTab('order_log'); loadUserOrders();">
+          <i class="fas fa-history" style="color: #3b82f6;"></i>
+          <span>Lịch Sử Đơn Hàng</span>
+        </a>
+        <a class="sidebar-nav-link" id="sidebarAdminLink" style="display: none;" href="javascript:void(0)" onclick="openAdminPanel()">
+          <i class="fas fa-crown" style="color: #f59e0b;"></i>
+          <span>Quản Trị Website</span>
+        </a>
+
+        <div class="sidebar-nav-section-title">Dịch Vụ Mạng Xã Hội</div>
+        <a class="sidebar-nav-link active" data-sidebar-platform="tiktok" href="javascript:void(0)" onclick="selectPlatform('tiktok')">
+          <i class="fab fa-tiktok" style="color: #111827;"></i>
+          <span>TikTok</span>
+          <span class="sidebar-badge-hot">HOT</span>
+        </a>
+        <a class="sidebar-nav-link" data-sidebar-platform="facebook" href="javascript:void(0)" onclick="selectPlatform('facebook')">
+          <i class="fab fa-facebook" style="color: #1877f2;"></i>
+          <span>Facebook</span>
+        </a>
+        <a class="sidebar-nav-link" data-sidebar-platform="instagram" href="javascript:void(0)" onclick="selectPlatform('instagram')">
+          <i class="fab fa-instagram" style="color: #e1306c;"></i>
+          <span>Instagram</span>
+        </a>
+        <a class="sidebar-nav-link" data-sidebar-platform="youtube" href="javascript:void(0)" onclick="selectPlatform('youtube')">
+          <i class="fab fa-youtube" style="color: #ff0000;"></i>
+          <span>YouTube</span>
+        </a>
+        <a class="sidebar-nav-link" data-sidebar-platform="telegram" href="javascript:void(0)" onclick="selectPlatform('telegram')">
+          <i class="fab fa-telegram-plane" style="color: #0088cc;"></i>
+          <span>Telegram</span>
+        </a>
+        <a class="sidebar-nav-link" data-sidebar-platform="shopee" href="javascript:void(0)" onclick="selectPlatform('shopee')">
+          <i class="fas fa-shopping-bag" style="color: #ee4d2d;"></i>
+          <span>Shopee</span>
+        </a>
+        <a class="sidebar-nav-link" data-sidebar-platform="twitter" href="javascript:void(0)" onclick="selectPlatform('twitter')">
+          <i class="fab fa-x-twitter" style="color: #0f172a;"></i>
+          <span>Twitter (X)</span>
+        </a>
+        <a class="sidebar-nav-link" data-sidebar-platform="threads" href="javascript:void(0)" onclick="selectPlatform('threads')">
+          <i class="fas fa-at" style="color: #000000;"></i>
+          <span>Threads</span>
+        </a>
+
+        <div class="sidebar-nav-section-title">Hỗ Trợ &amp; Hệ Thống</div>
+        <a class="sidebar-nav-link" href="javascript:void(0)" onclick="switchMainTab('api_docs')">
+          <i class="fas fa-code" style="color: #8b5cf6;"></i>
+          <span>API BaoStar v2</span>
+        </a>
+        <a class="sidebar-nav-link" href="https://zalo.me/0987654321" target="_blank">
+          <i class="fas fa-comment-dots" style="color: #0068ff;"></i>
+          <span>Chat Zalo Admin</span>
+        </a>
+        <a class="sidebar-nav-link" href="https://t.me/khoasmm" target="_blank">
+          <i class="fab fa-telegram" style="color: #0088cc;"></i>
+          <span>Chat Telegram Admin</span>
+        </a>
+        <a class="sidebar-nav-link" href="javascript:void(0)" onclick="openModal('modalSettings')">
+          <i class="fas fa-cog" style="color: #64748b;"></i>
+          <span>Trạng Thái &amp; Cài Đặt</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- ==========================================================================
+         RIGHT / MAIN COLUMN
+         ========================================================================== -->
+    <div class="baostar-main-column">
+
+      <!-- TOP HEADER BAR -->
+      <header class="top-header">
+        <div class="top-bar-inner">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <!-- Mobile Sidebar Toggle -->
+            <button class="btn-sidebar-toggle" onclick="toggleMobileSidebar()" title="Mở danh mục dịch vụ">
+              <i class="fas fa-bars"></i>
+            </button>
+
+            <!-- Brand Logo visible on mobile -->
+            <div class="brand-logo mobile-only-brand" onclick="selectPlatform('tiktok')" style="display: none;">
+              <div class="brand-badge-logo" style="padding: 4px 8px; font-size: 13px;">
+                <i class="fas fa-rocket"></i>
+                <span>KHOA SMM</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Search Services -->
+          <div class="header-search">
+            <i class="fas fa-search"></i>
+            <input type="text" id="headerGlobalSearch" placeholder="Tìm kiếm dịch vụ (TikTok, FB, IG...)..." autocomplete="off">
+          </div>
+
+          <!-- Right Header Actions -->
+          <div class="header-actions">
+            <!-- 1. GUEST STATE: SHOW LOGIN & REGISTER BUTTONS -->
+            <div id="headerAuthGuest" class="header-auth-group">
+              <button class="btn-auth-login" onclick="openAuthModal('login')">
+                <i class="fas fa-sign-in-alt"></i> Đăng nhập
+              </button>
+              <button class="btn-auth-register" onclick="openAuthModal('register')">
+                <i class="fas fa-user-plus"></i> Đăng ký
+              </button>
+            </div>
+
+            <!-- 2. LOGGED-IN USER STATE: SHOW USER WALLET & PROFILE -->
+            <div id="headerAuthUser" style="display: none; align-items: center; gap: 10px;">
+              <!-- Exclusive Admin Panel Button -->
+              <button class="btn-admin-header" id="headerAdminBtn" style="display: none;" onclick="openAdminPanel()" title="Mở Bảng Quản Trị Website">
+                <i class="fas fa-crown"></i> Quản Trị Website
+              </button>
+
+              <!-- Live BaoStar API Status Pill -->
+              <div class="header-balance-pill" id="baostarApiPill" style="background: rgba(16, 185, 129, 0.08); border-color: rgba(16, 185, 129, 0.3); font-size: 12px; cursor: pointer;" onclick="openModal('modalSettings')" title="Xem trạng thái kết nối BaoStar">
+                <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #10b981;"></span>
+                <span style="color: var(--text-muted);">API BaoStar:</span>
+                <strong style="color: #059669;" id="baostarBalanceLive">Đang kết nối...</strong>
+              </div>
+
+              <!-- User Balance Pill with Quick Deposit -->
+              <div class="header-balance-pill">
+                <span>Số dư:</span>
+                <span class="header-balance-amount" id="headerBalanceAmount">0 đ</span>
+                <button class="btn-deposit-quick" onclick="openDepositModal()">+ Nạp tiền</button>
+              </div>
+
+              <!-- User Profile Avatar Badge & Logout -->
+              <div class="header-user-badge" onclick="handleLogout()" title="Bấm để Đăng xuất">
+                <img src="https://api.dicebear.com/7.x/bottts/svg?seed=User&backgroundColor=fce7f3" alt="Avatar" class="user-avatar-mini" id="headerAvatarImg">
+                <span style="font-size: 12px; font-weight: 700; color: var(--danger); margin-left: 2px;"><i class="fas fa-sign-out-alt"></i></span>
+              </div>
+            </div>
+
+            <!-- Fullscreen toggle -->
+            <button class="action-icon-btn" onclick="toggleFullScreen()" title="Toàn màn hình">
+              <i class="fas fa-expand"></i>
+            </button>
+
+            <!-- Theme Toggle (Light / Dark) -->
+            <button class="action-icon-btn" onclick="toggleTheme()" title="Đổi giao diện Sáng / Tối">
+              <i class="fas fa-moon" id="themeToggleIcon"></i>
+            </button>
+
+            <!-- Notification Bell -->
+            <button class="action-icon-btn" onclick="openModal('modalNotifications')" title="Thông báo hệ thống">
+              <i class="far fa-bell"></i>
+              <span class="badge-dot">NEW</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Platform Categories Navigation Bar -->
+        <nav class="platform-navbar">
+          <div class="platform-navbar-inner" id="platformNavContainer"></div>
+        </nav>
+      </header>
 
   <!-- ==========================================================================
        MAIN CONTENT CONTAINER
@@ -2661,8 +3053,17 @@ button, input, select, textarea {
 
             <!-- Quantity Input -->
             <div class="form-group">
-              <label for="orderQuantityInput"><i class="fas fa-sort-numeric-up-alt"></i> Số lượng cần tăng:</label>
-              <input type="number" id="orderQuantityInput" class="form-control" value="100" min="50" step="10" oninput="handleQuantityChange(this.value)">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 4px;">
+                <label for="orderQuantityInput" style="margin-bottom: 0;"><i class="fas fa-sort-numeric-up-alt"></i> Số lượng cần tăng:</label>
+                <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                  <button type="button" class="btn-quick-qty" onclick="setAbsoluteQuantity(100)">100</button>
+                  <button type="button" class="btn-quick-qty" onclick="setAbsoluteQuantity(500)">500</button>
+                  <button type="button" class="btn-quick-qty" onclick="setAbsoluteQuantity(1000)">1.000</button>
+                  <button type="button" class="btn-quick-qty" onclick="setAbsoluteQuantity(5000)">5.000</button>
+                  <button type="button" class="btn-quick-qty" onclick="setAbsoluteQuantity(10000)">10.000</button>
+                </div>
+              </div>
+              <input type="number" id="orderQuantityInput" class="form-control" value="100" min="10" step="10" oninput="handleQuantityChange(this.value)" onblur="handleQuantityBlur()">
               <div class="form-help-text" id="quantityRangeHint">Tối thiểu: 50 - Tối đa: 100,000</div>
             </div>
 
@@ -2688,7 +3089,7 @@ button, input, select, textarea {
 
           <!-- Checkout & Order Action Bar -->
           <div class="order-action-bar">
-            <button class="btn-create-order" id="btnSubmitOrder" onclick="handleCreateOrder()">
+            <button class="btn-create-order" id="btnSubmitOrder" onclick="submitOrder()">
               <i class="fas fa-paper-plane"></i> Mua ngay dịch vụ
             </button>
             <div class="order-guarantee-note">
@@ -2904,6 +3305,12 @@ button, input, select, textarea {
     </div>
 
   </main>
+
+    </div>
+    <!-- END BAOSTAR MAIN COLUMN -->
+
+  </div>
+  <!-- END BAOSTAR APP WRAPPER -->
 
   <!-- ==========================================================================
        MODAL: AUTHENTICATION (ĐĂNG NHẬP / ĐĂNG KÝ CHO KHÁCH HÀNG MỚI)
@@ -4464,6 +4871,16 @@ function renderGuestUI() {
   if (sidebarGuest) sidebarGuest.style.display = "block";
   if (sidebarUser) sidebarUser.style.display = "none";
 
+  const sidebarUname = document.getElementById("sidebarUname");
+  const sidebarRole = document.getElementById("sidebarRole");
+  const sidebarBalanceText = document.getElementById("sidebarBalanceText");
+  const sidebarAdminLink = document.getElementById("sidebarAdminLink");
+
+  if (sidebarUname) sidebarUname.textContent = "Khách vãng lai";
+  if (sidebarRole) sidebarRole.textContent = "Chưa đăng nhập";
+  if (sidebarBalanceText) sidebarBalanceText.textContent = "0 đ";
+  if (sidebarAdminLink) sidebarAdminLink.style.display = "none";
+
   renderOrderLog();
   calculateTotalPrice();
 }
@@ -4491,17 +4908,34 @@ function renderAuthenticatedUI() {
   if (sidebarGuest) sidebarGuest.style.display = "none";
   if (sidebarUser) sidebarUser.style.display = "block";
 
-  document.getElementById("cardUserName").textContent = state.user.name || state.user.username;
-  document.getElementById("cardUserRank").textContent = state.user.role || "Thành viên";
-  document.getElementById("cardUserBalance").textContent = `${(state.user.balance || 0).toLocaleString('vi-VN')} đ`;
-  document.getElementById("cardUserTotalDeposit").textContent = `${(state.user.totalDeposit || 0).toLocaleString('vi-VN')} đ`;
-  document.getElementById("cardUserEmail").textContent = state.user.email || "";
-  document.getElementById("cardUserJoinDate").textContent = state.user.createdAt || "Hôm nay";
+  const cardName = document.getElementById("cardUserName");
+  const cardRank = document.getElementById("cardUserRank");
+  const cardBal = document.getElementById("cardUserBalance");
+  const cardDep = document.getElementById("cardUserTotalDeposit");
+  const cardEmail = document.getElementById("cardUserEmail");
+  const cardJoin = document.getElementById("cardUserJoinDate");
+
+  if (cardName) cardName.textContent = state.user.name || state.user.username;
+  if (cardRank) cardRank.textContent = state.user.role || "Thành viên";
+  if (cardBal) cardBal.textContent = `${(state.user.balance || 0).toLocaleString('vi-VN')} đ`;
+  if (cardDep) cardDep.textContent = `${(state.user.totalDeposit || 0).toLocaleString('vi-VN')} đ`;
+  if (cardEmail) cardEmail.textContent = state.user.email || "";
+  if (cardJoin) cardJoin.textContent = state.user.createdAt || "Hôm nay";
 
   const nextTier = document.getElementById("cardUserNextTier");
   if (nextTier) {
     nextTier.textContent = `${state.user.role} ${(state.user.totalDeposit || 0).toLocaleString('vi-VN')}/10,000,000 đ`;
   }
+
+  const sidebarUname = document.getElementById("sidebarUname");
+  const sidebarRole = document.getElementById("sidebarRole");
+  const sidebarBalanceText = document.getElementById("sidebarBalanceText");
+  const sidebarAdminLink = document.getElementById("sidebarAdminLink");
+
+  if (sidebarUname) sidebarUname.textContent = state.user.name || state.user.username;
+  if (sidebarRole) sidebarRole.textContent = state.user.role || "Thành viên";
+  if (sidebarBalanceText) sidebarBalanceText.textContent = `${(state.user.balance || 0).toLocaleString('vi-VN')} đ`;
+  if (sidebarAdminLink) sidebarAdminLink.style.display = (state.user.role === 'Admin') ? "flex" : "none";
 
   updateDepositModal();
   calculateTotalPrice();
@@ -5206,12 +5640,33 @@ function selectPlatform(platformKey) {
   state.currentCategory = null;
   state.currentServer = null;
 
+  document.querySelectorAll(".sidebar-nav-link").forEach(el => {
+    el.classList.toggle("active", el.getAttribute("data-sidebar-platform") === platformKey);
+  });
+
   document.querySelectorAll(".platform-navbar .nav-item").forEach(el => {
     el.classList.toggle("active", el.getAttribute("data-platform") === platformKey);
   });
 
   switchMainTab("order_create");
   renderCurrentService();
+
+  // On mobile, auto close sidebar after selecting
+  const sidebar = document.getElementById("baostarSidebar");
+  const overlay = document.getElementById("sidebarBackdrop");
+  if (sidebar && sidebar.classList.contains("open")) {
+    sidebar.classList.remove("open");
+    if (overlay) overlay.classList.remove("active");
+  }
+}
+
+function toggleMobileSidebar() {
+  const sidebar = document.getElementById("baostarSidebar");
+  const overlay = document.getElementById("sidebarBackdrop");
+  if (sidebar) {
+    sidebar.classList.toggle("open");
+    if (overlay) overlay.classList.toggle("active", sidebar.classList.contains("open"));
+  }
 }
 
 function renderCurrentService() {
@@ -5382,25 +5837,41 @@ function renderServerSpecCard(srv) {
 // PRICE CALCULATION & ORDER SUBMISSION
 // ==========================================================================
 function calculateTotalPrice() {
+  if (!state.currentServer) {
+    if (state.currentCategory && state.currentCategory.servers && state.currentCategory.servers.length > 0) {
+      state.currentServer = state.currentCategory.servers.find(s => s.recommended) || state.currentCategory.servers[0];
+    } else {
+      const platform = SERVICES_DATA[state.currentPlatform || 'tiktok'];
+      if (platform && platform.categories && platform.categories[0] && platform.categories[0].servers && platform.categories[0].servers.length > 0) {
+        state.currentCategory = platform.categories[0];
+        state.currentServer = state.currentCategory.servers.find(s => s.recommended) || state.currentCategory.servers[0];
+      }
+    }
+  }
   if (!state.currentServer) return;
 
   const qtyInput = document.getElementById("orderQuantityInput");
   const qty = parseInt(qtyInput ? qtyInput.value : state.quantity) || 0;
   state.quantity = qty;
 
-  const rawUnitRate = state.currentServer.price;
-  const rawTotal = qty * rawUnitRate;
+  const unitRate = Number(state.currentServer.price) || 0;
+  const rawTotal = qty * unitRate;
 
   const discountRate = (state.user && !state.user.isGuest) ? (state.user.discountPercent || 0) : 0;
   const discountAmount = (rawTotal * discountRate) / 100;
   const finalTotal = Math.max(0, Math.round(rawTotal - discountAmount));
 
-  const rateDisplay = document.getElementById("summaryUnitRate");
-  const totalDisplay = document.getElementById("summaryTotalPrice");
+  // Update elements by both IDs
+  const totalDisplay = document.getElementById("totalPriceDisplay") || document.getElementById("summaryTotalPrice");
+  const formulaHint = document.getElementById("priceFormulaHint") || document.getElementById("summaryUnitRate");
   const discountDisplay = document.getElementById("summaryDiscount");
 
-  if (rateDisplay) {
-    rateDisplay.textContent = `Giá: ${rawUnitRate.toLocaleString('vi-VN')} đ / 1 đơn vị | Số lượng: ${qty.toLocaleString('vi-VN')}`;
+  if (totalDisplay) {
+    totalDisplay.textContent = finalTotal.toLocaleString('vi-VN');
+  }
+
+  if (formulaHint) {
+    formulaHint.textContent = `${unitRate.toLocaleString('vi-VN')} đ x ${qty.toLocaleString('vi-VN')}`;
   }
 
   if (discountDisplay) {
@@ -5411,27 +5882,40 @@ function calculateTotalPrice() {
       discountDisplay.style.display = "none";
     }
   }
-
-  if (totalDisplay) {
-    totalDisplay.textContent = `${finalTotal.toLocaleString('vi-VN')} đ`;
-  }
 }
 
 function handleQuantityChange(value) {
-  const qtyInput = document.getElementById("orderQuantityInput");
-  if (!qtyInput) return;
   let qty = parseInt(value);
-  if (isNaN(qty) || qty < 1) qty = 1;
-  qtyInput.value = qty;
+  if (isNaN(qty) || qty < 0) qty = 0;
   state.quantity = qty;
   calculateTotalPrice();
+}
+
+function handleQuantityBlur() {
+  const qtyInput = document.getElementById("orderQuantityInput");
+  if (!qtyInput || !state.currentServer) return;
+  let qty = parseInt(qtyInput.value);
+  const minQty = state.currentServer.minQty || 10;
+  const maxQty = state.currentServer.maxQty || 1000000;
+  if (isNaN(qty) || qty < minQty) {
+    qty = minQty;
+    qtyInput.value = qty;
+    state.quantity = qty;
+    calculateTotalPrice();
+  } else if (qty > maxQty) {
+    qty = maxQty;
+    qtyInput.value = qty;
+    state.quantity = qty;
+    calculateTotalPrice();
+  }
 }
 
 function setQuickQuantity(delta) {
   const qtyInput = document.getElementById("orderQuantityInput");
   if (!qtyInput) return;
   let current = parseInt(qtyInput.value) || 0;
-  qtyInput.value = current + delta;
+  qtyInput.value = Math.max(0, current + delta);
+  state.quantity = parseInt(qtyInput.value);
   calculateTotalPrice();
 }
 
@@ -5439,8 +5923,14 @@ function setAbsoluteQuantity(qty) {
   const qtyInput = document.getElementById("orderQuantityInput");
   if (!qtyInput) return;
   qtyInput.value = qty;
+  state.quantity = qty;
   calculateTotalPrice();
 }
+
+// Global alias so both handleCreateOrder() and submitOrder() work everywhere
+window.handleCreateOrder = submitOrder;
+window.setAbsoluteQuantity = setAbsoluteQuantity;
+window.handleQuantityBlur = handleQuantityBlur;
 
 async function submitOrder() {
   if (!state.user || state.user.isGuest || !state.token) {
